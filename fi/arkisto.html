@@ -5,14 +5,14 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kaptam - Pelaajien taverna</title>
+  <title>Kaptam - Arkisto</title>
 
   <!-- 
     - favicon
   -->
-  <link rel="shortcut icon" href="./favicon.png" type="image/svg+xml">
+  <link rel="shortcut icon" href="../favicon.png" type="image/svg+xml">
 
-  <link rel="stylesheet" href="./assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/style.css">
 
   <!-- 
     - google font link
@@ -28,7 +28,66 @@
   -->
 </head>
 
+	<!-- 
+	-----------------------------------------------
+    #HEADER
+	-----------------------------------------------
+	-->
 
+
+
+  <header class="header">
+    
+    <div class="header-bottom skewBg" data-header>
+      <div class="container">
+
+        <a href="index.html" class="logo">Kaptam</a>
+
+        <nav class="navbar" data-navbar>
+          <ul class="navbar-list">
+
+            <li class="navbar-item">
+              <a href="index.html" class="navbar-link skewBg" data-nav-link>Etusivu</a>
+            </li>
+			
+			<li class="navbar-item">
+            <a href="lautapeli.html" class="navbar-link skewBg" data-nav-link>Lautapelikerho</a>
+            </li>
+			
+			<li class="navbar-item">
+            <a href="videopeli.html" class="navbar-link skewBg" data-nav-link>Videopelikerho</a>
+            </li>
+			
+			<li class="navbar-item">
+              <a href="roolipeli.html" class="navbar-link skewBg" data-nav-link>Roolipelikerho</a>
+            </li>
+			
+			<li class="navbar-item">
+            <a href="tappelu.html" class="navbar-link skewBg" data-nav-link>Taistelupeli-turnaus</a>
+            </li>
+			
+			<li class="navbar-item">
+            <a href="../en/archive.html" class="navbar-link skewBg" data-nav-link>Eng</a>
+            </li>
+
+          </ul>
+        </nav>
+
+        <div class="header-actions">
+
+
+          <button class="nav-toggle-btn" aria-label="toggle menu" data-nav-toggler>
+            <ion-icon name="menu-outline" class="menu"></ion-icon>
+            <ion-icon name="close-outline" class="close"></ion-icon>
+          </button>
+
+        </div>
+
+      </div>
+	  
+    </div>
+
+  </header>
 
   <main>
     <article>
@@ -47,199 +106,40 @@
           - #Introduction
         -->
 	
+      <section class="section hero" id="home" aria-label="home">
+        <div class="container" style="margin-top:-20%">
 
-	  
-	         <section class="section latest-game" id="clubs" aria-label="clubs" style="background-image: url('./assets/images/index-background.jpg')">
-			<div style="position: sticky; max-width: fit-content; margin-left: auto; margin-right: auto; margin-top: 30px;">
-			<a href="home.html"><h2 class="h2 hero-title2"> <span class="span2"> Website in English language  </span></a> 
-			</div>
-          <div class="container">
-
-			<div class="responsive-iframe">
-           <iframe width="660" height="371" src="https://www.youtube.com/embed/MmKnnqnClRw" title="Kaptam Gamers" 
-		   frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-		   referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
-		   </iframe>
-			</div>
-          </div>
-		  
-		</section>
-	<section class="hero-content">
-            <p class="hero-text" align="center">
-			<span>
-				Kaptam Gamers on Päijät-Hämeen alueen videopeli, lautapeli ja roolipeli harrastuksia edistävä yhdistys.
-				Tarkoituksemme on tehdä paikan päällä tapahtuva harrastustoiminta kaikille avoimeksi.
-				Tämä avustaisi harrastuksesta kiinnostuneet löytämään toisensa, ja harrastaa yhteisöllisemmin. 
-				<br>
-				<br>
-				“We are a democracy. We are doing it for the people”.
-			</span>
-			<br>
-			<br>
-			</p>
-			<br>
-		  </div>
-
-	</section>
+          <div class="hero-content">
 
 
-        <!-- 
-          - #CLUBS
-        -->
-
-          <div class="container">
-
-            <h2 class="h2 section-title">
-              Kaptam <span class="span">Kerhot</span>
-            </h2>
-			<br>
-			<br>
-			<p class="hero-subtitle" align="center" style="hero-banner"> Pyyhkäise vasemmalle <br> Klikkaa avataksesi sivu</p>
+			
+			<a href="tappelu2.html">
+            <h1 class="h1 hero-title4" style="font-size: 55px;">
+              Taistelupeli turnaus <span class="span">Tekken 3</span>  
+			  <br>
+			  31.1.2025
+            </h1>
+			</a>
 			
 			<br>
-
-            <ul class="has-scrollbar">
-              <li class="scrollbar-item">
-                <div class="latest-game-card">
-                  <a href="./lautapeli.html">
-                  <figure class="card-banner img-holder" style="--width: 400; --height: 470;">
-                    <img src="./assets/images/tabletop.jpg" width="400" height="470" loading="lazy"
-                      alt="Tabletop Club" class="img-cover">
-                  </figure>
-
-                  <div class="card-content">
-
-                    <div class="card-badge skewBg">Maanantaina @ 16:00</div>
-
-                    <h3 class="h3">
-                      <div class="card-title">BoardGamesKerho <br><br><span class="span">Lautapelikerho</span></div>
-                    </h3>
-                  </a>
-                  </div>
-
-                </div>
-              </li>
-              <li class="scrollbar-item">
-                <div class="latest-game-card">
-                  <a href="videopeli.html">
-                  <figure class="card-banner img-holder" style="--width: 400; --height: 470;">
-                    <img src="./assets/images/gaming.jpg" width="400" height="470" loading="lazy"
-                      alt="GamingKerho" class="img-cover">
-                  </figure>
-
-                  <div class="card-content">
-
-                    <div class="card-badge skewBg">Perjantaina @ 16:00</div>
-
-                    <h3 class="h3">
-                      <div class="card-title">VideoGamesKerho<br><br><span class="span">Videopelikerho</span></div>
-                    </h3>
-                  </a>
-                  </div>
-
-                </div>
-              </li>
-			  <li class="scrollbar-item">
-                <div class="latest-game-card">
-                  <a href="roolipeli.html">
-                  <figure class="card-banner img-holder" style="--width: 400; --height: 470;">
-                    <img src="./assets/images/roleplaying.jpg" width="400" height="470" loading="lazy"
-                      alt="Roleplaying club" class="img-cover">
-                  </figure>
-
-                  <div class="card-content">
-
-                    <div class="card-badge skewBg">Joka toinen viikko</div>
-
-                    <h3 class="h3">
-                      <div class="card-title">RoleplayingKerho <br><br><span class="span">Roolipelikerho</span></div>
-                    </h3>
-                  </a>
-                  </div>
-
-                </div>
-              </li>
-
-              
-
-            </ul>
-
-          </div>
-        </section>
-
-      <!-- 
-        - #BLOG
-      -->
-
-      <section class="section blog" id="events" aria-label="blog">
-        <div class="container">
-
-          <h2 class="h2 section-title">
-            <span class="span">Tulevat tapahtumat</span>
-          </h2>
 			<br>
-			<br>
-			<p class="hero-subtitle" align="center" style="hero-banner"> Klikkaa avataksesi sivu</p>
+
+			<a href="lanit.html">
+            <h1 class="h1 hero-title4" style="font-size: 55px;">
+              Kaptam Winter <span class="span">Lanit</span> 
+			  <br>
+			  14-16.2.2025
+            </h1>
+			</a>
 			
-			<br>
-          <ul class="blog-list">
-
-			<li>
-			<a href="tappelu.html">
-              <div class="blog-card">
-
-                <figure class="card-banner img-holder" style="--width: 400; --height: 290;">
-                  <img src="./assets/images/events/sf2stfin.jpg" width="400" height="290" loading="lazy"
-                    alt="1" class="img-cover">
-                </figure>
-
-                <div class="card-content">
-
-                  <ul class="card-meta-list">
-
-                    <li class="card-meta-item">
-                      <ion-icon name="person-outline"></ion-icon>
-
-                      <p class="item-text">Videopelit</p>
-                    </li>
-
-                    <li class="card-meta-item">
-                      <ion-icon name="calendar-outline"></ion-icon>
-
-                      <time datetime="2025-03-07" class="item-text">Maaliskuu 07, 2025</time>
-                    </li>
-
-                  </ul>
-
-                  <h3>
-                    <p class="card-title">~Lahti Fisticuffs~ turnaus</p>
-                  </h3>
-					</a>
-                  <p class="card-text">
-				    Peli: <br>
-					Super Street Fighter 2 Turbo 
-					<br>
-					<br>
-					Sijainti: <br>
-					Mukkulankatu 19 (LAB ammattikorkeakoulu) tapahtuma-areena, 15210 Lahti <br>
-					<a href="https://maps.app.goo.gl/Y5xQvMHZqdtBGVLA6" target="_blank" style="color: DodgerBlue;"><u>Google Maps</u></a>
-					<br>
-					Aika: <br>
-					07.03.2025 @ 16:00 Perjantai
-					<br>
-					<br>
-					Kaikki yli 13-vuotiaat voivat osallistua ilmaiseksi. Voit harjoitella videopelikerhon viikkotunteilla perjantaisin Niemenkatu 73 (Lahden Tiedepuisto) aulassa klo 16:00 - 20:00
-                  </p>
-
-                </div>
-
-              </div>
-            </li>
-
-                     </ul>
-
-        </div>
+		   </div>
+		   
+		</div>
+		
       </section>
+	  
+
+      
 	
 
 
@@ -310,15 +210,7 @@
                 <ion-icon name="document-outline"></ion-icon>
               </div>
 
-              <a href="./assets/pdf/kaptam_gamers_ry_saannot.pdf" class="item-text">Teksti : Yhdistyksen säännöt</a>
-            </li>
-
-			<li class="contact-item">
-              <div class="contact-icon">
-                <ion-icon name="save-outline"></ion-icon>
-              </div>
-
-              <a href="https://drive.google.com/drive/folders/10oNQlse6Te3afM2i28CCFx_4Bhn5Coc1?usp=drive_link" class="item-text">Linkki : Mediapankki</a>
+              <a href="../assets/pdf/kaptam_gamers_ry_saannot.pdf" class="item-text">Teksti : Yhdistyksen säännöt</a>
             </li>
 
           </ul>
@@ -340,11 +232,11 @@
 		  <br>
 		  
 		  <li>
-            <p class="footer-list-title">Vanhat tapahtumat</p>
+            <p class="footer-list-title">Vanhat sivut</p>
           </li>
 
           <li>
-            <a href="arkisto.html" target="_blank" class="footer-link">Arkisto</a>
+            <a href="https://link.webropolsurveys.com/S/3555C7D0C83B4850" target="_blank" class="footer-link">Arkisto</a>
           </li>
 
         </ul>
@@ -508,7 +400,7 @@
   <!-- 
     - custom js link
   -->
-  <script src="./assets/js/script.js" defer></script>
+  <script src="../assets/js/script.js" defer></script>
   
 
   <!-- 
