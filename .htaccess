@@ -1,0 +1,72 @@
+RewriteEngine On
+
+# Redirect URLs starting with /en/ or /fi/ to remove the language prefix and .html extension
+
+RewriteCond %{REQUEST_URI} ^/(fi|en)/
+RewriteRule ^(fi|en)/(.*)\.html$ /$2 [R=301,L]
+
+RewriteCond %{REQUEST_URI} ^/(fi|en)/
+RewriteCond %{REQUEST_URI} !\.html$
+RewriteRule ^(fi|en)/(.*)$ /$2 [R=301,L]
+
+RewriteCond %{REQUEST_URI} ^/(arkisto)/(.*)\.html$
+RewriteCond %{DOCUMENT_ROOT}/en/%2.html -f [OR]
+RewriteCond %{DOCUMENT_ROOT}/fi/%2.html -f
+RewriteRule ^(arkisto)/(.*)\.html$ /$2.html [R=301,L]
+
+RewriteCond %{REQUEST_URI} ^/(arkisto)/(.*)$
+RewriteCond %{DOCUMENT_ROOT}/en/%2.html -f [OR]
+RewriteCond %{DOCUMENT_ROOT}/fi/%2.html -f
+RewriteRule ^(arkisto)/(.*)$ /$2.html [R=301,L]
+
+RewriteCond %{REQUEST_URI} ^/(archive)/(.*)\.html$
+RewriteCond %{DOCUMENT_ROOT}/en/%2.html -f [OR]
+RewriteCond %{DOCUMENT_ROOT}/fi/%2.html -f
+RewriteRule ^(archive)/(.*)\.html$ /$2.html [R=301,L]
+
+RewriteCond %{REQUEST_URI} ^/(archive)/(.*)$
+RewriteCond %{DOCUMENT_ROOT}/en/%2.html -f [OR]
+RewriteCond %{DOCUMENT_ROOT}/fi/%2.html -f
+RewriteRule ^(archive)/(.*)$ /$2.html [R=301,L]
+
+# Handle empty path - redirect to /fi/index.html as default
+RewriteCond %{REQUEST_URI} ^/?$
+RewriteRule ^$ /fi/ [L]
+
+# Skip if already in one of the excluded directories
+RewriteCond %{REQUEST_URI} !^/(fi|en|archive|arkisto|assets)/ [NC]
+# Check if file exists in /fi/ directory
+RewriteCond %{DOCUMENT_ROOT}/fi/$1 -f
+RewriteRule ^(.*)$ /fi/$1 [L]
+
+RewriteCond %{REQUEST_URI} !^/(fi|en|archive|arkisto|assets)/ [NC]
+RewriteCond %{DOCUMENT_ROOT}/fi/$1.html -f
+RewriteRule ^(.*)$ /fi/$1.html [L]
+
+# If not in /fi/, check if it exists in /en/ directory
+RewriteCond %{REQUEST_URI} !^/(fi|en|archive|arkisto|assets)/ [NC]
+RewriteCond %{DOCUMENT_ROOT}/en/$1 -f 
+RewriteRule ^(.*)$ /en/$1 [L]
+
+RewriteCond %{REQUEST_URI} !^/(fi|en|archive|arkisto|assets)/ [NC]
+RewriteCond %{DOCUMENT_ROOT}/en/$1.html -f
+RewriteRule ^(.*)$ /en/$1.html [L]
+
+# Skip if already in one of the excluded directories
+RewriteCond %{REQUEST_URI} !^/(fi|en|archive|arkisto|assets)/ [NC]
+# Check if file exists in /fi/ directory
+RewriteCond %{DOCUMENT_ROOT}/arkisto/$1 -f
+RewriteRule ^(.*)$ /arkisto/$1 [L]
+
+RewriteCond %{REQUEST_URI} !^/(fi|en|archive|arkisto|assets)/ [NC]
+RewriteCond %{DOCUMENT_ROOT}/arkisto/$1.html -f
+RewriteRule ^(.*)$ /arkisto/$1.html [L]
+
+# If not in /fi/, check if it exists in /en/ directory
+RewriteCond %{REQUEST_URI} !^/(fi|en|archive|arkisto|assets)/ [NC]
+RewriteCond %{DOCUMENT_ROOT}/archive/$1 -f 
+RewriteRule ^(.*)$ /archive/$1 [L]
+
+RewriteCond %{REQUEST_URI} !^/(fi|en|archive|arkisto|assets)/ [NC]
+RewriteCond %{DOCUMENT_ROOT}/archive/$1.html -f
+RewriteRule ^(.*)$ /archive/$1.html [L]
