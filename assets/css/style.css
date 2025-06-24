@@ -272,6 +272,12 @@ ion-icon { display: block; }
   text-transform: uppercase;
 }
 
+.section-title3 {
+  position: relative;
+  text-align: center;
+  text-transform: uppercase;
+}
+
 .section-subtitle {
   color: var(--silver);
   font-size: var(--fs-9);
@@ -1199,6 +1205,17 @@ ion-icon { display: block; }
   color: var(--white);
   padding: 10px;
   border-radius: 2px;
+  padding-right: 250px;
+}
+
+.footer .social-link-2 {
+  display: flex;
+  gap:20px;
+  align-items:center;
+  color: var(--white);
+  padding: 10px;
+  border-radius: 2px;
+  padding-right: 80px;
 }
 
 .footer-newsletter { position: relative; }
@@ -1585,6 +1602,7 @@ ion-icon { display: block; }
 
   .header-bottom { outline: 1px solid hsla(0, 0%, 0%, 0.2); }
 
+  /*
   .header-bottom::before {
     display: block;
     top: 0;
@@ -1593,7 +1611,7 @@ ion-icon { display: block; }
     width: 170px;
     --skewX: 16deg;
   }
-
+  */
   .nav-toggle-btn { display: none; }
 
   .navbar,
