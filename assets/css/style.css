@@ -685,7 +685,7 @@ ion-icon { display: block; }
   background-size: cover;
   background-position: center;
   text-align: center;
-  min-height: 100vh;
+  min-height: 50vh;
   display: grid;
   align-items: center;
 }
@@ -1334,8 +1334,14 @@ ion-icon { display: block; }
 
   .h1 { --fs-2: 7rem; }
 
+  .latest-game {
+    --section-padding: 60px;
+    min-height: 100vh;
+  }
 
-
+  .responsive-iframe {
+    margin 0 auto;
+  }
   /**
    * HEADER
    */
