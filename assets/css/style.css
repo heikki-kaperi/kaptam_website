@@ -1,3 +1,4 @@
+
 /*-----------------------------------*\
   #style.css
 \*-----------------------------------*/
@@ -1676,11 +1677,14 @@ ion-icon { display: block; }
 
   .hero .container {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 0.9fr;
     align-items: center;
 	/* gap: 50px; */  /* Wanted Hero & Home section big text to fit before going to another row */
   }
 
+#help.hero .container {
+  grid-template-columns: 1fr;
+}
   .btn { margin-inline: auto; }
 
 
@@ -1811,11 +1815,14 @@ ion-icon { display: block; }
 
   .hero .container {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
     align-items: center;
 	/* gap: 50px; */  /* Wanted Hero & Home section big text to fit before going to another row */
   }
 
+#help.hero .container {
+  grid-template-columns: 1fr;
+}
   /**
    * BRAND
    */
@@ -1896,4 +1903,3 @@ ion-icon { display: block; }
   .blue_text {
     color:blue;
   }
-
