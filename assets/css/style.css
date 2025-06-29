@@ -250,6 +250,7 @@ ion-icon { display: block; }
   overflow-x: auto;
   padding-block-end: 30px;
   scroll-snap-type: inline mandatory;
+  flex-direction: column;
 }
 
 .has-scrollbar::-webkit-scrollbar { height: 10px; }
@@ -1342,6 +1343,7 @@ ion-icon { display: block; }
     margin-inline: auto;
   }
 
+  .
   .h1 { --fs-2: 7rem; }
 
   .latest-game {
@@ -1534,6 +1536,7 @@ ion-icon { display: block; }
     right: 45px;
   }
 
+  .has-scrollbar { flex-direction: row; }
 }
 
 
@@ -1758,6 +1761,7 @@ ion-icon { display: block; }
     column-gap: 80px;
   }
 
+  .has-scrollbar { flex-direction: row; }
 }
 
 
@@ -1781,6 +1785,7 @@ ion-icon { display: block; }
 
   .scrollbar-item { min-width: calc(25% - 22.5px); }
 
+  .has-scrollbar { flex-direction: row; }
 
 
   /**
@@ -1891,6 +1896,4 @@ ion-icon { display: block; }
   .blue_text {
     color:blue;
   }
-
-
 
