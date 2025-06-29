@@ -1679,11 +1679,13 @@ ion-icon { display: block; }
     display: grid;
     grid-template-columns: 1fr 0.9fr;
     align-items: center;
+    text-align: left;
 	/* gap: 50px; */  /* Wanted Hero & Home section big text to fit before going to another row */
   }
 
 #help.hero .container {
   grid-template-columns: 1fr;
+  text-align: center;
 }
   .btn { margin-inline: auto; }
 
@@ -1817,6 +1819,7 @@ ion-icon { display: block; }
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-items: center;
+    text-align: left;
 	/* gap: 50px; */  /* Wanted Hero & Home section big text to fit before going to another row */
   }
 
