@@ -45,6 +45,7 @@
   --silver: hsl(0, 0%, 78%);
   --white: hsl(0, 0%, 100%);
   --jet: hsl(236, 13%, 23%);
+  --purple: hsl(299, 100%, 39%);
 
   /**
    * typography
@@ -231,6 +232,20 @@ ion-icon { display: block; }
   z-index: -1;
 }
 
+.skewBg2 {
+  position: relative;
+  z-index: 1;
+}
+
+.skewBg2::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: skewX(var(--skewX, -16deg));
+  background-color: var(--bg, var(--purple));
+  z-index: -1;
+}
+
 .btn::after {
   content: "";
   position: absolute;
@@ -400,6 +415,10 @@ ion-icon { display: block; }
   color: var(--marigold);
 }
 
+.highlight-text:hover {
+  color: var(--marigold);
+}
+
 .header-actions {
   display: flex;
   align-items: center;
@@ -566,7 +585,8 @@ ion-icon { display: block; }
 
 .hero-title-a { 
   margin-block: 15px 12px; 
-  background-color: rgb(0, 0, 0, 0.7);
+  background-color: black;
+  opacity: 0.7;
   padding: 15px;
 }
 
@@ -1889,7 +1909,10 @@ ion-icon { display: block; }
    * FOOTER
    */
 
-  .footer .container { grid-template-columns: 1fr 0.7fr 0.7fr 1fr; }
+  .footer .container { 
+    grid-template-columns: 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr; 
+    column-gap: 45px;
+  }
 
 /*-----------------------------------*\
   #Heikki added stuff
