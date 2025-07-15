@@ -64,7 +64,26 @@ window.addEventListener("scroll", function () {
   );
   let currentIndex = 0;
 
+  const highResImages = Array.from(imageElements).map(img => {
+  const smallSrc = img.getAttribute("src");
+  const largeSrc = smallSrc.replace("/small/", "/large/");
+  return {
+    "@type": "ImageObject",
+    "contentUrl": largeSrc,
+    "url": largeSrc,
+    "name": img.getAttribute("alt") || largeSrc.split('/').pop()
+  };
+});
 
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": highResImages
+};
+
+const jsonLdScript = document.createElement("script");
+jsonLdScript.type = "application/ld+json";
+jsonLdScript.textContent = JSON.stringify(structuredData);
+document.head.appendChild(jsonLdScript);
 
 function showModal(index) {
   currentIndex = index;
