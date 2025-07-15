@@ -1502,7 +1502,7 @@ ion-icon { display: block; }
   max-height: 100%;
   max-width: 100%;
   user-select: none;
-  pointer-events: none;
+  pointer-events: auto;
   scroll-snap-align: center;
 }
 
