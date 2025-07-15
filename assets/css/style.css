@@ -46,6 +46,7 @@
   --white: hsl(0, 0%, 100%);
   --jet: hsl(236, 13%, 23%);
   --purple: hsl(299, 100%, 39%);
+  --red: rgb(250, 0, 0);
 
   /**
    * typography
@@ -730,6 +731,10 @@ ion-icon { display: block; }
   scroll-padding-inline-start: 15px;
 }
 
+.latest-game-card:hover {
+  border-color: yellow;
+  box-shadow: 0 0 15px yellow;
+}
 .latest-game-card {
   position: relative;
   border-style: solid;
@@ -766,9 +771,6 @@ ion-icon { display: block; }
 }
 
 .latest-game-card .card-price .span { margin-inline-start: 5px; }
-
-
-
 
 
 /*-----------------------------------*\
@@ -1449,6 +1451,99 @@ ion-icon { display: block; }
 
 }
 
+.image-modal {
+  position: fixed;
+  top: 7vh;
+  left: 0;
+  width: 100%;
+  height: 93vh;
+  background-color: rgba(0, 0, 0, 0.95);
+  display: none;
+  align-items: flex-end;
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+  justify-content: center;
+  overflow-x: hidden;
+  z-index: 1;
+}
+
+.image-modal-content {
+  display: flex;
+  transition: transform 0.4s ease-in-out;
+  will-change: transform;
+  width: 100%;
+  height: 100%;
+  touch-action: pan-y;
+}
+
+.image-modal-content img {
+  flex: 0 0 100%;
+  object-fit: contain;
+  max-height: 100%;
+  max-width: 100%;
+  user-select: none;
+  pointer-events: none;
+  scroll-snap-align: center;
+}
+
+.image-modal-close {
+  position: absolute;
+  top: 3rem;
+  right: 2rem;
+  font-size: 8rem;
+  color: white;
+  cursor: pointer;
+  z-index: 10000;
+}
+.image-modal-close:hover {
+  color: var(--red)
+}
+.image-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 5rem;
+  color: white;
+  background: rgba(0,0,0,0.4);
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  z-index: 1;
+  user-select: none;
+}
+.image-nav.left  { left: 1rem; }
+.image-nav.right { right: 1rem; }
+.image-nav:hover {
+  background: var(--marigold);
+}
+
+.image-indicator {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.6rem;
+  z-index: 10;
+}
+
+.image-indicator-dot {
+  width: 13px;
+  height: 13px;
+  border: 2px solid white;
+  border-radius: 50%;
+  background-color: transparent;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.image-indicator-dot.active {
+  width: 15px;
+  height: 15px;
+  background-color: var(--marigold);
+  border: 2px solid var(--marigold);
+}
+
 
 
 
@@ -1569,6 +1664,101 @@ ion-icon { display: block; }
  */
 
 @media (min-width: 992px) {
+
+
+.image-modal {
+  position: fixed;
+  top: 7vh;
+  left: 0;
+  width: 100%;
+  height: 93vh;
+  background-color: rgba(0, 0, 0, 0.95);
+  display: none;
+  align-items: flex-end;
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+  justify-content: center;
+  overflow-x: hidden;
+  z-index: 1;
+}
+
+.image-modal-content {
+  display: flex;
+  transition: transform 0.4s ease-in-out;
+  will-change: transform;
+  width: 100%;
+  height: 100%;
+  touch-action: pan-y;
+}
+
+.image-modal-content img {
+  flex: 0 0 100%;
+  object-fit: contain;
+  max-height: 100%;
+  max-width: 100%;
+  user-select: none;
+  pointer-events: none;
+  scroll-snap-align: center;
+}
+
+.image-modal-close {
+  position: absolute;
+  top: 4rem;
+  right: 8rem;
+  font-size: 8rem;
+  color: white;
+  cursor: pointer;
+  z-index: 10000;
+}
+.image-modal-close:hover {
+  color: var(--red)
+}
+.image-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 5rem;
+  color: white;
+  background: rgba(0,0,0,0.4);
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  z-index: 1;
+  user-select: none;
+}
+.image-nav.left  { left: 10rem; }
+.image-nav.right { right: 10rem; }
+.image-nav:hover {
+  background: var(--marigold);
+}
+
+.image-indicator {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.6rem;
+  z-index: 10;
+}
+
+.image-indicator-dot {
+  width: 13px;
+  height: 13px;
+  border: 2px solid white;
+  border-radius: 50%;
+  background-color: transparent;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.image-indicator-dot.active {
+  width: 15px;
+  height: 15px;
+  background-color: var(--marigold);
+  border: 2px solid var(--marigold);
+}
+
 
   /**
    * REUSED STYLE
@@ -1929,3 +2119,4 @@ ion-icon { display: block; }
   .blue_text {
     color:blue;
   }
+
