@@ -378,6 +378,9 @@ ion-icon { display: block; }
   min-height: 1px;
 }
 
+#lahtifgc.header-bottom {
+}
+
 .header-bottom {
   position: absolute;
   top: calc(100% - 1px);
@@ -409,9 +412,21 @@ ion-icon { display: block; }
   color: var(--white);
   font-family: var(--ff-oxanium);
   font-size: 3rem;
+  display: inline-flex;
+  gap: .5rem;
+  align-items: center;
+  background-image: url('../../favicon.png');
+  background-repeat: no-repeat;
+  background-position: left center;
+  background-size: 4rem;
+  padding-left: 5rem; 
   font-weight: var(--fw-800);
 }
 
+.logo-icon {
+  width: 3.5rem;
+  height: auto;
+}
 .logo:hover {
   color: var(--marigold);
 }
@@ -1451,6 +1466,11 @@ ion-icon { display: block; }
 
 }
 
+  #video.latest-game{
+    margin-top: 4rem;
+    background-image: url('../images/index-background.jpg')
+  }
+
 .image-modal {
   position: fixed;
   top: 7vh;
@@ -1876,7 +1896,9 @@ ion-icon { display: block; }
 
   .navbar-link:is(:hover, :focus)::before { opacity: 1; }
 
-
+  #video.latest-game{
+    background-image: url('../images/index-background2.jpg')
+  }
 
   /**
    * HERO
@@ -2033,9 +2055,9 @@ ion-icon { display: block; }
 	/* gap: 50px; */  /* Wanted Hero & Home section big text to fit before going to another row */
   }
 
-#help.hero .container {
-  grid-template-columns: 1fr;
-}
+  #help.hero .container {
+    grid-template-columns: 1fr;
+  }
   /**
    * BRAND
    */
@@ -2103,20 +2125,18 @@ ion-icon { display: block; }
     grid-template-columns: 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr; 
     column-gap: 45px;
   }
-
+}  
 /*-----------------------------------*\
   #Heikki added stuff
 \*-----------------------------------*/
- .float-child {
+.float-child {
+  display: flex;
+  flex-direction: column;
+  align-items: center;  /* Aligns both the image and the text horizontally */
+  justify-content: center;
+}
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;  /* Aligns both the image and the text horizontally */
-    justify-content: center;
- 
-  }
-
-  .blue_text {
-    color:blue;
-  }
+.blue_text {
+  color:blue;
+}
 
