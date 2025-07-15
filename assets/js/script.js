@@ -59,8 +59,9 @@ window.addEventListener("scroll", function () {
   const navRight = document.getElementById("navRight");
 
   const imageElements = document.querySelectorAll("#gallery .img-cover");
-  const imageSources = Array.from(imageElements).map(img => img.src);
-
+  const imageSources = Array.from(imageElements).map(img => 
+  img.src.replace('/small/', '/large/')
+  );
   let currentIndex = 0;
 
 
