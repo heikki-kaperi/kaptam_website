@@ -1533,11 +1533,17 @@ ion-icon { display: block; }
 }
 .image-nav.left  { left: 1rem; }
 .image-nav.right { right: 1rem; }
-.image-nav:hover {
+
+@media (hover: hover) {
+  .image-nav:hover {
+    background: var(--marigold);
+  }
+
+.image-nav:active {
   background: var(--marigold);
 }
 
-.image-indicator {
+}.image-indicator {
   position: absolute;
   bottom: 1.5rem;
   left: 50%;
