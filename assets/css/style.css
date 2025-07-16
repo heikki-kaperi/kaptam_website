@@ -431,6 +431,14 @@ ion-icon { display: block; }
   color: var(--marigold);
 }
 
+.logo2 {
+  color: var(--white);
+  font-family: var(--ff-oxanium);
+  font-size: 3rem;
+  font-weight: var(--fw-800);
+  margin-top: -7px;
+}
+
 .highlight-text:hover {
   color: var(--marigold);
 }
