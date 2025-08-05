@@ -758,6 +758,7 @@ ion-icon { display: block; }
   border-color: yellow;
   box-shadow: 0 0 15px yellow;
 }
+
 .latest-game-card {
   position: relative;
   border-style: solid;
@@ -794,6 +795,48 @@ ion-icon { display: block; }
 }
 
 .latest-game-card .card-price .span { margin-inline-start: 5px; }
+
+.latest-game-card2:hover {
+  border-color: turquoise;
+  box-shadow: 0 0 15px turquoise;
+}
+
+.latest-game-card2 {
+  position: relative;
+  border-style: solid;
+  border-color: var(--light-gray-2);
+  box-shadow: var(--shadow-2);
+}
+
+.latest-game-card2 .card-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: var(--xiketic_90);
+  padding: 35px 25px;
+}
+
+.latest-game-card2 .card-badge {
+  position: absolute;
+  bottom: 100%;
+  left: 25px;
+}
+
+.latest-game-card2 .card-title {
+  margin-block-end: 12px;
+  transition: var(--transition);
+}
+
+.latest-game-card2 .card-title:is(:hover, :focus) { color: var(--marigold); }
+
+.latest-game-card2 .card-price {
+  color: var(--silver);
+  font-size: var(--fs-10);
+  font-weight: var(--fw-600);
+}
+
+.latest-game-card2 .card-price .span { margin-inline-start: 5px; }
 
 
 /*-----------------------------------*\
