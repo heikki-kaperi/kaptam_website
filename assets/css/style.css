@@ -47,6 +47,7 @@
   --jet: hsl(236, 13%, 23%);
   --purple: hsl(299, 100%, 39%);
   --red: rgb(250, 0, 0);
+  --blue: hsl(182, 100%, 45%);
 
   /**
    * typography
@@ -243,7 +244,7 @@ ion-icon { display: block; }
   position: absolute;
   inset: 0;
   transform: skewX(var(--skewX, -16deg));
-  background-color: var(--bg, var(--purple));
+  background-color: var(--bg, var(--blue));
   z-index: -1;
 }
 
