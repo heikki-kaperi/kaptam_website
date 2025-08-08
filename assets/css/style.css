@@ -615,6 +615,13 @@ ion-icon { display: block; }
   padding: 15px;
 }
 
+.hero-title-a2 { 
+  margin-block: 15px 12px; 
+  background-color: black;
+  opacity: 0.9;
+  padding: 15px;
+}
+
 .hero-title2 { 
   margin-block: 15px 12px; 
   text-shadow: -0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000, -0.5px 0.5px 0 #000, 0.5px 0.5px 0 #000; 
@@ -660,6 +667,17 @@ ion-icon { display: block; }
 .hero-text span {
   background-color: black;
   opacity: 0.7;
+  padding: 15px;
+}
+
+.hero-text2 {
+  color: White;
+  margin-block-end: 45px;
+}
+
+.hero-text2 span {
+  background-color: black;
+  opacity: 0.9;
   padding: 15px;
 }
 
@@ -1646,6 +1664,10 @@ ion-icon { display: block; }
    */
 
   .hero-text {
+    max-width: 60ch;
+    margin-inline: auto;
+
+  .hero-text2 {
     max-width: 60ch;
     margin-inline: auto;
   }
