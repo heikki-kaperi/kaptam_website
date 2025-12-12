@@ -141,14 +141,14 @@
       // Tag filters
       const gameTags = game.tags ? game.tags.split(',').map(t => t.trim().toLowerCase()) : [];
 
-      // Check include filters (must have at least one)
+      // Check include filters (must have ALL selected tags)
       const includeTags = [...tagFilters.entries()]
         .filter(([, state]) => state === 'include')
         .map(([tag]) => tag.toLowerCase());
 
       if (includeTags.length > 0) {
-        const hasIncludeTag = includeTags.some(tag => gameTags.includes(tag));
-        if (!hasIncludeTag) return false;
+        const hasAllIncludeTags = includeTags.every(tag => gameTags.includes(tag));
+        if (!hasAllIncludeTags) return false;
       }
 
       // Check exclude filters (must not have any)
@@ -229,6 +229,19 @@
       // Get install status from the game object
       const isInstalled = game.installed;
 
+      // Determine platform icon
+      let platformIcon = '<ion-icon name="desktop-outline"></ion-icon>';
+      if (game.platform) {
+        if (game.platform === 'ps3') {
+          platformIcon = '<img src="../assets/images/list_images/Other/ps3.png" alt="PS3" class="platform-icon">';
+        } else if (game.platform === 'ps4') {
+          platformIcon = '<img src="../assets/images/list_images/Other/ps4.png" alt="PS4" class="platform-icon">';
+        }
+      }
+
+      // Add copies count if available
+      const copiesDisplay = game.copies ? `<span class="game-copies"> | ${game.copies} pcs</span>` : '';
+
       itemEl.innerHTML = `
         <img src="${game.image}" alt="${game.name}" class="game-item-image" loading="lazy">
         <div class="game-item-info">
@@ -236,7 +249,7 @@
             ${game.name}
           </div>
           <div class="game-item-platforms">
-            <ion-icon name="desktop-outline"></ion-icon>
+            ${platformIcon}${copiesDisplay}
           </div>
         </div>
         <span class="game-item-status ${isInstalled ? 'installed' : 'not-installed'}">
@@ -253,23 +266,28 @@
     resultsCountEl.textContent = `${filteredGames.length} result${filteredGames.length !== 1 ? 's' : ''}`;
   }
 
-  // Toggle tag filter state: null -> include -> exclude -> null
-  function toggleTagFilter(tag, forceExclude = false) {
+  // Toggle tag include state: null <-> include
+  function toggleTagInclude(tag) {
     const currentState = tagFilters.get(tag) || null;
 
-    let newState;
-    if (forceExclude) {
-      newState = currentState === 'exclude' ? null : 'exclude';
-    } else {
-      if (currentState === null) newState = 'include';
-      else if (currentState === 'include') newState = 'exclude';
-      else newState = null;
-    }
-
-    if (newState === null) {
+    if (currentState === 'include') {
       tagFilters.delete(tag);
     } else {
-      tagFilters.set(tag, newState);
+      tagFilters.set(tag, 'include');
+    }
+
+    renderTagFilters();
+    applyFiltersAndSort();
+  }
+
+  // Toggle tag exclude state: null <-> exclude
+  function toggleTagExclude(tag) {
+    const currentState = tagFilters.get(tag) || null;
+
+    if (currentState === 'exclude') {
+      tagFilters.delete(tag);
+    } else {
+      tagFilters.set(tag, 'exclude');
     }
 
     renderTagFilters();
@@ -307,8 +325,13 @@
 
       const tag = filterItem.dataset.tag;
       const isExcludeBtn = e.target.closest('.tag-exclude-btn');
+      const isCheckbox = e.target.closest('.tag-checkbox');
 
-      toggleTagFilter(tag, isExcludeBtn);
+      if (isExcludeBtn) {
+        toggleTagExclude(tag);
+      } else if (isCheckbox) {
+        toggleTagInclude(tag);
+      }
     });
 
     // Mobile filter toggle

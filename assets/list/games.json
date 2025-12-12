@@ -2342,7 +2342,7 @@
   {
     "id": 271,
     "name": "Age of Empires: Definitive Edition",
-    "image": "../assets/images/list_images/Age of Empires Definitive Edition.jpg",
+    "image": "../assets/images/list_images/Age of Empires.jpg",
     "url": "https://store.steampowered.com/app/1017900/Age_of_Empires_Definitive_Edition/",
     "tags": "Popular, Online multiplayer",
     "Date": "",
@@ -2536,5 +2536,199 @@
     "tags": "Popular, Online multiplayer",
     "Date": "",
     "installed": true
+  },
+  {
+    "id": 295,
+    "name": "Hogwarts Legacy",
+    "image": "../assets/images/list_images/Hogwarts Legacy.jpg",
+    "url": "https://store.steampowered.com/app/990080/",
+    "tags": "Popular, Online multiplayer",
+    "Date": "",
+    "installed": true
+  },
+  {
+    "id": 296,
+    "name": "COD: Black Ops 1",
+    "image": "../assets/images/list_images/bops.jpg",
+    "url": "https://store.steampowered.com/app/42700/Call_of_Duty_Black_Ops/",
+    "tags": "Popular, Console, Local 2 players co-op, Local 4 players co-op, Local 2 players vs, Local 4 players vs",
+    "Date": "2010-11-09",
+    "installed": false,
+    "platform": "ps3"
+  },
+  {
+    "id": 297,
+    "name": "COD: Black Ops 2",
+    "image": "../assets/images/list_images/bops2.jpg",
+    "url": "https://store.steampowered.com/app/202970/Call_of_Duty_Black_Ops_II/",
+    "tags": "Popular, Console, Local 2 players co-op, Local 4 players co-op, Local 2 players vs, Local 4 players vs",
+    "Date": "2012-11-12",
+    "installed": false,
+    "platform": "ps3",
+    "copies": 2
+  },
+  {
+    "id": 298,
+    "name": "COD: Black Ops 3",
+    "image": "../assets/images/list_images/bops3.jpg",
+    "url": "https://store.steampowered.com/app/311210/Call_of_Duty_Black_Ops_III/",
+    "tags": "Popular, Console, Local 2 players co-op, Local 4 players co-op, Local 2 players vs, Local 4 players vs",
+    "Date": "2015-11-06",
+    "installed": false,
+    "platform": "ps4",
+    "copies": 2
+  },
+  {
+    "id": 299,
+    "name": "COD: Modern Warfare 2",
+    "image": "../assets/images/list_images/mw2.jpg",
+    "url": "https://store.steampowered.com/app/10180/Call_of_Duty_Modern_Warfare_2_2009/",
+    "tags": "Popular, Console, Local 2 players co-op, Local 2 players vs, Local 4 players vs",
+    "Date": "2009-11-12",
+    "installed": false,
+    "platform": "ps3"
+  },
+  {
+    "id": 300,
+    "name": "COD: Ghosts",
+    "image": "../assets/images/list_images/ghosts.jpg",
+    "url": "https://store.steampowered.com/app/209160/Call_of_Duty_Ghosts/",
+    "tags": "Popular, Console, Local 2 players co-op, Local 2 players vs",
+    "Date": "2014-03-25",
+    "installed": false,
+    "platform": "ps3"
+  },
+  {
+    "id": 301,
+    "name": "Driveclub",
+    "image": "../assets/images/list_images/Driveclub.jpg",
+    "url": "https://en.wikipedia.org/wiki/Driveclub",
+    "tags": "Popular, Console, Singleplayer",
+    "Date": "2014-10-07",
+    "installed": false,
+    "platform": "ps4"
+  },
+  {
+    "id": 302,
+    "name": "FIFA 18",
+    "image": "../assets/images/list_images/Fifa18.jpg",
+    "url": "https://en.wikipedia.org/wiki/FIFA_18",
+    "tags": "Very popular, Console, Local 2 players vs",
+    "Date": "2017-12-29",
+    "installed": false,
+    "platform": "ps4"
+  },
+  {
+    "id": 303,
+    "name": "Gran Turismo 5",
+    "image": "../assets/images/list_images/gt5.jpg",
+    "url": "https://www.gran-turismo.com/us/products/gt5/",
+    "tags": "Popular, Console, Local 2 players vs",
+    "Date": "2010-11-24",
+    "installed": false,
+    "platform": "ps3"
+  },
+  {
+    "id": 304,
+    "name": "Gran Turismo 6",
+    "image": "../assets/images/list_images/gt6.jpg",
+    "url": "https://www.gran-turismo.com/us/products/gt6/",
+    "tags": "Popular, Console, Local 2 players vs",
+    "Date": "2013-12-02",
+    "installed": false,
+    "platform": "ps3"
+  },
+  {
+    "id": 305,
+    "name": "Gran Turismo 7",
+    "image": "../assets/images/list_images/gt7.jpg",
+    "url": "https://www.playstation.com/fi-fi/games/gran-turismo-7/",
+    "tags": "Popular, Console, Local 2 players vs",
+    "Date": "2022-03-04",
+    "installed": false,
+    "platform": "ps4"
+  },
+  {
+    "id": 306,
+    "name": "Need For Speed: The Run",
+    "image": "../assets/images/list_images/therun.jpg",
+    "url": "https://en.wikipedia.org/wiki/Need_for_Speed:_The_Run",
+    "tags": "Popular, Console, Singleplayer",
+    "Date": "2011-10-15",
+    "installed": false,
+    "platform": "ps3"
+  },
+  {
+    "id": 307,
+    "name": "NHL 13",
+    "image": "../assets/images/list_images/nhl13.jpg",
+    "url": "https://en.wikipedia.org/wiki/NHL_13",
+    "tags": "Popular, Console, Local 2 players vs, Local 4 players vs",
+    "Date": "2012-09-11",
+    "installed": false,
+    "platform": "ps3"
+  },
+  {
+    "id": 308,
+    "name": "Skate 2",
+    "image": "../assets/images/list_images/skate2.jpg",
+    "url": "https://en.wikipedia.org/wiki/Skate_2",
+    "tags": "Popular, Console, Local 2 players vs, Local 4 players vs",
+    "Date": "2009-01-21",
+    "installed": false,
+    "platform": "ps3"
+  },
+  {
+    "id": 309,
+    "name": "Sackboy A Big Adventure",
+    "image": "../assets/images/list_images/sackboy.jpg",
+    "url": "https://www.playstation.com/fi-fi/games/sackboy-a-big-adventure/",
+    "tags": "Popular, Console, Local 2 players co-op, Local 4 players co-op",
+    "Date": "2020-11-12",
+    "installed": false,
+    "platform": "ps4"
+  },
+  {
+    "id": 310,
+    "name": "Crash™ Team Racing Nitro-Fueled",
+    "image": "../assets/images/list_images/ctrnitro.jpg",
+    "url": "https://www.playstation.com/fi-fi/games/crash-team-racing-nitro-fueled/",
+    "tags": "Popular, Console, Local 2 players vs, Local 4 players vs",
+    "Date": "2019-06-21",
+    "installed": false,
+    "platform": "ps4"
+  },
+  {
+    "id": 311,
+    "name": "FIFA 25",
+    "image": "../assets/images/list_images/fifa25.jpg",
+    "url": "https://www.playstation.com/en-fi/games/ea-sports-fc-25/",
+    "tags": "Very popular, Console, Local 2 players vs",
+    "Date": "2024-09-27",
+    "installed": false,
+    "platform": "ps4"
+  },
+  {
+    "id": 312,
+    "name": "F1 2013",
+    "image": "../assets/images/list_images/f12013.jpg",
+    "url": "https://en.wikipedia.org/wiki/F1_2013_(video_game)",
+    "tags": "Not popular, Console, Local 2 players vs",
+    "Date": "2013-10-04",
+    "installed": false,
+    "platform": "ps3"
+  },
+  {
+    "id": 313,
+    "name": "blur",
+    "image": "../assets/images/list_images/blur.jpg",
+    "url": "https://en.wikipedia.org/wiki/Blur_(video_game)",
+    "tags": "Not popular, Console, Local 2 players vs, Local 4 players vs",
+    "Date": "2010-05-25",
+    "installed": false,
+    "platform": "ps3"
   }
+
+
 ]
+
