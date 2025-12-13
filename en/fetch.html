@@ -68,6 +68,36 @@
       text-decoration: underline;
     }
 
+    .settings {
+      background: #f8f9fa;
+      border: 2px solid #dee2e6;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+
+    .settings label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #495057;
+    }
+
+    .settings input {
+      width: 100px;
+      padding: 6px 10px;
+      border: 1px solid #ced4da;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    .settings small {
+      display: block;
+      color: #6c757d;
+      margin-top: 5px;
+      font-size: 12px;
+    }
+
     textarea {
       width: 100%;
       height: 200px;
@@ -222,6 +252,10 @@
       color: #dc3545;
     }
 
+    .log-warning {
+      color: #ffc107;
+    }
+
     .log-info {
       color: #6c757d;
     }
@@ -242,6 +276,15 @@
         <a href="https://cors-anywhere.herokuapp.com/corsdemo" target="_blank">Request CORS Access</a>
         <br><br>
         After clicking "Request temporary access" on that page, come back here and start fetching.
+      </div>
+
+      <div class="settings">
+        <label>
+          Delay Between Requests:
+          <input type="number" id="delayInput" value="20" min="15" max="60" step="1">
+          seconds
+        </label>
+        <small>⏱️ Recommended: 20-30 seconds to avoid rate limiting (HTTP 429 errors)</small>
       </div>
 
       <label for="jsonInput" style="display: block; margin-bottom: 10px; font-weight: 600; color: #333;">
@@ -269,7 +312,7 @@
 
   <script>
     const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/';
-    const DELAY_MS = 12000; // 12 seconds between requests
+    const MAX_RETRIES = 3;
 
     let games = [];
     let processedGames = [];
@@ -277,6 +320,7 @@
 
     const elements = {
       input: document.getElementById('jsonInput'),
+      delayInput: document.getElementById('delayInput'),
       fetchBtn: document.getElementById('fetchBtn'),
       copyBtn: document.getElementById('copyBtn'),
       status: document.getElementById('status'),
@@ -310,57 +354,93 @@
       return new Promise(resolve => setTimeout(resolve, ms));
     }
 
-    async function fetchStorageSize(url) {
+    function parseStorageSize(text) {
+      // Clean up the text
+      text = text.replace(/&nbsp;/g, ' ').trim();
+
+      // Try to extract GB
+      const gbMatch = text.match(/(\d+(?:\.\d+)?)\s*GB/i);
+      if (gbMatch) {
+        return parseFloat(gbMatch[1]);
+      }
+
+      // Try to extract MB and convert to GB
+      const mbMatch = text.match(/(\d+(?:\.\d+)?)\s*MB/i);
+      if (mbMatch) {
+        return parseFloat((mbMatch[1] / 1024).toFixed(2));
+      }
+
+      return null;
+    }
+
+    async function fetchStorageSize(url, retryCount = 0) {
       try {
         addLog(`Fetching: ${url}`, 'info');
 
-        // Use CORS proxy
         const proxiedUrl = CORS_PROXY + url;
         const response = await fetch(proxiedUrl);
+
+        if (response.status === 429) {
+          if (retryCount < MAX_RETRIES) {
+            const waitTime = (retryCount + 1) * 30; // 30, 60, 90 seconds
+            addLog(`⚠️ Rate limited (429). Waiting ${waitTime}s before retry ${retryCount + 1}/${MAX_RETRIES}...`, 'warning');
+            await delay(waitTime * 1000);
+            return fetchStorageSize(url, retryCount + 1);
+          } else {
+            throw new Error('Rate limited after max retries. Increase delay between requests.');
+          }
+        }
 
         if (!response.ok) {
           throw new Error(`HTTP ${response.status}`);
         }
 
         const html = await response.text();
+        addLog(`Received ${(html.length / 1024).toFixed(1)} KB of HTML`, 'info');
 
-        // Debug: log a snippet of the HTML
-        addLog(`Got ${html.length} chars of HTML`, 'info');
-
-        // Try multiple patterns to find storage info
+        // Enhanced regex patterns with more variations
         const patterns = [
-          /Storage[:\s]*<\/div>\s*<div[^>]*>\s*([^<]+)/i,
-          /Hard Drive[:\s]*<\/div>\s*<div[^>]*>\s*([^<]+)/i,
-          /Disk Space[:\s]*<\/div>\s*<div[^>]*>\s*([^<]+)/i,
-          /<strong>Storage:<\/strong>\s*([^<]+)/i,
-          /<strong>Hard Drive:<\/strong>\s*([^<]+)/i,
-          /Storage:<\/strong>\s*([^<]+)/i,
-          /Disk space:<\/strong>\s*([^<]+)/i,
-          /"sysreq_storage"[^>]*>([^<]+)</i
+          // Standard system requirements format
+          /(?:Storage|Hard Drive|Disk Space|HD space)[:\s]*<\/div>\s*<div[^>]*class="game_area_sys_req_full_desc"[^>]*>\s*([^<]+)/i,
+          /(?:Storage|Hard Drive|Disk Space|HD space)[:\s]*<\/div>\s*<div[^>]*>\s*([^<]+)/i,
+
+          // With <strong> tags
+          /<strong>(?:Storage|Hard Drive|Disk Space|HD space):<\/strong>\s*([^<]+)/i,
+
+          // Direct text patterns
+          /Storage:\s*([^\n<]+)/i,
+          /Hard Drive:\s*([^\n<]+)/i,
+          /Disk Space:\s*([^\n<]+)/i,
+          /HD space:\s*([^\n<]+)/i,
+
+          // System requirements table format
+          /"sysreq_storage"[^>]*>\s*([^<]+)/i,
+
+          // Minimum/Recommended split format
+          /Minimum[^:]*:[^<]*(?:Storage|Hard Drive|Disk Space)[:\s]*([^\n<]+)/i,
+
+          // Fallback: any line with GB or MB following storage-related keywords
+          /(?:Storage|Hard Drive|Disk Space|HD space)[^\d]*(\d+(?:\.\d+)?\s*(?:GB|MB))/i
         ];
 
         for (const pattern of patterns) {
           const match = html.match(pattern);
           if (match && match[1]) {
             let sizeStr = match[1].trim();
-            addLog(`Found size: "${sizeStr}"`, 'success');
+            addLog(`Raw match: "${sizeStr}"`, 'info');
 
-            // Parse the size
-            const gbMatch = sizeStr.match(/(\d+(?:\.\d+)?)\s*GB/i);
-            const mbMatch = sizeStr.match(/(\d+(?:\.\d+)?)\s*MB/i);
-
-            if (gbMatch) {
-              return parseFloat(gbMatch[1]);
-            } else if (mbMatch) {
-              return parseFloat((mbMatch[1] / 1024).toFixed(2));
+            const size = parseStorageSize(sizeStr);
+            if (size !== null) {
+              addLog(`✓ Parsed size: ${size} GB`, 'success');
+              return size;
             }
           }
         }
 
-        addLog('No storage info found in HTML', 'error');
+        addLog('⚠️ No storage info found in HTML', 'warning');
         return null;
       } catch (error) {
-        addLog(`Error: ${error.message}`, 'error');
+        addLog(`❌ Error: ${error.message}`, 'error');
         return null;
       }
     }
@@ -376,6 +456,14 @@
           return;
         }
 
+        const delaySeconds = parseInt(elements.delayInput.value);
+        const delayMs = delaySeconds * 1000;
+
+        if (delaySeconds < 15) {
+          showStatus('⚠️ Warning: Delay less than 15s may cause rate limiting', 'error');
+          return;
+        }
+
         // Filter games that need size data
         const gamesToFetch = games.filter(g =>
           g.url && (g.size === 0 || g.size === '' || g.size === null)
@@ -388,11 +476,13 @@
 
         isProcessing = true;
         elements.fetchBtn.disabled = true;
+        elements.delayInput.disabled = true;
         elements.progress.classList.add('show');
         processedGames = [...games];
 
-        showStatus(`🔄 Processing ${gamesToFetch.length} games...`, 'info');
-        addLog(`Starting batch of ${gamesToFetch.length} games`, 'info');
+        const estimatedTime = Math.ceil((gamesToFetch.length * delaySeconds) / 60);
+        showStatus(`🔄 Processing ${gamesToFetch.length} games (Est. ${estimatedTime} min)...`, 'info');
+        addLog(`Starting batch of ${gamesToFetch.length} games with ${delaySeconds}s delay`, 'info');
 
         let successCount = 0;
         let failCount = 0;
@@ -401,7 +491,7 @@
           const game = gamesToFetch[i];
           updateProgress(i + 1, gamesToFetch.length);
 
-          addLog(`\n[${i + 1}/${gamesToFetch.length}] ${game.name}`, 'info');
+          addLog(`\n━━━ [${i + 1}/${gamesToFetch.length}] ${game.name} ━━━`, 'info');
 
           const size = await fetchStorageSize(game.url);
 
@@ -411,17 +501,17 @@
             if (size !== null) {
               processedGames[gameIndex].size = size;
               successCount++;
-              addLog(`✓ Set size to ${size} GB`, 'success');
             } else {
               failCount++;
-              addLog(`✗ Could not fetch size`, 'error');
             }
           }
 
           // Wait between requests (except for the last one)
           if (i < gamesToFetch.length - 1) {
-            addLog(`Waiting ${DELAY_MS / 1000}s...`, 'info');
-            await delay(DELAY_MS);
+            const remaining = gamesToFetch.length - i - 1;
+            const eta = Math.ceil((remaining * delaySeconds) / 60);
+            addLog(`⏳ Waiting ${delaySeconds}s... (${remaining} games left, ~${eta} min ETA)`, 'info');
+            await delay(delayMs);
           }
         }
 
@@ -430,17 +520,18 @@
         elements.copyBtn.style.display = 'block';
 
         showStatus(
-          `✓ Complete! Fetched ${successCount} storage values, ${failCount} failed`,
+          `✓ Complete! ✅ ${successCount} fetched | ❌ ${failCount} failed`,
           successCount > 0 ? 'success' : 'error'
         );
-        addLog(`\n=== COMPLETE ===\nSuccess: ${successCount}, Failed: ${failCount}`, 'success');
+        addLog(`\n━━━ COMPLETE ━━━\n✅ Success: ${successCount}\n❌ Failed: ${failCount}`, 'success');
 
       } catch (error) {
         showStatus(`❌ Error: ${error.message}`, 'error');
-        addLog(`FATAL ERROR: ${error.message}`, 'error');
+        addLog(`💥 FATAL ERROR: ${error.message}`, 'error');
       } finally {
         isProcessing = false;
         elements.fetchBtn.disabled = false;
+        elements.delayInput.disabled = false;
         elements.progress.classList.remove('show');
       }
     }
