@@ -242,6 +242,9 @@
       // Add copies count if available
       const copiesDisplay = game.copies ? `<span class="game-copies"> | ${game.copies} pcs</span>` : '';
 
+      // Check if game is in cart
+      const inCart = window.KaptamCart && window.KaptamCart.isInCart(game.id);
+
       itemEl.innerHTML = `
         <img src="${game.image}" alt="${game.name}" class="game-item-image" loading="lazy">
         <div class="game-item-info">
@@ -255,6 +258,14 @@
         <span class="game-item-status ${isInstalled ? 'installed' : 'not-installed'}">
           ${isInstalled ? 'Installed' : 'Not installed'}
         </span>
+        <div class="game-item-cart-actions" data-game-id="${game.id}" data-game-name="${game.name}" data-game-image="${game.image}">
+          <button class="cart-btn cart-remove-btn ${inCart ? 'visible' : ''}" title="Remove from cart">
+            <ion-icon name="bag-remove-outline"></ion-icon>
+          </button>
+          <button class="cart-btn cart-add-btn ${inCart ? 'in-cart' : ''}" title="${inCart ? 'In cart' : 'Add to cart'}">
+            <ion-icon name="${inCart ? 'bag-check-outline' : 'bag-add-outline'}"></ion-icon>
+          </button>
+        </div>
       `;
 
       gameListEl.appendChild(itemEl);
@@ -338,6 +349,52 @@
     filterToggleBtn.addEventListener('click', () => toggleFilterSidebar(true));
     filterCloseBtn.addEventListener('click', () => toggleFilterSidebar(false));
     filterOverlay.addEventListener('click', () => toggleFilterSidebar(false));
+
+    // Cart button handlers (event delegation)
+    gameListEl.addEventListener('click', (e) => {
+      const addBtn = e.target.closest('.cart-add-btn');
+      const removeBtn = e.target.closest('.cart-remove-btn');
+
+      if (!addBtn && !removeBtn) return;
+
+      e.preventDefault();
+      e.stopPropagation();
+
+      const cartActions = e.target.closest('.game-item-cart-actions');
+      if (!cartActions) return;
+
+      const gameId = parseInt(cartActions.dataset.gameId);
+      const gameName = cartActions.dataset.gameName;
+      const gameImage = cartActions.dataset.gameImage;
+
+      if (addBtn && !window.KaptamCart.isInCart(gameId)) {
+        // Add to cart
+        window.KaptamCart.addItem(gameId, gameName, gameImage);
+        updateCartButtons(cartActions, true);
+      } else if (removeBtn) {
+        // Remove from cart
+        window.KaptamCart.removeItem(gameId);
+        updateCartButtons(cartActions, false);
+      }
+    });
+  }
+
+  // Update cart button appearance
+  function updateCartButtons(cartActions, inCart) {
+    const addBtn = cartActions.querySelector('.cart-add-btn');
+    const removeBtn = cartActions.querySelector('.cart-remove-btn');
+
+    if (inCart) {
+      addBtn.classList.add('in-cart');
+      addBtn.title = 'In cart';
+      addBtn.innerHTML = '<ion-icon name="bag-check-outline"></ion-icon>';
+      removeBtn.classList.add('visible');
+    } else {
+      addBtn.classList.remove('in-cart');
+      addBtn.title = 'Add to cart';
+      addBtn.innerHTML = '<ion-icon name="bag-add-outline"></ion-icon>';
+      removeBtn.classList.remove('visible');
+    }
   }
 
   // Run on DOM ready

@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Steam Game Storage Fetcher</title>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      border-radius: 8px;
+      padding: 24px;
+      color: white;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      color: #9ca3af;
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+
+    .space-y-4 {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    textarea {
+      width: 100%;
+      height: 200px;
+      padding: 16px;
+      background: #334155;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      resize: vertical;
+    }
+
+    textarea::placeholder {
+      color: #94a3b8;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background: #2563eb;
+      color: white;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background: #1d4ed8;
+    }
+
+    .btn-primary:disabled {
+      background: #4b5563;
+      cursor: not-allowed;
+    }
+
+    .btn-danger {
+      background: #dc2626;
+      color: white;
+    }
+
+    .btn-danger:hover {
+      background: #b91c1c;
+    }
+
+    .btn-success {
+      background: #16a34a;
+      color: white;
+    }
+
+    .btn-success:hover:not(:disabled) {
+      background: #15803d;
+    }
+
+    .btn-success:disabled {
+      background: #4b5563;
+      cursor: not-allowed;
+    }
+
+    .status-box {
+      padding: 12px;
+      background: #334155;
+      border-radius: 6px;
+      font-size: 13px;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .stats {
+      display: flex;
+      gap: 20px;
+      font-size: 13px;
+      flex-wrap: wrap;
+    }
+
+    .stats-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .stat-success {
+      color: #4ade80;
+    }
+
+    .stat-pending {
+      color: #facc15;
+    }
+
+    .stat-gray {
+      color: #9ca3af;
+    }
+
+    .games-list {
+      max-height: 400px;
+      overflow-y: auto;
+      background: #334155;
+      padding: 16px;
+      border-radius: 6px;
+    }
+
+    .games-list h2 {
+      font-weight: bold;
+      margin-bottom: 12px;
+      font-size: 18px;
+    }
+
+    .game-item {
+      font-size: 13px;
+      margin-bottom: 8px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #475569;
+    }
+
+    .game-name {
+      color: #60a5fa;
+    }
+
+    .game-size {
+      margin-left: 8px;
+    }
+
+    .size-found {
+      color: #4ade80;
+    }
+
+    .size-pending {
+      color: #9ca3af;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState } = React;
+
+    function SteamStorageFetcher() {
+      const [games, setGames] = useState([]);
+      const [processing, setProcessing] = useState(false);
+      const [currentIndex, setCurrentIndex] = useState(0);
+      const [copied, setCopied] = useState(false);
+      const [status, setStatus] = useState('');
+
+      const handleJsonInput = (e) => {
+        try {
+          const json = JSON.parse(e.target.value);
+          setGames(json);
+          setCurrentIndex(0);
+          setStatus('');
+        } catch (err) {
+          setStatus('Invalid JSON format');
+        }
+      };
+
+      const fetchStorage = async (game) => {
+        try {
+          const urlParts = game.url.split('/app/');
+          if (!urlParts[1]) return null;
+
+          const appId = urlParts[1].replace('/', '');
+          const response = await fetch(`https://store.steampowered.com/app/${appId}`);
+          const html = await response.text();
+
+          const storageMatch = html.match(/(?:Storage|Hard Drive|HD space):\s*(\d+(?:\.\d+)?)\s*(GB|MB)/i);
+          if (storageMatch) {
+            const value = parseFloat(storageMatch[1]);
+            const unit = storageMatch[2].toUpperCase();
+            return unit === 'GB' ? value : parseFloat((value / 1024).toFixed(2));
+          }
+          return null;
+        } catch (err) {
+          console.error(`Failed to fetch ${game.name}:`, err);
+          return null;
+        }
+      };
+
+      const processGames = async () => {
+        setProcessing(true);
+        setStatus('Starting fetch with 12-second rate limit...');
+        const updated = [...games];
+        let successCount = 0;
+        let failCount = 0;
+
+        for (let i = 0; i < updated.length; i++) {
+          if (!processing) break;
+
+          setCurrentIndex(i);
+          setStatus(`Processing ${i + 1}/${updated.length}: ${updated[i].name}...`);
+
+          if (!updated[i].size || updated[i].size === '' || updated[i].size === 0) {
+            const size = await fetchStorage(updated[i]);
+            if (size !== null) {
+              updated[i].size = size;
+              successCount++;
+              setGames([...updated]);
+            } else {
+              failCount++;
+            }
+          }
+
+          if (i < updated.length - 1) {
+            await new Promise(r => setTimeout(r, 12000));
+          }
+        }
+
+        setGames(updated);
+        setProcessing(false);
+        setStatus(`✓ Complete! Fetched ${successCount} storage values, ${failCount} failed`);
+      };
+
+      const stopProcessing = () => {
+        setProcessing(false);
+        setStatus('Processing stopped');
+      };
+
+      const copyToClipboard = () => {
+        navigator.clipboard.writeText(JSON.stringify(games, null, 2));
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      };
+
+      const getStorageStats = () => {
+        const withSize = games.filter(g => g.size && g.size !== '' && g.size !== 0).length;
+        const withoutSize = games.filter(g => !g.size || g.size === '' || g.size === 0).length;
+        return { withSize, withoutSize };
+      };
+
+      const stats = getStorageStats();
+
+      return (
+        <div className="container">
+          <h1>Steam Game Storage Fetcher</h1>
+          <div className="subtitle">Rate limited to 1 request per 12 seconds</div>
+
+          <div className="space-y-4">
+            <textarea
+              placeholder="Paste your JSON array of games here..."
+              onChange={handleJsonInput}
+            />
+
+            <div className="button-group">
+              <button
+                onClick={processGames}
+                disabled={processing || games.length === 0}
+                className="btn-primary"
+              >
+                ⬇️
+                {processing ? `Processing... (${currentIndex + 1}/${games.length})` : 'Start Fetching'}
+              </button>
+
+              {processing && (
+                <button onClick={stopProcessing} className="btn-danger">
+                  ⏹️ Stop
+                </button>
+              )}
+
+              <button
+                onClick={copyToClipboard}
+                disabled={games.length === 0}
+                className="btn-success"
+              >
+                {copied ? '✓' : '📋'}
+                {copied ? 'Copied!' : 'Copy JSON'}
+              </button>
+            </div>
+
+            {status && (
+              <div className="status-box">
+                <span>ℹ️</span>
+                <span>{status}</span>
+              </div>
+            )}
+
+            {games.length > 0 && (
+              <div>
+                <div className="stats">
+                  <div className="stats-item">
+                    <span className="stat-success">✓ {stats.withSize}</span>
+                    <span className="stat-gray">with storage</span>
+                  </div>
+                  <div className="stats-item">
+                    <span className="stat-pending">⏱ {stats.withoutSize}</span>
+                    <span className="stat-gray">remaining</span>
+                  </div>
+                  <div className="stats-item">
+                    <span className="stat-gray">Est. time: {Math.round(stats.withoutSize * 0.2)} min</span>
+                  </div>
+                </div>
+
+                <div className="games-list">
+                  <h2>Games ({games.length})</h2>
+                  {games.map((game, i) => (
+                    <div key={i} className="game-item">
+                      <span className="game-name">{game.name}</span>
+                      <span className={`game-size ${game.size && game.size !== 0 && game.size !== '' ? 'size-found' : 'size-pending'}`}>
+                        {game.size && game.size !== 0 && game.size !== '' ? `${game.size} GB` : 'Pending...'}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      );
+    }
+
+    ReactDOM.render(<SteamStorageFetcher />, document.getElementById('root'));
+  </script>
+</body>
+
+</html>
