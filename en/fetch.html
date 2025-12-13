@@ -4,10 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Steam Game Storage Fetcher</title>
-  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <title>Steam Storage Fetcher</title>
   <style>
     * {
       margin: 0;
@@ -16,369 +13,451 @@
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       min-height: 100vh;
       padding: 20px;
     }
 
     .container {
-      width: 100%;
-      max-width: 800px;
+      max-width: 900px;
       margin: 0 auto;
-      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-      border-radius: 8px;
-      padding: 24px;
-      color: white;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
     }
 
-    h1 {
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 30px;
+      text-align: center;
+    }
+
+    .header h1 {
       font-size: 28px;
-      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .header p {
+      opacity: 0.9;
+      font-size: 14px;
+    }
+
+    .content {
+      padding: 30px;
+    }
+
+    .warning {
+      background: #fff3cd;
+      border: 2px solid #ffc107;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+
+    .warning strong {
+      color: #856404;
+      display: block;
       margin-bottom: 8px;
     }
 
-    .subtitle {
-      color: #9ca3af;
-      font-size: 14px;
-      margin-bottom: 24px;
-    }
-
-    .space-y-4 {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
+    .warning a {
+      color: #0066cc;
+      text-decoration: underline;
     }
 
     textarea {
       width: 100%;
       height: 200px;
-      padding: 16px;
-      background: #334155;
-      color: white;
-      border: none;
-      border-radius: 6px;
+      padding: 15px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
       font-family: 'Courier New', monospace;
-      font-size: 12px;
+      font-size: 13px;
       resize: vertical;
+      transition: border-color 0.3s;
     }
 
-    textarea::placeholder {
-      color: #94a3b8;
+    textarea:focus {
+      outline: none;
+      border-color: #667eea;
     }
 
-    .button-group {
+    .controls {
       display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
+      gap: 15px;
+      margin-top: 20px;
+      align-items: center;
     }
 
     button {
       padding: 12px 24px;
-      border: none;
-      border-radius: 6px;
+      font-size: 16px;
       font-weight: 600;
+      border: none;
+      border-radius: 8px;
       cursor: pointer;
-      font-size: 14px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      transition: all 0.2s;
+      transition: all 0.3s;
     }
 
     .btn-primary {
-      background: #2563eb;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       color: white;
+      flex: 1;
     }
 
     .btn-primary:hover:not(:disabled) {
-      background: #1d4ed8;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
     }
 
     .btn-primary:disabled {
-      background: #4b5563;
+      opacity: 0.6;
       cursor: not-allowed;
     }
 
-    .btn-danger {
-      background: #dc2626;
+    .btn-secondary {
+      background: #6c757d;
       color: white;
+      flex: 0 0 auto;
     }
 
-    .btn-danger:hover {
-      background: #b91c1c;
+    .btn-secondary:hover {
+      background: #5a6268;
     }
 
-    .btn-success {
-      background: #16a34a;
-      color: white;
+    .status {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 14px;
+      display: none;
     }
 
-    .btn-success:hover:not(:disabled) {
-      background: #15803d;
+    .status.show {
+      display: block;
     }
 
-    .btn-success:disabled {
-      background: #4b5563;
-      cursor: not-allowed;
+    .status.info {
+      background: #d1ecf1;
+      border: 1px solid #bee5eb;
+      color: #0c5460;
     }
 
-    .status-box {
-      padding: 12px;
-      background: #334155;
-      border-radius: 6px;
+    .status.success {
+      background: #d4edda;
+      border: 1px solid #c3e6cb;
+      color: #155724;
+    }
+
+    .status.error {
+      background: #f8d7da;
+      border: 1px solid #f5c6cb;
+      color: #721c24;
+    }
+
+    .progress {
+      margin-top: 15px;
+      display: none;
+    }
+
+    .progress.show {
+      display: block;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: #e9ecef;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+      transition: width 0.3s;
+      width: 0%;
+    }
+
+    .progress-text {
+      margin-top: 8px;
       font-size: 13px;
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
+      color: #6c757d;
+      text-align: center;
     }
 
-    .stats {
-      display: flex;
-      gap: 20px;
-      font-size: 13px;
-      flex-wrap: wrap;
-    }
-
-    .stats-item {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .stat-success {
-      color: #4ade80;
-    }
-
-    .stat-pending {
-      color: #facc15;
-    }
-
-    .stat-gray {
-      color: #9ca3af;
-    }
-
-    .games-list {
-      max-height: 400px;
+    .log {
+      margin-top: 20px;
+      padding: 15px;
+      background: #f8f9fa;
+      border-radius: 8px;
+      max-height: 300px;
       overflow-y: auto;
-      background: #334155;
-      padding: 16px;
-      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      display: none;
     }
 
-    .games-list h2 {
-      font-weight: bold;
-      margin-bottom: 12px;
-      font-size: 18px;
+    .log.show {
+      display: block;
     }
 
-    .game-item {
-      font-size: 13px;
-      margin-bottom: 8px;
-      padding-bottom: 8px;
-      border-bottom: 1px solid #475569;
+    .log-entry {
+      padding: 4px 0;
+      border-bottom: 1px solid #e9ecef;
     }
 
-    .game-name {
-      color: #60a5fa;
+    .log-entry:last-child {
+      border-bottom: none;
     }
 
-    .game-size {
-      margin-left: 8px;
+    .log-success {
+      color: #28a745;
     }
 
-    .size-found {
-      color: #4ade80;
+    .log-error {
+      color: #dc3545;
     }
 
-    .size-pending {
-      color: #9ca3af;
+    .log-info {
+      color: #6c757d;
     }
   </style>
 </head>
 
 <body>
-  <div id="root"></div>
+  <div class="container">
+    <div class="header">
+      <h1>🎮 Steam Game Storage Fetcher</h1>
+      <p>Automatically fetch disk space requirements from Steam store pages</p>
+    </div>
 
-  <script type="text/babel">
-    const { useState } = React;
+    <div class="content">
+      <div class="warning">
+        <strong>⚠️ CORS Access Required</strong>
+        Before using this tool, click this link and request temporary access:
+        <a href="https://cors-anywhere.herokuapp.com/corsdemo" target="_blank">Request CORS Access</a>
+        <br><br>
+        After clicking "Request temporary access" on that page, come back here and start fetching.
+      </div>
 
-    function SteamStorageFetcher() {
-      const [games, setGames] = useState([]);
-      const [processing, setProcessing] = useState(false);
-      const [currentIndex, setCurrentIndex] = useState(0);
-      const [copied, setCopied] = useState(false);
-      const [status, setStatus] = useState('');
+      <label for="jsonInput" style="display: block; margin-bottom: 10px; font-weight: 600; color: #333;">
+        Paste your JSON array of games:
+      </label>
+      <textarea id="jsonInput"
+        placeholder='[{"name": "Game", "url": "https://store.steampowered.com/app/123/", "size": 0}, ...]'></textarea>
 
-      const handleJsonInput = (e) => {
-        try {
-          const json = JSON.parse(e.target.value);
-          setGames(json);
-          setCurrentIndex(0);
-          setStatus('');
-        } catch (err) {
-          setStatus('Invalid JSON format');
+      <div class="controls">
+        <button class="btn-primary" id="fetchBtn">🚀 Start Fetching</button>
+        <button class="btn-secondary" id="copyBtn" style="display: none;">📋 Copy Results</button>
+      </div>
+
+      <div class="progress" id="progress">
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="progress-text" id="progressText">Processing...</div>
+      </div>
+
+      <div class="status" id="status"></div>
+      <div class="log" id="log"></div>
+    </div>
+  </div>
+
+  <script>
+    const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/';
+    const DELAY_MS = 12000; // 12 seconds between requests
+
+    let games = [];
+    let processedGames = [];
+    let isProcessing = false;
+
+    const elements = {
+      input: document.getElementById('jsonInput'),
+      fetchBtn: document.getElementById('fetchBtn'),
+      copyBtn: document.getElementById('copyBtn'),
+      status: document.getElementById('status'),
+      progress: document.getElementById('progress'),
+      progressFill: document.getElementById('progressFill'),
+      progressText: document.getElementById('progressText'),
+      log: document.getElementById('log')
+    };
+
+    function showStatus(message, type = 'info') {
+      elements.status.textContent = message;
+      elements.status.className = `status show ${type}`;
+    }
+
+    function addLog(message, type = 'info') {
+      const entry = document.createElement('div');
+      entry.className = `log-entry log-${type}`;
+      entry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+      elements.log.appendChild(entry);
+      elements.log.scrollTop = elements.log.scrollHeight;
+      elements.log.classList.add('show');
+    }
+
+    function updateProgress(current, total) {
+      const percent = (current / total) * 100;
+      elements.progressFill.style.width = `${percent}%`;
+      elements.progressText.textContent = `Processing ${current} of ${total} games...`;
+    }
+
+    function delay(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    async function fetchStorageSize(url) {
+      try {
+        addLog(`Fetching: ${url}`, 'info');
+
+        // Use CORS proxy
+        const proxiedUrl = CORS_PROXY + url;
+        const response = await fetch(proxiedUrl);
+
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
         }
-      };
 
-      const fetchStorage = async (game) => {
-        try {
-          const urlParts = game.url.split('/app/');
-          if (!urlParts[1]) return null;
+        const html = await response.text();
 
-          const appId = urlParts[1].replace('/', '');
-          const steamUrl = `https://store.steampowered.com/app/${appId}`;
-          const corsProxy = `https://cors-anywhere.herokuapp.com/`;
+        // Debug: log a snippet of the HTML
+        addLog(`Got ${html.length} chars of HTML`, 'info');
 
-          const response = await fetch(corsProxy + steamUrl);
-          const html = await response.text();
+        // Try multiple patterns to find storage info
+        const patterns = [
+          /Storage[:\s]*<\/div>\s*<div[^>]*>\s*([^<]+)/i,
+          /Hard Drive[:\s]*<\/div>\s*<div[^>]*>\s*([^<]+)/i,
+          /Disk Space[:\s]*<\/div>\s*<div[^>]*>\s*([^<]+)/i,
+          /<strong>Storage:<\/strong>\s*([^<]+)/i,
+          /<strong>Hard Drive:<\/strong>\s*([^<]+)/i,
+          /Storage:<\/strong>\s*([^<]+)/i,
+          /Disk space:<\/strong>\s*([^<]+)/i,
+          /"sysreq_storage"[^>]*>([^<]+)</i
+        ];
 
-          const storageMatch = html.match(/(?:Storage|Hard Drive|HD space):\s*(\d+(?:\.\d+)?)\s*(GB|MB)/i);
-          if (storageMatch) {
-            const value = parseFloat(storageMatch[1]);
-            const unit = storageMatch[2].toUpperCase();
-            return unit === 'GB' ? value : parseFloat((value / 1024).toFixed(2));
+        for (const pattern of patterns) {
+          const match = html.match(pattern);
+          if (match && match[1]) {
+            let sizeStr = match[1].trim();
+            addLog(`Found size: "${sizeStr}"`, 'success');
+
+            // Parse the size
+            const gbMatch = sizeStr.match(/(\d+(?:\.\d+)?)\s*GB/i);
+            const mbMatch = sizeStr.match(/(\d+(?:\.\d+)?)\s*MB/i);
+
+            if (gbMatch) {
+              return parseFloat(gbMatch[1]);
+            } else if (mbMatch) {
+              return parseFloat((mbMatch[1] / 1024).toFixed(2));
+            }
           }
-          return null;
-        } catch (err) {
-          console.error(`Failed to fetch ${game.name}:`, err);
-          return null;
         }
-      };
 
-      const processGames = async () => {
-        setProcessing(true);
-        setStatus('Starting fetch with 12-second rate limit...');
-        const updated = [...games];
+        addLog('No storage info found in HTML', 'error');
+        return null;
+      } catch (error) {
+        addLog(`Error: ${error.message}`, 'error');
+        return null;
+      }
+    }
+
+    async function processGames() {
+      if (isProcessing) return;
+
+      try {
+        games = JSON.parse(elements.input.value);
+
+        if (!Array.isArray(games) || games.length === 0) {
+          showStatus('❌ Invalid JSON or empty array', 'error');
+          return;
+        }
+
+        // Filter games that need size data
+        const gamesToFetch = games.filter(g =>
+          g.url && (g.size === 0 || g.size === '' || g.size === null)
+        );
+
+        if (gamesToFetch.length === 0) {
+          showStatus('ℹ️ All games already have size data', 'info');
+          return;
+        }
+
+        isProcessing = true;
+        elements.fetchBtn.disabled = true;
+        elements.progress.classList.add('show');
+        processedGames = [...games];
+
+        showStatus(`🔄 Processing ${gamesToFetch.length} games...`, 'info');
+        addLog(`Starting batch of ${gamesToFetch.length} games`, 'info');
+
         let successCount = 0;
         let failCount = 0;
 
-        for (let i = 0; i < updated.length; i++) {
-          if (!processing) break;
+        for (let i = 0; i < gamesToFetch.length; i++) {
+          const game = gamesToFetch[i];
+          updateProgress(i + 1, gamesToFetch.length);
 
-          setCurrentIndex(i);
-          setStatus(`Processing ${i + 1}/${updated.length}: ${updated[i].name}...`);
+          addLog(`\n[${i + 1}/${gamesToFetch.length}] ${game.name}`, 'info');
 
-          if (!updated[i].size || updated[i].size === '' || updated[i].size === 0) {
-            const size = await fetchStorage(updated[i]);
+          const size = await fetchStorageSize(game.url);
+
+          // Update the game in processedGames
+          const gameIndex = processedGames.findIndex(g => g.url === game.url);
+          if (gameIndex !== -1) {
             if (size !== null) {
-              updated[i].size = size;
+              processedGames[gameIndex].size = size;
               successCount++;
-              setGames([...updated]);
+              addLog(`✓ Set size to ${size} GB`, 'success');
             } else {
               failCount++;
+              addLog(`✗ Could not fetch size`, 'error');
             }
           }
 
-          if (i < updated.length - 1) {
-            await new Promise(r => setTimeout(r, 12000));
+          // Wait between requests (except for the last one)
+          if (i < gamesToFetch.length - 1) {
+            addLog(`Waiting ${DELAY_MS / 1000}s...`, 'info');
+            await delay(DELAY_MS);
           }
         }
 
-        setGames(updated);
-        setProcessing(false);
-        setStatus(`✓ Complete! Fetched ${successCount} storage values, ${failCount} failed`);
-      };
+        // Update the textarea with results
+        elements.input.value = JSON.stringify(processedGames, null, 2);
+        elements.copyBtn.style.display = 'block';
 
-      const stopProcessing = () => {
-        setProcessing(false);
-        setStatus('Processing stopped');
-      };
+        showStatus(
+          `✓ Complete! Fetched ${successCount} storage values, ${failCount} failed`,
+          successCount > 0 ? 'success' : 'error'
+        );
+        addLog(`\n=== COMPLETE ===\nSuccess: ${successCount}, Failed: ${failCount}`, 'success');
 
-      const copyToClipboard = () => {
-        navigator.clipboard.writeText(JSON.stringify(games, null, 2));
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
-      };
-
-      const getStorageStats = () => {
-        const withSize = games.filter(g => g.size && g.size !== '' && g.size !== 0).length;
-        const withoutSize = games.filter(g => !g.size || g.size === '' || g.size === 0).length;
-        return { withSize, withoutSize };
-      };
-
-      const stats = getStorageStats();
-
-      return (
-        <div className="container">
-          <h1>Steam Game Storage Fetcher</h1>
-          <div className="subtitle">Rate limited to 1 request per 12 seconds</div>
-
-          <div className="space-y-4">
-            <textarea
-              placeholder="Paste your JSON array of games here..."
-              onChange={handleJsonInput}
-            />
-
-            <div className="button-group">
-              <button
-                onClick={processGames}
-                disabled={processing || games.length === 0}
-                className="btn-primary"
-              >
-                ⬇️
-                {processing ? `Processing... (${currentIndex + 1}/${games.length})` : 'Start Fetching'}
-              </button>
-
-              {processing && (
-                <button onClick={stopProcessing} className="btn-danger">
-                  ⏹️ Stop
-                </button>
-              )}
-
-              <button
-                onClick={copyToClipboard}
-                disabled={games.length === 0}
-                className="btn-success"
-              >
-                {copied ? '✓' : '📋'}
-                {copied ? 'Copied!' : 'Copy JSON'}
-              </button>
-            </div>
-
-            {status && (
-              <div className="status-box">
-                <span>ℹ️</span>
-                <span>{status}</span>
-              </div>
-            )}
-
-            {games.length > 0 && (
-              <div>
-                <div className="stats">
-                  <div className="stats-item">
-                    <span className="stat-success">✓ {stats.withSize}</span>
-                    <span className="stat-gray">with storage</span>
-                  </div>
-                  <div className="stats-item">
-                    <span className="stat-pending">⏱ {stats.withoutSize}</span>
-                    <span className="stat-gray">remaining</span>
-                  </div>
-                  <div className="stats-item">
-                    <span className="stat-gray">Est. time: {Math.round(stats.withoutSize * 0.2)} min</span>
-                  </div>
-                </div>
-
-                <div className="games-list">
-                  <h2>Games ({games.length})</h2>
-                  {games.map((game, i) => (
-                    <div key={i} className="game-item">
-                      <span className="game-name">{game.name}</span>
-                      <span className={`game-size ${game.size && game.size !== 0 && game.size !== '' ? 'size-found' : 'size-pending'}`}>
-                        {game.size && game.size !== 0 && game.size !== '' ? `${game.size} GB` : 'Pending...'}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      );
+      } catch (error) {
+        showStatus(`❌ Error: ${error.message}`, 'error');
+        addLog(`FATAL ERROR: ${error.message}`, 'error');
+      } finally {
+        isProcessing = false;
+        elements.fetchBtn.disabled = false;
+        elements.progress.classList.remove('show');
+      }
     }
 
-    ReactDOM.render(<SteamStorageFetcher />, document.getElementById('root'));
+    elements.fetchBtn.addEventListener('click', processGames);
+
+    elements.copyBtn.addEventListener('click', () => {
+      elements.input.select();
+      document.execCommand('copy');
+      showStatus('✓ Copied to clipboard!', 'success');
+      setTimeout(() => {
+        elements.copyBtn.textContent = '✓ Copied!';
+      }, 0);
+      setTimeout(() => {
+        elements.copyBtn.textContent = '📋 Copy Results';
+      }, 2000);
+    });
   </script>
 </body>
 
