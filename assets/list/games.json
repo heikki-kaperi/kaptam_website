@@ -3046,7 +3046,7 @@
     "name": "CS2",
     "image": "../assets/images/list_images/cs2.jpg",
     "url": "https://store.steampowered.com/app/730",
-    "tags": "Very popular, Online multiplayer, K18",
+    "tags": "Very popular, Online multiplayer",
     "Date": "2023-09-27",
     "installed": false,
     "size": 85
@@ -3056,7 +3056,7 @@
     "name": "DOTA 2",
     "image": "../assets/images/list_images/dota2.jpg",
     "url": "https://store.steampowered.com/app/570",
-    "tags": "Very popular, Online multiplayer, K18",
+    "tags": "Very popular, Online multiplayer",
     "Date": "2013-07-09",
     "installed": false,
     "size": 60
@@ -3066,7 +3066,7 @@
     "name": "Warframe",
     "image": "../assets/images/list_images/warframe.jpg",
     "url": "https://store.steampowered.com/app/230410",
-    "tags": "Popular, Online multiplayer, K18",
+    "tags": "Popular, Online multiplayer",
     "Date": "2013-03-25",
     "installed": false,
     "size": 35
@@ -3076,7 +3076,7 @@
     "name": "League of Legends",
     "image": "../assets/images/list_images/leagueoflegends.jpg",
     "url": "https://www.leagueoflegends.com/en-us/",
-    "tags": "Very popular, Online multiplayer, K12",
+    "tags": "Very popular, Online multiplayer",
     "Date": "2009-10-27",
     "installed": false,
     "size": 16
@@ -3086,7 +3086,7 @@
     "name": "Starcraft 2 (free)",
     "image": "../assets/images/list_images/starcraft2.jpg",
     "url": "https://starcraft2.blizzard.com/en-gb/",
-    "tags": "Popular, Online multiplayer, K12",
+    "tags": "Popular, Online multiplayer",
     "Date": "2010-07-27",
     "installed": false,
     "size": 30
@@ -3096,7 +3096,7 @@
     "name": "Rocket League",
     "image": "../assets/images/list_images/rocketleague.jpg",
     "url": "https://www.rocketleague.com/en/",
-    "tags": "Popular, Online multiplayer, K3",
+    "tags": "Popular, Online multiplayer",
     "Date": "2015-07-07",
     "installed": false,
     "size": 20
