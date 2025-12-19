@@ -87,6 +87,18 @@
     updateCartIcon();
   }
 
+  // Clear all items from cart with confirmation
+  function clearCartWithConfirmation() {
+    if (confirm('Are you sure you want to clear your cart?')) {
+      clearCart();
+
+      // Refresh game list if on that page
+      if (window.location.pathname.includes('list.html')) {
+        window.location.reload();
+      }
+    }
+  }
+
   // Update cart icon appearance
   function updateCartIcon() {
     // Update desktop cart icon
@@ -124,6 +136,16 @@
     if (cartBadgeMobile) {
       cartBadgeMobile.textContent = cartItems.length;
       cartBadgeMobile.style.display = cartItems.length > 0 ? 'flex' : 'none';
+    }
+
+    // Update clear cart button visibility
+    const clearBtn = document.getElementById('cart-clear-btn');
+    if (clearBtn) {
+      if (cartItems.length > 0) {
+        clearBtn.classList.add('visible');
+      } else {
+        clearBtn.classList.remove('visible');
+      }
     }
   }
 
@@ -254,6 +276,14 @@
   } else {
     init();
   }
+
+  // Clear cart button handler
+  document.addEventListener('DOMContentLoaded', function() {
+    const clearCartBtn = document.getElementById('cart-clear-btn');
+    if (clearCartBtn) {
+      clearCartBtn.addEventListener('click', clearCartWithConfirmation);
+    }
+  });
 
   // Expose public API
   window.KaptamCart = {

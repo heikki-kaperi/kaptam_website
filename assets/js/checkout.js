@@ -20,15 +20,20 @@
   const orderCodeEl = document.getElementById('order-code');
   const copyCodeBtn = document.getElementById('copy-code-btn');
   const inputName = document.getElementById('input-name');
+  const infoNotice = document.querySelector('.info-notice');
 
   // State
   let isEditingPrevious = false;
   let previousCode = null;
   let pendingLoadCode = null;
+  let allGames = [];
 
   // Initialize
-  function init() {
+  async function init() {
     if (!checkoutMain) return;
+
+    // Load games data to get size information
+    await loadGamesData();
 
     // Check for code in URL
     const urlParams = new URLSearchParams(window.location.search);
@@ -43,6 +48,44 @@
 
     bindEvents();
     updateSubmitButton();
+    updateInfoNoticeVisibility();
+  }
+
+  // Load games data to get size information
+  async function loadGamesData() {
+    try {
+      const response = await fetch('../assets/list/games.json');
+      if (!response.ok) throw new Error('Failed to load games');
+      allGames = await response.json();
+    } catch (error) {
+      console.error('Error loading games data:', error);
+    }
+  }
+
+  // Calculate total size of games in cart
+  function calculateTotalSize() {
+    const items = window.KaptamCart.getItems();
+    let totalSize = 0;
+
+    items.forEach(item => {
+      const game = allGames.find(g => g.id === item.id);
+      if (game && game.size) {
+        totalSize += game.size;
+      }
+    });
+
+    return totalSize;
+  }
+
+  // Update info notice visibility based on total size
+  function updateInfoNoticeVisibility() {
+    const totalSize = calculateTotalSize();
+    
+    if (totalSize > 19.9) {
+      infoNotice.style.display = 'flex';
+    } else {
+      infoNotice.style.display = 'none';
+    }
   }
 
   // Render cart items
@@ -53,6 +96,7 @@
       cartItemsList.innerHTML = '';
       emptyCartMessage.style.display = 'block';
       submitBtn.disabled = true;
+      updateInfoNoticeVisibility();
       return;
     }
 
@@ -64,10 +108,17 @@
       itemEl.className = 'cart-item';
       itemEl.dataset.gameId = item.id;
 
+      // Get game data to check installed status
+      const game = allGames.find(g => g.id === item.id);
+      const isInstalled = game ? game.installed : false;
+
       itemEl.innerHTML = `
         <img src="${item.image}" alt="${item.name}" class="cart-item-image">
         <div class="cart-item-info">
           <span class="cart-item-name">${item.name}</span>
+          <span class="cart-item-status ${isInstalled ? 'installed' : 'not-installed'}">
+            ${isInstalled ? 'Installed' : 'Will install before session'}
+          </span>
         </div>
         <button class="cart-item-remove" title="Remove from cart">
           <ion-icon name="trash-outline"></ion-icon>
@@ -78,6 +129,7 @@
     });
 
     updateSubmitButton();
+    updateInfoNoticeVisibility();
   }
 
   // Update submit button state

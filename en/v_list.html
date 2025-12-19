@@ -40,7 +40,7 @@
 
 	<!-- 
 	-----------------------------------------------
-    #HEADER
+    MARK: #HEADER
 	-----------------------------------------------
 	-->
 
@@ -48,7 +48,7 @@
 
   <header class="header">
 
-    <div class="header-bottom skewBg" data-header>
+    <div class="header-bottom" data-header>
       <div class="container">
 
         <a href="home.html" class="logo">Kaptam</a>
@@ -103,6 +103,12 @@
     </div>
 
   </header>
+
+    <!-- 
+  	-----------------------------------------------
+      MARK: #Game search
+  	-----------------------------------------------
+  	-->
 
   <main>
     <article class="game-list-page">
@@ -160,12 +166,17 @@
 
         <!-- Right: Filter Sidebar -->
         <aside id="filter-sidebar" class="filter-sidebar">
-          <!-- Cart button (desktop) -->
-          <a href="checkout.html" id="cart-icon-btn" class="cart-icon-btn desktop-only" title="Cart (empty)">
-            <ion-icon name="cart-outline"></ion-icon>
-            <span id="cart-badge" class="cart-badge" style="display: none;">0</span>
-            <span class="cart-label">Cart</span>
-          </a>
+          <!-- Cart buttons (desktop) -->
+          <div class="cart-buttons-row">
+            <a href="checkout.html" id="cart-icon-btn" class="cart-icon-btn desktop-only" title="Cart (empty)">
+              <ion-icon name="cart-outline"></ion-icon>
+              <span id="cart-badge" class="cart-badge" style="display: none;">0</span>
+              <span class="cart-label">Cart</span>
+            </a>
+            <button id="cart-clear-btn" class="cart-clear-btn" title="Clear cart">
+              <ion-icon name="trash-outline"></ion-icon>
+            </button>
+          </div>
           <div class="filter-header">
             <h3>Narrow by tag</h3>
             <button id="filter-close-btn" class="filter-close-btn">
@@ -190,7 +201,7 @@
 
     <!--
 		-----------------------------------------------
-        #FOOTER
+        MARK: #FOOTER
 		-----------------------------------------------
 		-->
 

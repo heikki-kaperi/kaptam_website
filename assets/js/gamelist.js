@@ -22,7 +22,11 @@
     'Local 2 players vs',
     'Local 4 players co-op',
     'Local 4 players vs',
-    'Fighting'
+    'Fighting',
+    'Console',
+    'K3',
+    'K12',
+    'K16'
   ];
 
   // DOM Elements
@@ -260,7 +264,7 @@
         </span>
         <div class="game-item-cart-actions" data-game-id="${game.id}" data-game-name="${game.name}" data-game-image="${game.image}">
           <button class="cart-btn cart-remove-btn ${inCart ? 'visible' : ''}" title="Remove from cart">
-            <ion-icon name="bag-remove-outline"></ion-icon>
+            <ion-icon name="trash-outline"></ion-icon>
           </button>
           <button class="cart-btn cart-add-btn ${inCart ? 'in-cart' : ''}" title="${inCart ? 'In cart' : 'Add to cart'}">
             <ion-icon name="${inCart ? 'bag-check-outline' : 'bag-add-outline'}"></ion-icon>
