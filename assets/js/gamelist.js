@@ -23,10 +23,7 @@
     'Local 4 players co-op',
     'Local 4 players vs',
     'Fighting',
-    'Console',
-    'K3',
-    'K12',
-    'K16'
+    'Console'
   ];
 
   // DOM Elements
@@ -341,10 +338,11 @@
       const tag = filterItem.dataset.tag;
       const isExcludeBtn = e.target.closest('.tag-exclude-btn');
       const isCheckbox = e.target.closest('.tag-checkbox');
+      const isTagName = e.target.closest('.tag-name');
 
       if (isExcludeBtn) {
         toggleTagExclude(tag);
-      } else if (isCheckbox) {
+      } else if (isCheckbox || isTagName) {
         toggleTagInclude(tag);
       }
     });

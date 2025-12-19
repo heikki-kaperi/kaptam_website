@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>Videogames list</title>
+
+  <!-- 
+    - favicon
+  -->
+  <link rel="shortcut icon" href="../favicon.png" type="image/svg+xml">
+
+  <link rel="stylesheet" href="../assets/css/style.css">
+
+  <!-- 
+    - google font link
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Oxanium:wght@600;700;800&family=Poppins:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+  <!-- 
+    - Flag Icons Library
+  -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icons/6.6.6/css/flag-icons.min.css">
+
+  <!-- 
+    - preload images
+  -->
+</head>
+
+<body id="top">
+
+
+
+  <!-- 
+	-----------------------------------------------
+    MARK: #HEADER
+	-----------------------------------------------
+	-->
+
+
+
+  <header class="header">
+
+    <div class="header-bottom" data-header>
+      <div class="container">
+
+        <a href="home.html" class="logo">Kaptam</a>
+
+        <nav class="navbar" data-navbar>
+          <ul class="navbar-list">
+
+            <li class="navbar-item">
+              <a href="home.html" class="navbar-link skewBg" data-nav-link>Home</a>
+            </li>
+
+            <li class="navbar-item">
+              <a href="boardgames.html" class="navbar-link skewBg" data-nav-link>Board games club</a>
+            </li>
+
+            <li class="navbar-item">
+              <a href="videogames.html" class="navbar-link skewBg" data-nav-link>Video games club</a>
+            </li>
+
+            <li class="navbar-item">
+              <a href="lahtifgc_eng.html" class="navbar-link skewBg" data-nav-link>Lahti FGC</a>
+            </li>
+
+            <li class="navbar-item">
+              <a href="gallery.html" class="navbar-link skewBg" data-nav-link>Gallery</a>
+            </li>
+
+            <li class="navbar-item">
+              <a href="about.html" class="navbar-link skewBg" data-nav-link>About us</a>
+            </li>
+
+            <li class="navbar-item">
+              <a href="../fi/index.html" class="navbar-link skewBg" data-nav-link>
+                <span class="fi fi-fi" style="font-size: 1.3em;"></span></a>
+            </li>
+
+          </ul>
+        </nav>
+
+        <div class="header-actions">
+
+
+          <button class="nav-toggle-btn" aria-label="toggle menu" data-nav-toggler>
+            <ion-icon name="menu-outline" class="menu"></ion-icon>
+            <ion-icon name="close-outline" class="close"></ion-icon>
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </header>
+
+  <!-- 
+  	-----------------------------------------------
+      MARK: #Game search
+  	-----------------------------------------------
+  	-->
+
+  <main>
+    <article class="game-list-page">
+
+      <!-- Tab Navigation -->
+      <div class="game-tabs">
+        <a href="videogames_list.html" class="game-tab active skewBg">Videogames</a>
+        <a href="boardgames_list.html" class="game-tab skewBg2">Boardgames</a>
+      </div>
+
+      <!-- Main Content Area -->
+      <div class="game-list-container">
+
+        <!-- Left: Search and Game List -->
+        <div class="game-list-main">
+
+          <!-- Search Bar Row -->
+          <div class="search-row">
+            <div class="search-box">
+              <input type="text" id="game-search" placeholder="enter search term or tag">
+              <button id="search-btn" class="search-button">Search</button>
+            </div>
+            <div class="sort-box">
+              <label for="sort-select">Sort by</label>
+              <select id="sort-select">
+                <option value="installed">Installed</option>
+                <option value="name-asc">Name A-Z</option>
+                <option value="name-desc">Name Z-A</option>
+                <option value="date-new">Release Date (Newest)</option>
+                <option value="date-old">Release Date (Oldest)</option>
+              </select>
+            </div>
+            <!-- Mobile filter toggle button -->
+            <button id="filter-toggle-btn" class="filter-toggle-btn">
+              <ion-icon name="options-outline"></ion-icon>
+            </button>
+          </div>
+
+          <!-- Results count -->
+          <div class="results-info">
+            <span id="results-count">0 results</span>
+          </div>
+
+          <!-- Game List -->
+          <div id="game-list" class="game-list">
+            <!-- Games will be loaded here dynamically -->
+          </div>
+
+        </div>
+
+        <!-- Right: Filter Sidebar -->
+        <aside id="filter-sidebar" class="filter-sidebar">
+          <!-- Cart buttons (desktop) -->
+          <div class="cart-buttons-row desktop-only">
+            <a href="reserve.html" id="cart-icon-btn" class="cart-icon-btn" title="Cart (empty)">
+              <ion-icon name="reader-outline"></ion-icon>
+              <span id="cart-badge" class="cart-badge" style="display: none;">0</span>
+              <span class="cart-label">Reserve</span>
+            </a>
+            <button id="cart-clear-btn" class="cart-clear-btn" title="Clear cart">
+              <ion-icon name="trash-outline"></ion-icon>
+            </button>
+          </div>
+          <div class="filter-header">
+            <h3>Narrow by tag</h3>
+            <button id="filter-close-btn" class="filter-close-btn">
+              <ion-icon name="close-outline"></ion-icon>
+            </button>
+          </div>
+          <div id="tag-filters" class="tag-filters">
+            <!-- Tag checkboxes will be generated dynamically -->
+          </div>
+        </aside>
+
+        <!-- Cart buttons (mobile) -->
+        <div class="cart-buttons-row mobile-only">
+          <a href="reserve.html" id="cart-icon-btn-mobile" class="cart-icon-btn" title="Cart (empty)">
+            <ion-icon name="reader-outline"></ion-icon>
+            <span id="cart-badge-mobile" class="cart-badge" style="display: none;">0</span>
+          </a>
+          <button id="cart-clear-btn-mobile" class="cart-clear-btn" title="Clear cart">
+            <ion-icon name="trash-outline"></ion-icon>
+          </button>
+        </div>
+
+        <!-- Overlay for mobile filter -->
+        <div id="filter-overlay" class="filter-overlay"></div>
+
+      </div>
+
+    </article>
+  </main>
+
+
+
+
+  <!--
+		-----------------------------------------------
+        MARK: #FOOTER
+		-----------------------------------------------
+		-->
+
+
+
+  <footer class="footer" id="footer">
+
+    <br>
+    <br>
+
+    <div class="footer-top">
+      <div class="container">
+
+        <div class="footer-brand">
+
+          <p class="logo2">Kaptam Gamers</p>
+          <p class="footer-list-title" id="some"></p>
+          <p class="footer-text">
+            Association for Video Gamers, Board Gamers and Role-Players
+          </p>
+
+          <ul class="contact-list">
+
+            <li class="contact-item">
+              <div class="contact-icon">
+                <ion-icon name="location"></ion-icon>
+              </div>
+
+              <address class="item-text">
+                <a href="https://maps.app.goo.gl/seNsq8FYJo5qo1tc7">Address : <br> Mukkulankatu 19 <br>15210 Lahti</a>
+              </address>
+            </li>
+
+            <li class="contact-item">
+              <div class="contact-icon">
+                <ion-icon name="call"></ion-icon>
+              </div>
+
+
+              <a href="tel:+358408505051" class="item-text">Phone : +358 40 850 5051</a>
+
+            </li>
+
+            <li class="contact-item">
+              <div class="contact-icon">
+                <ion-icon name="mail-open"></ion-icon>
+              </div>
+
+              <a href="mailto:kaptamgamers@gmail.com" class="item-text">Email : kaptamgamers@gmail.com</a>
+            </li>
+
+            <li class="contact-item">
+              <div class="contact-icon">
+                <ion-icon name="document-outline"></ion-icon>
+              </div>
+
+              <a href="../assets/pdf/kaptam_gamers_ry_saannot.pdf" class="item-text">Text : Association Rules</a>
+            </li>
+            <li class="contact-item">
+              <div class="contact-icon">
+                <ion-icon name="save-outline"></ion-icon>
+              </div>
+
+              <a href="https://drive.google.com/drive/folders/10oNQlse6Te3afM2i28CCFx_4Bhn5Coc1?usp=drive_link"
+                class="item-text">Link : Mediabank</a>
+            </li>
+
+          </ul>
+
+        </div>
+
+        <div class="footer-wrapper">
+
+          <div class="social-wrapper">
+
+            <p class="footer-list-title">Kaptam Gamers</p>
+
+            <ul class="contact-list">
+              <li>
+                <a href="https://youtube.com/@kaptamgamers" target="_blank" class="social-link-2"
+                  style="background-color: #fd1d1d">
+                  <ion-icon name="logo-youtube"></ion-icon>
+                  <p>Youtube</p>
+                </a>
+              </li>
+
+              <li>
+                <a href="https://www.instagram.com/kaptamgamers" target="_blank" class="social-link-2"
+                  style="background-color: #e60073">
+                  <ion-icon name="logo-instagram"></ion-icon>
+                  <p>Instagram</p>
+                </a>
+              </li>
+
+            </ul>
+
+          </div>
+
+        </div>
+
+        <div class="footer-wrapper">
+
+          <div class="social-wrapper">
+
+            <p class="footer-list-title">Lahti FGC</p>
+
+            <ul class="contact-list">
+              <li>
+                <a href="https://chat.whatsapp.com/Ks7Mevd9v0gELKhYcM3qeY" target="_blank" class="social-link-2"
+                  style="background-color: #076e54">
+                  <ion-icon name="logo-whatsapp"></ion-icon>
+                  <p>WhatsApp</p>
+                </a>
+              </li>
+
+              <li>
+                <a href="https://discord.gg/Ahac3BYPyp" target="_blank" class="social-link-2"
+                  style="background-color: #7289da">
+                  <ion-icon name="logo-discord"></ion-icon>
+                  <p>Discord <span style="font-size:11px">More chatting</span></p>
+                </a>
+              </li>
+
+              <li>
+                <a href="https://www.instagram.com/lahtifgc" target="_blank" class="social-link-2"
+                  style="background-color: #e60073">
+                  <ion-icon name="logo-instagram"></ion-icon>
+                  <p>Instagram</p>
+                </a>
+              </li>
+
+            </ul>
+
+          </div>
+
+        </div>
+
+        <div class="footer-wrapper">
+
+          <div class="social-wrapper">
+
+            <p class="footer-list-title">Video games club</p>
+
+            <ul class="contact-list">
+
+              <li>
+                <a href="https://chat.whatsapp.com/E1r7nhvvHvvLC5aMSsv8NH" target="_blank" class="social-link-2"
+                  style="background-color: #076e54">
+                  <ion-icon name="logo-whatsapp"></ion-icon>
+                  <p>WhatsApp</p>
+                </a>
+              </li>
+
+              <li>
+                <a href="" target="_blank" class="social-link-2" style="background-color: #7289da">
+                  <ion-icon name="logo-discord"></ion-icon>
+                  <p>Discord</p>
+                </a>
+              </li>
+
+              <li>
+                <a href="https://www.instagram.com/videogameskerho/" target="_blank" class="social-link-2"
+                  style="background-color: #e60073">
+                  <ion-icon name="logo-instagram"></ion-icon>
+                  <p>Instagram</p>
+                </a>
+              </li>
+
+            </ul>
+
+          </div>
+
+        </div>
+
+        <div class="footer-wrapper">
+
+          <div class="social-wrapper">
+
+            <p class="footer-list-title">Board games club</p>
+
+            <ul class="contact-list">
+              <li>
+                <a href="https://chat.whatsapp.com/E4ZDoieFq5X8K91nDPiM3R" target="_blank" class="social-link-2"
+                  style="background-color: #076e54">
+                  <ion-icon name="logo-whatsapp"></ion-icon>
+                  <p>WhatsApp</p>
+                </a>
+              </li>
+
+              <li>
+                <a href="" target="_blank" class="social-link-2" style="background-color: #7289da">
+                  <ion-icon name="logo-discord"></ion-icon>
+                  <p>Discord</p>
+                </a>
+              </li>
+
+              <li>
+                <a href="https://www.instagram.com/boardgameskerho" target="_blank" class="social-link-2"
+                  style="background-color: #e60073">
+                  <ion-icon name="logo-instagram"></ion-icon>
+                  <p>Instagram</p>
+                </a>
+              </li>
+
+            </ul>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container">
+
+        <p class="copyright">
+          &copy; 2026 Kaptam Gamers ry All Right Reserved.
+          Website made by <a href="https://github.com/Kyouma960" class="copyright-link">Kyouma960</a>
+          and <a href="https://github.com/heikki-kaperi" class="copyright-link">heikki-kaperi</a>.
+        </p>
+
+      </div>
+    </div>
+
+  </footer>
+
+
+  <!--
+    - custom js link
+  -->
+  <script src="../assets/js/script.js" defer></script>
+  <script src="../assets/js/cart.js" defer></script>
+  <script src="../assets/js/gamelist.js" defer></script>
+
+
+  <!-- 
+    - ionicon link
+  -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css>
+
+</body>
+
+</html>

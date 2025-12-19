@@ -21,6 +21,7 @@
   const copyCodeBtn = document.getElementById('copy-code-btn');
   const inputName = document.getElementById('input-name');
   const infoNotice = document.querySelector('.info-notice');
+  const inputDate = document.getElementById('input-date');
 
   // State
   let isEditingPrevious = false;
@@ -32,7 +33,7 @@
   async function init() {
     if (!checkoutMain) return;
 
-    // Load games data to get size information
+    // Load games data to get size and installed information
     await loadGamesData();
 
     // Check for code in URL
@@ -51,7 +52,7 @@
     updateInfoNoticeVisibility();
   }
 
-  // Load games data to get size information
+  // Load games data to get size and installed information
   async function loadGamesData() {
     try {
       const response = await fetch('../assets/list/games.json');
@@ -62,14 +63,15 @@
     }
   }
 
-  // Calculate total size of games in cart
+  // Calculate total size of NOT installed games in cart
   function calculateTotalSize() {
     const items = window.KaptamCart.getItems();
     let totalSize = 0;
 
     items.forEach(item => {
       const game = allGames.find(g => g.id === item.id);
-      if (game && game.size) {
+      // Only count size if game is NOT installed
+      if (game && game.size && !game.installed) {
         totalSize += game.size;
       }
     });
@@ -77,7 +79,7 @@
     return totalSize;
   }
 
-  // Update info notice visibility based on total size
+  // Update info notice visibility based on total size of not installed games
   function updateInfoNoticeVisibility() {
     const totalSize = calculateTotalSize();
     
@@ -136,8 +138,9 @@
   function updateSubmitButton() {
     const items = window.KaptamCart.getItems();
     const nameValue = inputName.value.trim();
+    const dateValue = inputDate.value;
 
-    submitBtn.disabled = items.length === 0 || nameValue === '';
+    submitBtn.disabled = items.length === 0 || nameValue === '' || dateValue === '';
   }
 
   // Remove item from cart
@@ -172,6 +175,9 @@
       document.getElementById('input-email').value = data.email || '';
       document.getElementById('input-controller').value = data.controller || 'controller';
       document.getElementById('input-additional').value = data.additionalInfo || '';
+      if (data.date) {
+        inputDate.value = data.date;
+      }
 
       // Mark as editing previous
       isEditingPrevious = true;
@@ -217,12 +223,19 @@
       name: inputName.value.trim(),
       email: document.getElementById('input-email').value.trim(),
       controller: document.getElementById('input-controller').value,
-      additionalInfo: document.getElementById('input-additional').value.trim()
+      additionalInfo: document.getElementById('input-additional').value.trim(),
+      date: inputDate.value
     };
 
     if (!formData.name) {
       showNotification('Please enter your name or nickname', 'error');
       inputName.focus();
+      return;
+    }
+
+    if (!formData.date) {
+      showNotification('Please select a date', 'error');
+      inputDate.focus();
       return;
     }
 
@@ -303,8 +316,9 @@
     // Form submission
     checkoutForm.addEventListener('submit', submitOrder);
 
-    // Name input for validation
+    // Name and date input for validation
     inputName.addEventListener('input', updateSubmitButton);
+    inputDate.addEventListener('change', updateSubmitButton);
 
     // Remove item from cart (event delegation)
     cartItemsList.addEventListener('click', (e) => {

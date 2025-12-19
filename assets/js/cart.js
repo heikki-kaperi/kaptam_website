@@ -89,7 +89,7 @@
 
   // Clear all items from cart with confirmation
   function clearCartWithConfirmation() {
-    if (confirm('Are you sure you want to clear your cart?')) {
+    if (confirm('Are you sure you want to clear your reservation?')) {
       clearCart();
 
       // Refresh game list if on that page
@@ -109,7 +109,7 @@
         cartIcon.setAttribute('title', `Cart (${cartItems.length} items)`);
       } else {
         cartIcon.classList.remove('has-items');
-        cartIcon.setAttribute('title', 'Cart (empty)');
+        cartIcon.setAttribute('title', 'Reserve (empty)');
       }
     }
 
@@ -121,7 +121,7 @@
         cartIconMobile.setAttribute('title', `Cart (${cartItems.length} items)`);
       } else {
         cartIconMobile.classList.remove('has-items');
-        cartIconMobile.setAttribute('title', 'Cart (empty)');
+        cartIconMobile.setAttribute('title', 'Reserve (empty)');
       }
     }
 
@@ -191,7 +191,8 @@
         name: formData.name,
         email: formData.email || null,
         controller: formData.controller,
-        additionalInfo: formData.additionalInfo || null
+        additionalInfo: formData.additionalInfo || null,
+        date: formData.date || null
       };
 
       const response = await fetch('http://localhost:3000/api/cart/submit', {
@@ -230,7 +231,8 @@
         name: formData.name,
         email: formData.email || null,
         controller: formData.controller,
-        additionalInfo: formData.additionalInfo || null
+        additionalInfo: formData.additionalInfo || null,
+        date: formData.date || null
       };
 
       const response = await fetch(`http://localhost:3000/api/cart/${code}`, {
