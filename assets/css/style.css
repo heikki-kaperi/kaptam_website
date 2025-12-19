@@ -1100,11 +1100,9 @@ body {
   display: flex;
   gap: 5px;
   align-items: center;
-  height: 24px;
 }
 
 .platform-icon {
-  height: 24px;
   width: auto;
   max-width: 50px;
   object-fit: contain;
@@ -1112,7 +1110,7 @@ body {
 
 .game-item-platforms ion-icon {
   color: var(--white);
-  font-size: 24px;
+  font-size: 16px;
 }
 
 .game-item-status {
@@ -2106,7 +2104,6 @@ body {
   display: flex;
   gap: 5px;
   color: var(--white);
-  height: 24px;
   width: auto;
   max-width: 50px;
   object-fit: contain;
@@ -2162,7 +2159,7 @@ body {
   }
 
   .game-item-status {
-    margin-top: 8px;
+    margin-top: 12px;
   }
 
   .game-item {
