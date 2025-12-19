@@ -93,7 +93,7 @@
       clearCart();
 
       // Refresh game list if on that page
-      if (window.location.pathname.includes('list.html')) {
+      if (window.location.pathname.includes('list.html') || window.location.pathname.includes('v-list')) {
         window.location.reload();
       }
     }
