@@ -147,6 +147,15 @@
         clearBtn.classList.remove('visible');
       }
     }
+
+    const clearBtnMobile = document.getElementById('cart-clear-btn-mobile');
+    if (clearBtnMobile) {
+      if (cartItems.length > 0) {
+        clearBtnMobile.classList.add('visible');
+      } else {
+        clearBtnMobile.classList.remove('visible');
+      }
+    }
   }
 
   // Save last used cart code
@@ -284,6 +293,11 @@
     const clearCartBtn = document.getElementById('cart-clear-btn');
     if (clearCartBtn) {
       clearCartBtn.addEventListener('click', clearCartWithConfirmation);
+    }
+
+    const clearCartBtnMobile = document.getElementById('cart-clear-btn-mobile');
+    if (clearCartBtnMobile) {
+      clearCartBtnMobile.addEventListener('click', clearCartWithConfirmation);
     }
   });
 
