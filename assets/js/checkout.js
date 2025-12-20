@@ -36,6 +36,9 @@
     // Load games data to get size and installed information
     await loadGamesData();
 
+    // Check date availability
+    await checkDateAvailability();
+
     // Check for code in URL
     const urlParams = new URLSearchParams(window.location.search);
     const codeFromUrl = urlParams.get('code');
@@ -60,6 +63,30 @@
       allGames = await response.json();
     } catch (error) {
       console.error('Error loading games data:', error);
+    }
+  }
+
+  // Check date availability from server
+  async function checkDateAvailability() {
+    try {
+      const response = await fetch('http://localhost:3000/api/dates/availability');
+      if (!response.ok) return;
+
+      const availability = await response.json();
+
+      // Update date options
+      const options = inputDate.querySelectorAll('option[value]');
+      options.forEach(option => {
+        if (option.value) {
+          const dateCount = availability[option.value] || 0;
+          if (dateCount >= 6) {
+            option.disabled = true;
+            option.textContent = option.textContent.replace(' (FULL)', '') + ' (FULL)';
+          }
+        }
+      });
+    } catch (error) {
+      console.error('Error checking date availability:', error);
     }
   }
 

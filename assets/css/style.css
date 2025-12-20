@@ -554,7 +554,7 @@ body {
   left: 0;
   width: 100%;
   height: 57%;
-  background-image: url("../images/section-wrapper-bg.png");
+  background-image: url("../images/section-wrapper-bg4.png");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -2126,6 +2126,12 @@ body {
     MARK:#MEDIA QUERIES
 \*-----------------------------------*/
 
+
+
+/*
+    MARK:#Min 576px
+*/
+
 @media (min-width: 576px) {
   .container {
     max-width: 540px;
@@ -2235,7 +2241,12 @@ body {
   }
 }
 
+/*
+    MARK:#Min 992px
+*/
+
 @media (min-width: 992px) {
+  
   #lahtifgc .hero-title {
     text-align: left;
   }
@@ -2375,6 +2386,11 @@ body {
   .cart-buttons-row.mobile-only {
     display: none;
   }
+
+  /*
+      MARK:#Max 992px
+  */
+
 }
 @media (max-width: 992px) {
 
@@ -2464,6 +2480,10 @@ body {
   }
 }
 
+/*
+    MARK:#Min Max 1661px
+*/
+
 @media (min-width: 1661px) {
   #lahtifgc .hero-title {
     text-align: center;
@@ -2477,6 +2497,10 @@ body {
     margin-left: 0;
   }
 }
+
+/*
+    MARK:#Max 576px
+*/
 
 @media (max-width: 576px) {
   .game-tabs {
