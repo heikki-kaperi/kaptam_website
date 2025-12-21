@@ -2423,6 +2423,11 @@ body {
     width: 80px;
     height: 30px;
   }
+
+  .game-item-image2 {
+    width: 80px;
+    height: 30px;
+  }
 }
 
 @media (min-width: 1200px) {
@@ -2543,12 +2548,17 @@ body {
     height: 23px;
   }
 
+  .game-item-image2 {
+    width: 60px;
+    height: 23px;
+  }
+
   .game-item-name {
     font-size: var(--fs-12);
   }
 
   .game-item-name2 {
-    font-size: var(--fs-10);
+    font-size: var(--fs-12);
   }
 
   .game-item-status {
