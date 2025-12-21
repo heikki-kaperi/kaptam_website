@@ -1069,6 +1069,14 @@ body {
   gap: 4px;
 }
 
+.game-item-info2 {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
 .game-item-name {
   color: var(--white);
   font-size: var(--fs-9);
@@ -2560,6 +2568,10 @@ body {
 
   .game-item-name2 {
     font-size: var(--fs-15);
+  }
+
+  .game-item-info2 {
+    max-width: 100%;
   }
 
   .game-item-status {
