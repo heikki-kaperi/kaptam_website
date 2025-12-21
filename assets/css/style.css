@@ -2553,7 +2553,7 @@ body {
   }
 
   .game-item-name2 {
-    font-size: var(--fs-12);
+    font-size: 1.15rem;
   }
 
   .game-item-status {
