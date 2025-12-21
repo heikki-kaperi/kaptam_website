@@ -42,6 +42,7 @@
   --fs-13: 1.0rem;
   --fs-14: 0.9rem;
   --fs-15: 0.8rem;
+  --fs-15: 0.7rem;
 
   --fw-500: 500;
   --fw-600: 600;
@@ -2558,7 +2559,7 @@ body {
   }
 
   .game-item-name2 {
-    font-size: var(--fs-14);
+    font-size: var(--fs-15);
   }
 
   .game-item-status {
