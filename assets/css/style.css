@@ -42,6 +42,7 @@
   --fs-13: 1.0rem;
   --fs-14: 0.9rem;
   --fs-15: 0.8rem;
+  --fs-15: 0.7rem;
 
   --fw-500: 500;
   --fw-600: 600;
@@ -434,7 +435,7 @@ body {
 
 .navbar.active {
   visibility: visible;
-  max-height: 275px;
+  max-height: 375px;
   transition-duration: 0.5s;
 }
 
@@ -1030,7 +1031,7 @@ body {
 
 .game-item {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   background-color: rgba(0, 0, 0, 0.2);
   padding: 8px;
   gap: 15px;
@@ -1080,7 +1081,8 @@ body {
 
 .game-item-name2 {
   color: var(--white);
-  font-size: var(--fs-4);
+  font-size: var(--fs-6);
+  width: 650px;
   font-weight: var(--fw-500);
   white-space: nowrap;
   overflow: hidden;
@@ -1131,7 +1133,7 @@ body {
 }
 
 .filter-sidebar {
-  width: 200px;
+  width: 240px;
   flex-shrink: 0;
   background-color: rgba(0, 0, 0, 0.2);
   padding: 15px;
@@ -1172,13 +1174,13 @@ body {
 .tag-filters {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 0px;
 }
 
 .tag-filter-item {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 5px;
   cursor: pointer;
   padding: 5px 0;
 }
@@ -2195,12 +2197,6 @@ body {
   background-image: url('../images/index-background.jpg')
 }
 
-@media (max-width: 768px) {
-  #lahtifgc .game-item-name2 {
-    font-size: var(--fs-10);
-  }
-}
-
 @media (min-width: 768px) {
   .container {
     max-width: 720px;
@@ -2246,6 +2242,7 @@ body {
 */
 
 @media (min-width: 992px) {
+  
   #lahtifgc .hero-title {
     text-align: left;
   }
@@ -2387,7 +2384,7 @@ body {
   }
 
   /*
-      MARK:#Min 992px
+      MARK:#Max 992px
   */
 
 }
@@ -2419,6 +2416,11 @@ body {
   }
 
   .game-item-image {
+    width: 80px;
+    height: 30px;
+  }
+
+  .game-item-image2 {
     width: 80px;
     height: 30px;
   }
@@ -2542,12 +2544,18 @@ body {
     height: 23px;
   }
 
+  .game-item-image2 {
+    width: 80px;
+    height: 30px;
+  }
+
   .game-item-name {
     font-size: var(--fs-12);
   }
 
   .game-item-name2 {
-    font-size: var(--fs-10);
+    font-size: 1.15rem;
+    width: auto;
   }
 
   .game-item-status {
@@ -2579,7 +2587,7 @@ body {
   .back-to-list-btn {
     position: static;
     margin-top:-30px !important;
-    margin-left: -360px;
+    margin-left: -310px;
   }
 
   .checkout-title {
