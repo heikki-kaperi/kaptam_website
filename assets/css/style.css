@@ -1180,7 +1180,7 @@ body {
 .tag-filter-item {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 5px;
   cursor: pointer;
   padding: 5px 0;
 }
