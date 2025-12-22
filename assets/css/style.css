@@ -1031,7 +1031,7 @@ body {
 
 .game-item {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   background-color: rgba(0, 0, 0, 0.2);
   padding: 8px;
   gap: 15px;
@@ -2164,15 +2164,6 @@ body {
 
   .cart-buttons-row.mobile-only {
     display: flex;
-  }
-
-  .game-item-status {
-    margin-top: 12px;
-  }
-
-  .game-item {
-    align-items: flex-start;
-    flex-wrap: wrap;
   }
 
   .game-item-name {
