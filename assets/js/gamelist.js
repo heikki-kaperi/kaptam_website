@@ -13,9 +13,9 @@
 
   // Predetermined tag order
   const tagOrder = [
-    'Very popular',
-    'Popular',
-    'Not popular',
+    'Mainstream',
+    'Niche',
+    'Underground',
     'Singleplayer',
     'Online multiplayer',
     'Local 2 players co-op',
@@ -23,7 +23,11 @@
     'Local 4 players co-op',
     'Local 4 players vs',
     'Fighting',
-    'Console'
+    'Console',
+    'K3',
+    'K12',
+    'K16',
+    'K18'
   ];
 
   // DOM Elements
