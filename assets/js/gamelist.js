@@ -25,6 +25,7 @@
     'Fighting',
     'Console',
     'K3',
+    'K7',
     'K12',
     'K16',
     'K18'
