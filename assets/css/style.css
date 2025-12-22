@@ -1082,7 +1082,7 @@ body {
 .game-item-name2 {
   color: var(--white);
   font-size: var(--fs-6);
-  width: 650px;
+  width: 440px;
   font-weight: var(--fw-500);
   white-space: nowrap;
   overflow: hidden;
