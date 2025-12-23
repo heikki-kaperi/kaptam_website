@@ -171,7 +171,8 @@ function renderTagFilters() {
 
     tagFiltersEl.appendChild(ageRatingContainer);
   }
-}
+  }
+
 
     allTags.forEach((count, tag) => {
       const filterState = tagFilters.get(tag) || null;
@@ -351,7 +352,7 @@ function renderTagFilters() {
             <ion-icon name="trash-outline"></ion-icon>
           </button>
           <button class="cart-btn cart-add-btn ${inCart ? 'in-cart' : ''}" title="${inCart ? 'In cart' : 'Add to cart'}">
-            <ion-icon name="${inCart ? 'bag-check-outline' : 'bag-add-outline'}"></ion-icon>
+            <ion-icon name="${inCart ? 'checkmark-outline' : 'add-outline'}"></ion-icon>
           </button>
         </div>
       `;
@@ -435,7 +436,7 @@ tagFiltersEl.addEventListener('click', (e) => {
     return;
   }
 
-  // Handle age rating filters
+// Handle age rating filters
   const ageRatingItem = e.target.closest('.age-rating-item');
   if (ageRatingItem) {
     const tag = ageRatingItem.dataset.tag;
@@ -478,20 +479,20 @@ tagFiltersEl.addEventListener('click', (e) => {
     });
   }
 
-  // Update cart button appearance
-  function updateCartButtons(cartActions, inCart) {
+// Update cart button appearance
+    function updateCartButtons(cartActions, inCart) {
     const addBtn = cartActions.querySelector('.cart-add-btn');
     const removeBtn = cartActions.querySelector('.cart-remove-btn');
 
     if (inCart) {
       addBtn.classList.add('in-cart');
       addBtn.title = 'In cart';
-      addBtn.innerHTML = '<ion-icon name="bag-check-outline"></ion-icon>';
+      addBtn.innerHTML = '<ion-icon name="checkmark-outline"></ion-icon>';
       removeBtn.classList.add('visible');
     } else {
       addBtn.classList.remove('in-cart');
       addBtn.title = 'Add to cart';
-      addBtn.innerHTML = '<ion-icon name="bag-add-outline"></ion-icon>';
+      addBtn.innerHTML = '<ion-icon name="add-outline"></ion-icon>';
       removeBtn.classList.remove('visible');
     }
   }
