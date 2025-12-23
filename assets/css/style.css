@@ -1225,6 +1225,20 @@ body {
   font-weight: bold;
 }
 
+.tag-exclude-btn {
+  background: none;
+  color: var(--light-gray-1);
+  font-size: 14px;
+  padding: 2px;
+  opacity: 0.7;
+  transition: var(--transition);
+}
+
+.tag-exclude-btn:hover {
+  color: var(--red);
+  opacity: 1;
+}
+
 .tag-name {
   color: var(--light-gray-1);
   font-size: var(--fs-10);
@@ -1237,7 +1251,7 @@ body {
 .age-rating-filters {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 0px;
   margin-top: 20px;
   padding-top: 20px;
   border-top: 1px solid var(--jet);
@@ -1245,12 +1259,10 @@ body {
 
 .age-rating-item {
   display: flex;
-  flex-direction: column;
   align-items: center;
   gap: 5px;
   cursor: pointer;
-  padding: 5px;
-  flex: 1;
+  padding: 5px 0;
 }
 
 .age-rating-item:hover .age-rating-name {
@@ -1258,17 +1270,16 @@ body {
 }
 
 .age-rating-checkbox {
-  width: 28px;
-  height: 28px;
+  width: 18px;
+  height: 18px;
   background-color: var(--raisin-black-2);
-  border: 2px solid var(--jet);
+  border: 1px solid var(--jet);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
   transition: var(--transition);
   cursor: pointer;
-  border-radius: 4px;
 }
 
 .age-rating-checkbox.checked {
@@ -1279,6 +1290,17 @@ body {
 .age-rating-checkbox.checked::after {
   content: "✓";
   color: var(--white);
+  font-size: 12px;
+}
+
+.age-rating-checkbox.excluded {
+  background-color: var(--raisin-black-2);
+  border-color: var(--jet);
+}
+
+.age-rating-checkbox.excluded::after {
+  content: "−";
+  color: var(--white);
   font-size: 16px;
   font-weight: bold;
 }
@@ -1286,11 +1308,22 @@ body {
 .age-rating-name {
   color: var(--light-gray-1);
   font-size: var(--fs-10);
-  font-weight: var(--fw-600);
-  text-align: center;
+  flex: 1;
   transition: var(--transition);
   cursor: pointer;
-  text-transform: uppercase;
+}
+
+.age-rating-exclude-btn {
+  background: none;
+  color: var(--roman-silver);
+  font-size: 14px;
+  padding: 2px;
+  opacity: 1;
+  transition: var(--transition);
+}
+
+.age-rating-exclude-btn:hover {
+  color: var(--red);
 }
 
 /* Desktop: Horizontal layout for age ratings */
@@ -1300,31 +1333,33 @@ body {
     justify-content: space-between;
     gap: 5px;
   }
-}
 
-.tag-exclude-btn {
-  background: none;
-  color: var(--roman-silver);
-  font-size: 14px;
-  padding: 2px;
-  opacity: 1;
-  transition: var(--transition);
-}
+  .age-rating-item {
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+  }
 
-.tag-exclude-btn:hover {
-  color: var(--red);
-}
+  .age-rating-checkbox {
+    width: 28px;
+    height: 28px;
+    border: 2px solid var(--jet);
+    border-radius: 4px;
+  }
 
-.filter-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background-color: rgba(0, 0, 0, 0.7);
-  z-index: 5;
-}
+  .age-rating-checkbox.checked::after {
+    font-size: 16px;
+  }
 
-.filter-overlay.active {
-  display: block;
+  .age-rating-name {
+    font-weight: var(--fw-600);
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .age-rating-exclude-btn {
+    display: none;
+  }
 }
 
 /*-----------------------------------*\
@@ -1349,6 +1384,10 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.cart-btn ion-icon {
+  font-size: 130%;
 }
 
 .cart-btn:hover {
@@ -2444,6 +2483,14 @@ body {
 
 }
 @media (max-width: 992px) {
+
+  .age-rating-filters {
+      margin-top: 0px;
+      padding-top: 0px;
+      border-top: 0px;
+      gap: 3px;
+      padding-top: 2px;
+    }
 
   .filter-toggle-btn {
     display: block;
