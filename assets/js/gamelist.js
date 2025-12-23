@@ -99,8 +99,79 @@
   }
 
   // Render tag filter checkboxes
-  function renderTagFilters() {
-    tagFiltersEl.innerHTML = '';
+// Render tag filter checkboxes
+function renderTagFilters() {
+  tagFiltersEl.innerHTML = '';
+
+  // Separate age rating tags from other tags
+  const ageRatingTags = ['K3', 'K7', 'K12', 'K16', 'K18'];
+  const regularTags = [];
+  const ageRatings = [];
+
+  allTags.forEach((count, tag) => {
+    if (ageRatingTags.includes(tag)) {
+      ageRatings.push({ tag, count });
+    } else {
+      regularTags.push({ tag, count });
+    }
+  });
+
+  // Render regular tags
+  regularTags.forEach(({ tag, count }) => {
+    const filterState = tagFilters.get(tag) || null;
+
+    const itemEl = document.createElement('div');
+    itemEl.className = 'tag-filter-item';
+    itemEl.dataset.tag = tag;
+
+    const checkboxEl = document.createElement('div');
+    checkboxEl.className = 'tag-checkbox';
+    if (filterState === 'include') checkboxEl.classList.add('checked');
+    if (filterState === 'exclude') checkboxEl.classList.add('excluded');
+
+    const nameEl = document.createElement('span');
+    nameEl.className = 'tag-name';
+    nameEl.textContent = tag;
+
+    const excludeBtn = document.createElement('button');
+    excludeBtn.className = 'tag-exclude-btn';
+    excludeBtn.title = 'Exclude results with this tag';
+    excludeBtn.innerHTML = '-';
+
+    itemEl.appendChild(checkboxEl);
+    itemEl.appendChild(nameEl);
+    itemEl.appendChild(excludeBtn);
+    tagFiltersEl.appendChild(itemEl);
+  });
+
+  // Render age rating section if there are any age ratings
+  if (ageRatings.length > 0) {
+    const ageRatingContainer = document.createElement('div');
+    ageRatingContainer.className = 'age-rating-filters';
+
+    ageRatings.forEach(({ tag, count }) => {
+      const filterState = tagFilters.get(tag) || null;
+
+      const itemEl = document.createElement('div');
+      itemEl.className = 'age-rating-item';
+      itemEl.dataset.tag = tag;
+
+      const checkboxEl = document.createElement('div');
+      checkboxEl.className = 'age-rating-checkbox';
+      if (filterState === 'include') checkboxEl.classList.add('checked');
+
+      const nameEl = document.createElement('span');
+      nameEl.className = 'age-rating-name';
+      nameEl.textContent = tag;
+
+      itemEl.appendChild(checkboxEl);
+      itemEl.appendChild(nameEl);
+      ageRatingContainer.appendChild(itemEl);
+    });
+
+    tagFiltersEl.appendChild(ageRatingContainer);
+  }
+}
 
     allTags.forEach((count, tag) => {
       const filterState = tagFilters.get(tag) || null;
@@ -128,7 +199,6 @@
       itemEl.appendChild(excludeBtn);
       tagFiltersEl.appendChild(itemEl);
     });
-  }
 
   // Apply filters and sort, then render
   function applyFiltersAndSort() {
@@ -147,14 +217,26 @@
       // Tag filters
       const gameTags = game.tags ? game.tags.split(',').map(t => t.trim().toLowerCase()) : [];
 
-      // Check include filters (must have ALL selected tags)
+      // Separate age rating tags from other tags
+      const ageRatingTags = ['k3', 'k7', 'k12', 'k16', 'k18'];
+      
       const includeTags = [...tagFilters.entries()]
         .filter(([, state]) => state === 'include')
         .map(([tag]) => tag.toLowerCase());
 
-      if (includeTags.length > 0) {
-        const hasAllIncludeTags = includeTags.every(tag => gameTags.includes(tag));
-        if (!hasAllIncludeTags) return false;
+      const ageRatingFilters = includeTags.filter(tag => ageRatingTags.includes(tag));
+      const otherFilters = includeTags.filter(tag => !ageRatingTags.includes(tag));
+
+      // Check other filters (must have ALL selected tags)
+      if (otherFilters.length > 0) {
+        const hasAllOtherTags = otherFilters.every(tag => gameTags.includes(tag));
+        if (!hasAllOtherTags) return false;
+      }
+
+      // Check age rating filters (must have AT LEAST ONE if any are selected)
+      if (ageRatingFilters.length > 0) {
+        const hasAnyAgeRating = ageRatingFilters.some(tag => gameTags.includes(tag));
+        if (!hasAnyAgeRating) return false;
       }
 
       // Check exclude filters (must not have any)
@@ -335,22 +417,32 @@
     // Sort
     sortSelect.addEventListener('change', applyFiltersAndSort);
 
-    // Tag filters (event delegation)
-    tagFiltersEl.addEventListener('click', (e) => {
-      const filterItem = e.target.closest('.tag-filter-item');
-      if (!filterItem) return;
+// Tag filters (event delegation)
+tagFiltersEl.addEventListener('click', (e) => {
+  // Handle regular tag filters
+  const filterItem = e.target.closest('.tag-filter-item');
+  if (filterItem) {
+    const tag = filterItem.dataset.tag;
+    const isExcludeBtn = e.target.closest('.tag-exclude-btn');
+    const isCheckbox = e.target.closest('.tag-checkbox');
+    const isTagName = e.target.closest('.tag-name');
 
-      const tag = filterItem.dataset.tag;
-      const isExcludeBtn = e.target.closest('.tag-exclude-btn');
-      const isCheckbox = e.target.closest('.tag-checkbox');
-      const isTagName = e.target.closest('.tag-name');
+    if (isExcludeBtn) {
+      toggleTagExclude(tag);
+    } else if (isCheckbox || isTagName) {
+      toggleTagInclude(tag);
+    }
+    return;
+  }
 
-      if (isExcludeBtn) {
-        toggleTagExclude(tag);
-      } else if (isCheckbox || isTagName) {
-        toggleTagInclude(tag);
-      }
-    });
+  // Handle age rating filters
+  const ageRatingItem = e.target.closest('.age-rating-item');
+  if (ageRatingItem) {
+    const tag = ageRatingItem.dataset.tag;
+    toggleTagInclude(tag);
+    return;
+  }
+});
 
     // Mobile filter toggle
     filterToggleBtn.addEventListener('click', () => toggleFilterSidebar(true));
