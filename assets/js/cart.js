@@ -37,9 +37,14 @@
     }
   }
 
-  // Add item to cart
+// Add item to cart
   function addItem(gameId, gameName, gameImage) {
     if (!isInCart(gameId)) {
+      // Check if cart is full (max 20 games)
+      if (cartItems.length >= 20) {
+        return 'limit_reached';
+      }
+      
       cartItems.push({
         id: gameId,
         name: gameName,

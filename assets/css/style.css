@@ -871,6 +871,78 @@ body {
   margin-inline: auto;
 }
 
+.game-tab:hover:not(.active) {
+  color: var(--marigold);
+}
+
+/* Welcome message */
+.welcome-message {
+  max-width: 1230px;
+  margin: 0 auto 20px;
+  padding: 0 15px;
+}
+
+.welcome-message-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  background-color: rgba(0, 200, 255, 0.1);
+  border: 1px solid rgba(0, 200, 255, 0.3);
+  border-radius: 4px;
+  padding: 20px;
+  position: relative;
+}
+
+.welcome-message-content>ion-icon {
+  color: var(--blue);
+  font-size: 28px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.welcome-message-text {
+  flex: 1;
+  color: var(--light-gray-1);
+  font-size: var(--fs-9);
+  line-height: 1.6;
+}
+
+.welcome-message-text p {
+  margin: 0;
+}
+
+.welcome-message-text p:not(:last-child) {
+  margin-bottom: 8px;
+}
+
+.welcome-message-text strong {
+  color: var(--white);
+  font-weight: var(--fw-600);
+}
+
+.welcome-message-close {
+  background: none;
+  border: none;
+  color: var(--roman-silver);
+  padding: 4px;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}
+
+.welcome-message-close ion-icon {
+  font-size: 24px;
+}
+
+.welcome-message-close:hover {
+  color: var(--white);
+}
+
 .game-tab {
   color: var(--eerie-black-1);
   font-family: var(--ff-oxanium);

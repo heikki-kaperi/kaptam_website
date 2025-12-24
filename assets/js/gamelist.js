@@ -23,6 +23,7 @@
     'Local 4 players co-op',
     'Local 4 players vs',
     'Fighting',
+    'Driving',
     'Console',
     'K3',
     'K7',
@@ -43,15 +44,38 @@
   const filterCloseBtn = document.getElementById('filter-close-btn');
   const filterOverlay = document.getElementById('filter-overlay');
 
-  // Initialize
+// Initialize
   async function init() {
     if (!gameListEl) return; // Not on game list page
 
+    checkWelcomeMessage();
     await loadGames();
     extractTags();
     renderTagFilters();
     applyFiltersAndSort();
     bindEvents();
+  }
+
+  // Check and show welcome message
+  function checkWelcomeMessage() {
+    const WELCOME_KEY = 'kaptam_welcome_dismissed';
+    const welcomeMessage = document.getElementById('welcome-message');
+    const closeBtn = document.getElementById('welcome-message-close');
+
+    if (!welcomeMessage || !closeBtn) return;
+
+    // Check if user has dismissed the message before
+    const isDismissed = localStorage.getItem(WELCOME_KEY);
+
+    if (!isDismissed) {
+      welcomeMessage.style.display = 'block';
+    }
+
+    // Handle close button
+    closeBtn.addEventListener('click', () => {
+      welcomeMessage.style.display = 'none';
+      localStorage.setItem(WELCOME_KEY, 'true');
+    });
   }
 
   // Load games from JSON
@@ -351,7 +375,7 @@ function renderTagFilters() {
           <button class="cart-btn cart-remove-btn ${inCart ? 'visible' : ''}" title="Remove from cart">
             <ion-icon name="trash-outline"></ion-icon>
           </button>
-          <button class="cart-btn cart-add-btn ${inCart ? 'in-cart' : ''}" title="${inCart ? 'In cart' : 'Add to cart'}">
+          <button class="cart-btn cart-add-btn ${inCart ? 'in-cart' : ''}" title="${inCart ? 'In cart' : 'Add to reservation'}">
             <ion-icon name="${inCart ? 'checkmark-outline' : 'add-outline'}"></ion-icon>
           </button>
         </div>
@@ -407,6 +431,39 @@ function renderTagFilters() {
     }
   }
 
+  // Show cart limit modal
+  function showCartLimitModal() {
+    // Create modal overlay
+    const overlay = document.createElement('div');
+    overlay.className = 'modal-overlay';
+    overlay.innerHTML = `
+      <div class="modal-content">
+        <h3>Cart Limit Reached</h3>
+        <p>Maximum of 20 games per 1 reservation</p>
+        <div class="modal-actions">
+          <button class="checkout-btn primary modal-ok-btn">
+            OK
+          </button>
+        </div>
+      </div>
+    `;
+
+    document.body.appendChild(overlay);
+
+    // Handle OK button
+    const okBtn = overlay.querySelector('.modal-ok-btn');
+    okBtn.addEventListener('click', () => {
+      document.body.removeChild(overlay);
+    });
+
+    // Handle clicking outside modal
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) {
+        document.body.removeChild(overlay);
+      }
+    });
+  }
+
   // Bind events
   function bindEvents() {
     // Search
@@ -450,7 +507,7 @@ tagFiltersEl.addEventListener('click', (e) => {
     filterCloseBtn.addEventListener('click', () => toggleFilterSidebar(false));
     filterOverlay.addEventListener('click', () => toggleFilterSidebar(false));
 
-    // Cart button handlers (event delegation)
+  // Cart button handlers (event delegation)
     gameListEl.addEventListener('click', (e) => {
       const addBtn = e.target.closest('.cart-add-btn');
       const removeBtn = e.target.closest('.cart-remove-btn');
@@ -467,10 +524,20 @@ tagFiltersEl.addEventListener('click', (e) => {
       const gameName = cartActions.dataset.gameName;
       const gameImage = cartActions.dataset.gameImage;
 
-      if (addBtn && !window.KaptamCart.isInCart(gameId)) {
-        // Add to cart
-        window.KaptamCart.addItem(gameId, gameName, gameImage);
-        updateCartButtons(cartActions, true);
+      if (addBtn) {
+        if (window.KaptamCart.isInCart(gameId)) {
+          // Remove from cart (same as trash button)
+          window.KaptamCart.removeItem(gameId);
+          updateCartButtons(cartActions, false);
+        } else {
+          // Add to cart
+          const result = window.KaptamCart.addItem(gameId, gameName, gameImage);
+          if (result === 'limit_reached') {
+            showCartLimitModal();
+          } else if (result) {
+            updateCartButtons(cartActions, true);
+          }
+        }
       } else if (removeBtn) {
         // Remove from cart
         window.KaptamCart.removeItem(gameId);
