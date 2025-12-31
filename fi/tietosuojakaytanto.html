@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>Tietosuojakäytäntö - Kaptam</title>
+
+  <!-- 
+    - favicon
+  -->
+  <link rel="shortcut icon" href="../favicon.png" type="image/svg+xml">
+
+  <link rel="stylesheet" href="../assets/css/style.css">
+
+        <!-- 
+      	-----------------------------------------------
+          MARK: #CSS
+      	-----------------------------------------------
+      	-->
+
+  <style>
+    .privacy-page {
+      padding-top: 100px;
+      min-height: 100vh;
+      background-color: var(--raisin-black-3);
+    }
+
+    .privacy-container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 15px 60px;
+    }
+
+    .privacy-title {
+      color: var(--white);
+      font-family: var(--ff-oxanium);
+      font-size: var(--fs-1);
+      font-weight: var(--fw-800);
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    .privacy-updated {
+      color: var(--roman-silver);
+      font-size: var(--fs-9);
+      text-align: center;
+      margin-bottom: 40px;
+      font-style: italic;
+    }
+
+    .privacy-section {
+      background-color: rgba(0, 0, 0, 0.2);
+      padding: 30px;
+      margin-bottom: 20px;
+      border-radius: 4px;
+      border-left: 3px solid var(--marigold);
+    }
+
+    .privacy-section h2 {
+      color: var(--white);
+      font-family: var(--ff-oxanium);
+      font-size: var(--fs-4);
+      font-weight: var(--fw-700);
+      text-transform: uppercase;
+      margin-bottom: 15px;
+    }
+
+    .privacy-section h3 {
+      color: var(--marigold);
+      font-family: var(--ff-oxanium);
+      font-size: var(--fs-7);
+      font-weight: var(--fw-600);
+      margin-top: 20px;
+      margin-bottom: 10px;
+    }
+
+    .privacy-section p {
+      color: var(--light-gray-1);
+      font-size: var(--fs-8);
+      line-height: 1.8;
+      margin-bottom: 15px;
+    }
+
+    .privacy-section p:last-child {
+      margin-bottom: 0;
+    }
+
+    .privacy-section ul {
+      color: var(--light-gray-1);
+      font-size: var(--fs-8);
+      line-height: 1.8;
+      margin-left: 25px;
+      margin-bottom: 15px;
+    }
+
+    .privacy-section li {
+      list-style: disc;
+      margin-bottom: 8px;
+    }
+
+    .privacy-section a {
+      color: var(--marigold);
+      text-decoration: underline;
+      transition: var(--transition);
+    }
+
+    .privacy-section a:hover {
+      color: var(--white);
+    }
+
+    .privacy-section strong {
+      color: var(--white);
+      font-weight: var(--fw-600);
+    }
+
+    .back-to-home {
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .back-to-home .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    @media (max-width: 576px) {
+      .privacy-title {
+        font-size: var(--fs-2);
+      }
+
+      .privacy-section {
+        padding: 20px;
+      }
+
+      .privacy-section h2 {
+        font-size: var(--fs-5);
+      }
+    }
+  </style>
+
+        <!-- 
+      	-----------------------------------------------
+          MARK: #LINKS 
+      	-----------------------------------------------
+      	-->
+
+  <!-- 
+    - google font link
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Oxanium:wght@600;700;800&family=Poppins:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+  <!-- 
+      - Flag Icons Library
+    -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icons/6.6.6/css/flag-icons.min.css">
+
+</head>
+
+<body id="top">
+
+  <!-- 
+	-----------------------------------------------
+    MARK: #HEADER
+	-----------------------------------------------
+	-->
+
+  <header class="header">
+
+    <div class="header-bottom" data-header>
+      <div class="container">
+
+        <a href="index.html" class="logo">Kaptam</a>
+
+        <nav class="navbar" data-navbar>
+          <ul class="navbar-list">
+
+              <li class="navbar-item">
+                <a href="lautapeli.html" class="navbar-link skewBg2" data-nav-link>Lautapelikerho</a>
+              </li>
+              
+              <li class="navbar-item">
+                <a href="videopeli.html" class="navbar-link skewBg2" data-nav-link>Videopelikerho</a>
+              </li>
+              
+              <li class="navbar-item">
+                <a href="lahtifgc.html" class="navbar-link skewBg" data-nav-link>Lahti FGC</a>
+              </li>
+              
+              <li class="navbar-item">
+                <a href="../en/v-list.html" class="navbar-link skewBg" data-nav-link>Pelilista</a>
+              </li>
+              
+              <li class="navbar-item">
+                <a href="galleria.html" class="navbar-link skewBg" data-nav-link>Galleria</a>
+              </li>
+              
+              <li class="navbar-item">
+                <a href="info.html" class="navbar-link skewBg" data-nav-link>Tietoa meistä</a>
+              </li>
+
+            <li class="navbar-item">
+              <a href="../en/privacy.html" class="navbar-link skewBg" data-nav-link>
+                <span class="fi fi-gb" style="font-size: 1.3em;"></span>
+              </a>
+            </li>
+
+          </ul>
+        </nav>
+
+        <div class="header-actions">
+
+          <button class="nav-toggle-btn" aria-label="toggle menu" data-nav-toggler>
+            <ion-icon name="menu-outline" class="menu"></ion-icon>
+            <ion-icon name="close-outline" class="close"></ion-icon>
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </header>
+
+  <!-- 
+  	-----------------------------------------------
+      MARK: #PRIVACY
+  	-----------------------------------------------
+  	-->
+
+  <main>
+    <article class="privacy-page">
+
+      <div class="privacy-container">
+
+        <h1 class="privacy-title">Tietosuojakäytäntö</h1>
+        <p class="privacy-updated">Viimeksi päivitetty: 28 joulukuuta 2025</p>
+
+        <section class="privacy-section">
+          <h2>Johdanto</h2>
+          <p>Tässä tietosuojakäytännössä selitetään, miten Kaptam Gamers ry ("me", "meitä" tai "meidän") kerää, käyttää ja suojaa
+          tietoja, kun käytät pelivarausjärjestelmäämme kaptam.fi-sivustolla.</p>
+        </section>
+
+        <section class="privacy-section">
+          <h2>Keräämämme tiedot</h2>
+
+          <h3>Antamasi tiedot</h3>
+          <p>Kun teet pelivarauksen verkkosivustomme kautta, keräämme:</p>
+          <ul>
+            <li>Käyttäjänimesi</li>
+            <li>Sähköpostiosoitteesi (valinnainen)</li>
+            <li>Ohjaimen asetuksesi (näppäimistö & hiiri vai ohjain)</li>
+            <li>Vierailupäivämäärä (valinnainen)</li>
+            <li>Lisätietoja, jotka päätät antaa (valinnainen)</li>
+            <li>Luettelo varaukseen valitsemistasi peleistä</li>
+          </ul>
+
+          <h3>Automaattisesti tallennetut tiedot</h3>
+          <p>Verkkosivustomme käyttää selaimen localStorage-tallennustilaa (ei evästeitä) seuraaviin tarkoituksiin:</p>
+          <ul>
+            <li>Pelivalikoimisi ylläpitäminen selaamisen aikana</li>
+            <li>Muistaa, että olet painanut raksia (X) tervetuloviestissä</li>
+            <li>Tallentaa varauskoodisi viitteeksi</li>
+          </ul>
+        </section>
+
+        <section class="privacy-section">
+          <h2>Kuinka käytämme tietojasi</h2>
+          <p>Käytämme kerättyjä tietoja <strong>yksinomaan</strong> seuraaviin tarkoituksiin:</p>
+          <ul>
+            <li>Pelivaraustesi käsittely ja hallinta</li>
+            <li>Pyydettyjen pelien asentaminen ennen vierailuasi</li>
+            <li>Ottaminen sinuun yhteyttä tarvittaessa varaukseesi liittyen</li>
+            <li>Varauskoodisi antaminen sinulle</li>
+          </ul>
+
+          <p><strong>Emme:</strong></p>
+          <ul>
+            <li>Myy tietojasi kolmansille osapuolille</li>
+            <li>Käytä tietojasi markkinointitarkoituksiin</li>
+            <li>Jaa tietojasi organisaatiomme ulkopuolisten tahojen kanssa</li>
+            <li>Seuraa selauskäyttäytymistäsi</li>
+            <li>Käytä analytiikka- tai mainosevästeitä</li>
+          </ul>
+        </section>
+
+        <section class="privacy-section">
+          <h2>Tietojen tallennus</h2>
+          <ul>
+            <li>Varaustiedot tallennetaan palvelimellemme vain varauksesi täyttämistä varten</li>
+            <li>Selaimesi localStorage sisältää väliaikaisia ​tietoja (ostoskorin sisältö, asetukset), jotka jäävät laitteellesi</li>
+            <li>Voit poistaa localStorage-tiedot milloin tahansa selainasetuksistasi.</li>
+          </ul>
+        </section>
+
+        <section class="privacy-section">
+          <h2>Oikeutesi (GDPR)</h2>
+          <p>Yleisen tietosuoja-asetuksen (GDPR) nojalla sinulla on oikeus:</p>
+          <ul>
+            <li>Päästä henkilötietoihisi</li>
+            <li>Pyytää henkilötietojesi korjaamista</li>
+            <li>Pyytää henkilötietojesi poistamista</li>
+            <li>Vastustaa henkilötietojesi käsittelyä</li>
+            <li>Pyytää henkilötietojesi käsittelyn rajoittamista</li>
+          </ul>
+          <p>Jos haluat käyttää näitä oikeuksia, ota meihin yhteyttä alla olevaan sähköpostiosoitteeseen.</p>
+        </section>
+
+        <section class="privacy-section">
+          <h2>Tietojen säilyttäminen</h2>
+          <p>Säilytämme varaustietojasi vain niin kauan kuin on tarpeen varauksen toteuttamiseksi ja kohtuullisen ajan sen jälkeen
+          arkistointitarkoituksiin. Tämän ajanjakson jälkeen tietosi poistetaan.</p>
+        </section>
+
+        <section class="privacy-section">
+          <h2>Turvallisuus</h2>
+          <p>Käytämme asianmukaisia ​​teknisiä ja organisatorisia toimenpiteitä henkilötietojesi suojaamiseksi. Mikään
+          tiedonsiirtomenetelmä internetin tai sähköisen tallennuksen kautta ei kuitenkaan ole 100 % turvallinen.</p>
+        </section>
+
+        <section class="privacy-section">
+          <h2>Muutokset tähän käytäntöön</h2>
+          <p>Saatamme päivittää tätä tietosuojakäytäntöä aika ajoin. Ilmoitamme sinulle muutoksista julkaisemalla uuden
+          tietosuojakäytännön tällä sivulla ja päivittämällä "Viimeksi päivitetty" -päivämäärän.</p>
+        </section>
+
+        <section class="privacy-section">
+          <h2>Ota yhteyttä</h2>
+          <p>Jos sinulla on kysyttävää tästä tietosuojakäytännöstä tai tietojenkäsittelykäytännöistämme, ota meihin yhteyttä:</p>
+          <ul>
+            <li><strong>Osoite:</strong> Mukkulankatu 19, 15210 Lahti</li>
+            <li><strong>Puhelin:</strong> <a href="tel:+358408505051">+358 40 850 5051</a></li>
+            <li><strong>Sähköposti:</strong> <a href="mailto:kaptamgamers@gmail.com">kaptamgamers@gmail.com</a></li>
+          </ul>
+        </section>
+
+        <div class="back-to-home">
+          <a href="index.html" class="btn skewBg">Takaisin etusivulle</a>
+        </div>
+
+      </div>
+
+    </article>
+  </main>
+
+  <!--
+		-----------------------------------------------
+        MARK: #FOOTER
+		-----------------------------------------------
+		-->
+
+  <footer class="footer" id="footer">
+
+    <div class="footer-bottom">
+      <div class="container">
+
+        <p class="copyright">
+          &copy; 2026 Kaptam Gamers ry.
+          Nettisivun tehnyt <a href="https://github.com/Kyouma960" class="copyright-link">Kyouma960</a>
+          ja <a href="https://github.com/heikki-kaperi" class="copyright-link">heikki-kaperi</a>.
+        </p>
+
+      </div>
+    </div>
+
+  </footer>
+
+  <!--
+    - custom js link
+  -->
+  <script src="../assets/js/script.js" defer></script>
+
+  <!-- 
+    - ionicon link
+  -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>
