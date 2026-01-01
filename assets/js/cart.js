@@ -38,17 +38,18 @@
   }
 
 // Add item to cart
-  function addItem(gameId, gameName, gameImage) {
+  function addItem(gameId, gameName, gameImage, gameType) {
     if (!isInCart(gameId)) {
       // Check if cart is full (max 20 games)
       if (cartItems.length >= 20) {
         return 'limit_reached';
       }
-      
+
       cartItems.push({
         id: gameId,
         name: gameName,
         image: gameImage,
+        type: gameType || 'videogame', // Default to videogame for backwards compatibility
         addedAt: new Date().toISOString()
       });
       saveCart();
@@ -280,6 +281,7 @@
       id: item.id,
       name: item.name,
       image: item.image,
+      type: item.type || 'videogame', // Default to videogame for backwards compatibility
       addedAt: item.addedAt || new Date().toISOString()
     }));
     saveCart();

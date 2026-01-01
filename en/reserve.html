@@ -116,19 +116,19 @@
         <div class="checkout-section previous-cart-section">
           <h3>Have a previous order?</h3>
           <div class="previous-cart-row">
-            <input type="text" id="previous-code-input" placeholder="Enter your cart code (e.g., K4PT-AM7X)" maxlength="9">
+            <input type="text" id="previous-code-input" placeholder="Enter your reservation code (e.g., K4PT-AM7X)" maxlength="9">
             <button id="load-previous-btn" class="checkout-btn secondary">Load</button>
           </div>
         </div>
 
         <!-- Cart Items Section -->
         <div class="checkout-section cart-items-section">
-          <h3>Your Cart</h3>
+          <h3>Your Reservations</h3>
           <div id="cart-items-list" class="cart-items-list">
             <!-- Cart items will be rendered here -->
           </div>
           <p id="empty-cart-message" class="empty-cart-message" style="display: none;">
-            Your cart is empty. <a href="v-list.html">Browse games</a>
+            Your reservations are empty. <a href="v-list.html">Browse games</a>
           </p>
         </div>
 
@@ -168,8 +168,6 @@
               <label for="input-date" style="display: flex; gap: 0.25rem; align-items: center;">Select Date <span class="required">*</span></label>
               <select id="input-date" name="date" required>
                 <option value="">Choose a date</option>
-                <option value="2026-02-06">06.02.2026</option>
-                <option value="2026-02-13">13.02.2026</option>
                 <option value="2026-02-27">27.02.2026</option>
                 <option value="2026-03-06">06.03.2026</option>
                 <option value="2026-03-13">13.03.2026</option>

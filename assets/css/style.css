@@ -435,7 +435,7 @@ body {
 
 .navbar.active {
   visibility: visible;
-  max-height: 375px;
+  max-height: 550px;
   transition-duration: 0.5s;
 }
 
@@ -1432,6 +1432,66 @@ body {
   .age-rating-exclude-btn {
     display: none;
   }
+}
+
+/*-----------------------------------*\
+    MARK:#BOARDGAMES
+\*-----------------------------------*/
+
+/* Boardgame-specific info display */
+.boardgame-info {
+  font-size: var(--fs-11);
+  color: var(--roman-silver);
+  white-space: nowrap;
+  margin-right: 8px;
+}
+
+.boardgame-info:last-child {
+  margin-right: 0;
+}
+
+/* Adjust game item platforms for boardgames */
+.game-item-platforms {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Tutorial section */
+.game-item-tutorial {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+
+.tutorial-btn {
+  background: none;
+  border: 1px solid var(--jet);
+  color: var(--white);
+  padding: 6px;
+  font-size: 20px;
+  border-radius: 4px;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.tutorial-btn:hover {
+  border-color: var(--blue);
+  color: var(--blue);
+  background-color: rgba(0, 200, 255, 0.1);
+}
+
+.tutorial-length {
+  font-size: var(--fs-11);
+  color: var(--roman-silver);
+  white-space: nowrap;
 }
 
 /*-----------------------------------*\
@@ -2796,4 +2856,24 @@ body {
   .thank-you-content h1 {
     font-size: var(--fs-2);
   }
+
+  /* Mobile adjustments for boardgame info */
+  .boardgame-info {
+    font-size: var(--fs-13);
+  }
+  
+  .tutorial-btn {
+    padding: 4px;
+    font-size: 18px;
+  }
+  
+  .tutorial-length {
+    font-size: var(--fs-13);
+  }
+  
+  .game-item-tutorial {
+    gap: 5px;
+    margin-right: 5px;
+  }
+
 }

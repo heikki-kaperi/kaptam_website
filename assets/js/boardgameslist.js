@@ -1,5 +1,5 @@
 /**
- * Game List Page - Search, Filter, and Sort functionality
+ * Boardgame List Page - Search, Filter, and Sort functionality
  */
 
 (function() {
@@ -13,18 +13,19 @@
 
   // Predetermined tag order
   const tagOrder = [
-    'Mainstream',
-    'Niche',
-    'Underground',
-    'Singleplayer',
-    'Online multiplayer',
-    'Local 2 players co-op',
-    'Local 2 players vs',
-    'Local 4 players co-op',
-    'Local 4 players vs',
-    'Fighting',
-    'Driving',
-    'Console',
+    'Light',
+    'Medium',
+    'Heavy',
+    'Solo',
+    '2 players',
+    '2-4 players',
+    '2-6 players',
+    '4+ players',
+    '6+ players',
+    'Quick (<30 min)',
+    'Medium (30-60 min)',
+    'Long (60-120 min)',
+    'Epic (120+ min)',
     'K3',
     'K7',
     'K12',
@@ -44,7 +45,7 @@
   const filterCloseBtn = document.getElementById('filter-close-btn');
   const filterOverlay = document.getElementById('filter-overlay');
 
-// Initialize
+  // Initialize
   async function init() {
     if (!gameListEl) return; // Not on game list page
 
@@ -58,7 +59,7 @@
 
   // Check and show welcome message
   function checkWelcomeMessage() {
-    const WELCOME_KEY = 'kaptam_welcome_dismissed';
+    const WELCOME_KEY = 'kaptam_boardgames_welcome_dismissed';
     const welcomeMessage = document.getElementById('welcome-message');
     const closeBtn = document.getElementById('welcome-message-close');
 
@@ -81,7 +82,7 @@
   // Load games from JSON
   async function loadGames() {
     try {
-      const response = await fetch('../assets/list/games.json');
+      const response = await fetch('../assets/list/boardgames.json');
       if (!response.ok) throw new Error('Failed to load games');
       allGames = await response.json();
     } catch (error) {
@@ -123,82 +124,24 @@
   }
 
   // Render tag filter checkboxes
-// Render tag filter checkboxes
-function renderTagFilters() {
-  tagFiltersEl.innerHTML = '';
+  function renderTagFilters() {
+    tagFiltersEl.innerHTML = '';
 
-  // Separate age rating tags from other tags
-  const ageRatingTags = ['K3', 'K7', 'K12', 'K16', 'K18'];
-  const regularTags = [];
-  const ageRatings = [];
-
-  allTags.forEach((count, tag) => {
-    if (ageRatingTags.includes(tag)) {
-      ageRatings.push({ tag, count });
-    } else {
-      regularTags.push({ tag, count });
-    }
-  });
-
-  // Render regular tags
-  regularTags.forEach(({ tag, count }) => {
-    const filterState = tagFilters.get(tag) || null;
-
-    const itemEl = document.createElement('div');
-    itemEl.className = 'tag-filter-item';
-    itemEl.dataset.tag = tag;
-
-    const checkboxEl = document.createElement('div');
-    checkboxEl.className = 'tag-checkbox';
-    if (filterState === 'include') checkboxEl.classList.add('checked');
-    if (filterState === 'exclude') checkboxEl.classList.add('excluded');
-
-    const nameEl = document.createElement('span');
-    nameEl.className = 'tag-name';
-    nameEl.textContent = tag;
-
-    const excludeBtn = document.createElement('button');
-    excludeBtn.className = 'tag-exclude-btn';
-    excludeBtn.title = 'Exclude results with this tag';
-    excludeBtn.innerHTML = '-';
-
-    itemEl.appendChild(checkboxEl);
-    itemEl.appendChild(nameEl);
-    itemEl.appendChild(excludeBtn);
-    tagFiltersEl.appendChild(itemEl);
-  });
-
-  // Render age rating section if there are any age ratings
-  if (ageRatings.length > 0) {
-    const ageRatingContainer = document.createElement('div');
-    ageRatingContainer.className = 'age-rating-filters';
-
-    ageRatings.forEach(({ tag, count }) => {
-      const filterState = tagFilters.get(tag) || null;
-
-      const itemEl = document.createElement('div');
-      itemEl.className = 'age-rating-item';
-      itemEl.dataset.tag = tag;
-
-      const checkboxEl = document.createElement('div');
-      checkboxEl.className = 'age-rating-checkbox';
-      if (filterState === 'include') checkboxEl.classList.add('checked');
-
-      const nameEl = document.createElement('span');
-      nameEl.className = 'age-rating-name';
-      nameEl.textContent = tag;
-
-      itemEl.appendChild(checkboxEl);
-      itemEl.appendChild(nameEl);
-      ageRatingContainer.appendChild(itemEl);
-    });
-
-    tagFiltersEl.appendChild(ageRatingContainer);
-  }
-  }
-
+    // Separate age rating tags from other tags
+    const ageRatingTags = ['K3', 'K7', 'K12', 'K16', 'K18'];
+    const regularTags = [];
+    const ageRatings = [];
 
     allTags.forEach((count, tag) => {
+      if (ageRatingTags.includes(tag)) {
+        ageRatings.push({ tag, count });
+      } else {
+        regularTags.push({ tag, count });
+      }
+    });
+
+    // Render regular tags
+    regularTags.forEach(({ tag, count }) => {
       const filterState = tagFilters.get(tag) || null;
 
       const itemEl = document.createElement('div');
@@ -225,6 +168,35 @@ function renderTagFilters() {
       tagFiltersEl.appendChild(itemEl);
     });
 
+    // Render age rating section if there are any age ratings
+    if (ageRatings.length > 0) {
+      const ageRatingContainer = document.createElement('div');
+      ageRatingContainer.className = 'age-rating-filters';
+
+      ageRatings.forEach(({ tag, count }) => {
+        const filterState = tagFilters.get(tag) || null;
+
+        const itemEl = document.createElement('div');
+        itemEl.className = 'age-rating-item';
+        itemEl.dataset.tag = tag;
+
+        const checkboxEl = document.createElement('div');
+        checkboxEl.className = 'age-rating-checkbox';
+        if (filterState === 'include') checkboxEl.classList.add('checked');
+
+        const nameEl = document.createElement('span');
+        nameEl.className = 'age-rating-name';
+        nameEl.textContent = tag;
+
+        itemEl.appendChild(checkboxEl);
+        itemEl.appendChild(nameEl);
+        ageRatingContainer.appendChild(itemEl);
+      });
+
+      tagFiltersEl.appendChild(ageRatingContainer);
+    }
+  }
+
   // Apply filters and sort, then render
   function applyFiltersAndSort() {
     const searchTerm = searchInput.value.toLowerCase().trim();
@@ -235,8 +207,9 @@ function renderTagFilters() {
       // Search filter
       if (searchTerm) {
         const nameMatch = game.name.toLowerCase().includes(searchTerm);
+        const nameFinMatch = game.name_fin && game.name_fin.toLowerCase().includes(searchTerm);
         const tagMatch = game.tags && game.tags.toLowerCase().includes(searchTerm);
-        if (!nameMatch && !tagMatch) return false;
+        if (!nameMatch && !nameFinMatch && !tagMatch) return false;
       }
 
       // Tag filters
@@ -291,36 +264,19 @@ function renderTagFilters() {
       case 'date-old':
         filteredGames.sort((a, b) => new Date(a.Date) - new Date(b.Date));
         break;
-      case 'installed': // sort by installed status first, then by popularity
-        filteredGames.sort((a, b) => {
-          // Get install status from the 'installed' property
-          const aIsInstalled = a.installed;
-          const bIsInstalled = b.installed;
-
-          // Sort installed games first
-          if (aIsInstalled !== bIsInstalled) {
-            return bIsInstalled - aIsInstalled; // true (1) comes before false (0)
-          }
-
-          // Within same install status, sort by popularity
-          const aPopularity = getPopularity(a.tags);
-          const bPopularity = getPopularity(b.tags);
-          const popularityOrder = { 'Very popular': 0, 'Popular': 1, 'Not popular': 2 };
-          return (popularityOrder[aPopularity] || 3) - (popularityOrder[bPopularity] || 3);
-        });
+      case 'playtime-short':
+        filteredGames.sort((a, b) => a.playtime - b.playtime);
+        break;
+      case 'playtime-long':
+        filteredGames.sort((a, b) => b.playtime - a.playtime);
+        break;
+      case 'copies':
+        filteredGames.sort((a, b) => b.copies - a.copies);
+        break;
     }
 
     renderGameList();
     updateResultsCount();
-  }
-
-  // Get popularity level from tags
-  function getPopularity(tags) {
-    if (!tags) return null;
-    if (tags.includes('Very popular')) return 'Very popular';
-    if (tags.includes('Popular')) return 'Popular';
-    if (tags.includes('Not popular')) return 'Not popular';
-    return null;
   }
 
   // Render game list
@@ -333,27 +289,12 @@ function renderTagFilters() {
     }
 
     filteredGames.forEach(game => {
-      const itemEl = document.createElement('a');
+      const itemEl = document.createElement('div');
       itemEl.className = 'game-item';
-      itemEl.href = game.url;
-      itemEl.target = '_blank';
-      itemEl.rel = 'noopener noreferrer';
 
-      // Get install status from the game object
-      const isInstalled = game.installed;
-
-      // Determine platform icon
-      let platformIcon = '<ion-icon name="desktop-outline"></ion-icon>';
-      if (game.platform) {
-        if (game.platform === 'ps3') {
-          platformIcon = '<img src="../assets/images/list_images/Other/ps3.png" alt="PS3" class="platform-icon">';
-        } else if (game.platform === 'ps4') {
-          platformIcon = '<img src="../assets/images/list_images/Other/ps4.png" alt="PS4" class="platform-icon">';
-        }
-      }
-
-      // Add copies count if available
-      const copiesDisplay = game.copies ? `<span class="game-copies"> | ${game.copies} pcs</span>` : '';
+      // Format playtime
+      const playtimeDisplay = game.playtime ? `⏱ ${game.playtime} min` : '';
+      const copiesDisplay = game.copies ? `📦 ${game.copies} ${game.copies === 1 ? 'copy' : 'copies'}` : '';
 
       // Check if game is in cart
       const inCart = window.KaptamCart && window.KaptamCart.isInCart(game.id);
@@ -362,20 +303,27 @@ function renderTagFilters() {
         <img src="${game.image}" alt="${game.name}" class="game-item-image" loading="lazy">
         <div class="game-item-info">
           <div class="game-item-name">
-            ${game.name}
+            <a href="${game.url}" target="_blank" rel="noopener noreferrer">${game.name}</a>
           </div>
           <div class="game-item-platforms">
-            ${platformIcon}${copiesDisplay}
+            <span class="boardgame-info">👥 ${game.players}</span>
+            ${playtimeDisplay ? `<span class="boardgame-info">${playtimeDisplay}</span>` : ''}
+            ${copiesDisplay ? `<span class="boardgame-info">${copiesDisplay}</span>` : ''}
           </div>
         </div>
-        <span class="game-item-status ${isInstalled ? 'installed' : 'not-installed'}">
-          ${isInstalled ? 'Installed' : 'Not installed'}
-        </span>
-        <div class="game-item-cart-actions" data-game-id="${game.id}" data-game-name="${game.name}" data-game-image="${game.image}" data-game-type="videogame">
+        ${game.tutorial ? `
+          <div class="game-item-tutorial">
+            ${game.tutorial_length ? `<span class="tutorial-length"> ${game.tutorial_length} min</span>` : ''}
+            <a href="${game.tutorial}" target="_blank" rel="noopener noreferrer" class="tutorial-btn" title="View tutorial">
+              <ion-icon name="help-outline"></ion-icon>
+            </a>
+          </div>
+        ` : ''}
+        <div class="game-item-cart-actions" data-game-id="${game.id}" data-game-name="${game.name}" data-game-image="${game.image}" data-game-type="boardgame">
           <button class="cart-btn cart-remove-btn ${inCart ? 'visible' : ''}" title="Remove from cart">
             <ion-icon name="trash-outline"></ion-icon>
           </button>
-          <button class="cart-btn cart-add-btn ${inCart ? 'in-cart' : ''}" title="${inCart ? 'In cart' : 'Add to reservation'}">
+          <button class="cart-btn cart-add-btn ${inCart ? 'in-cart' : ''}" title="${inCart ? 'In cart' : 'Add to cart'}">
             <ion-icon name="${inCart ? 'checkmark-outline' : 'add-outline'}"></ion-icon>
           </button>
         </div>
@@ -475,39 +423,39 @@ function renderTagFilters() {
     // Sort
     sortSelect.addEventListener('change', applyFiltersAndSort);
 
-// Tag filters (event delegation)
-tagFiltersEl.addEventListener('click', (e) => {
-  // Handle regular tag filters
-  const filterItem = e.target.closest('.tag-filter-item');
-  if (filterItem) {
-    const tag = filterItem.dataset.tag;
-    const isExcludeBtn = e.target.closest('.tag-exclude-btn');
-    const isCheckbox = e.target.closest('.tag-checkbox');
-    const isTagName = e.target.closest('.tag-name');
+    // Tag filters (event delegation)
+    tagFiltersEl.addEventListener('click', (e) => {
+      // Handle regular tag filters
+      const filterItem = e.target.closest('.tag-filter-item');
+      if (filterItem) {
+        const tag = filterItem.dataset.tag;
+        const isExcludeBtn = e.target.closest('.tag-exclude-btn');
+        const isCheckbox = e.target.closest('.tag-checkbox');
+        const isTagName = e.target.closest('.tag-name');
 
-    if (isExcludeBtn) {
-      toggleTagExclude(tag);
-    } else if (isCheckbox || isTagName) {
-      toggleTagInclude(tag);
-    }
-    return;
-  }
+        if (isExcludeBtn) {
+          toggleTagExclude(tag);
+        } else if (isCheckbox || isTagName) {
+          toggleTagInclude(tag);
+        }
+        return;
+      }
 
-// Handle age rating filters
-  const ageRatingItem = e.target.closest('.age-rating-item');
-  if (ageRatingItem) {
-    const tag = ageRatingItem.dataset.tag;
-    toggleTagInclude(tag);
-    return;
-  }
-});
+      // Handle age rating filters
+      const ageRatingItem = e.target.closest('.age-rating-item');
+      if (ageRatingItem) {
+        const tag = ageRatingItem.dataset.tag;
+        toggleTagInclude(tag);
+        return;
+      }
+    });
 
     // Mobile filter toggle
     filterToggleBtn.addEventListener('click', () => toggleFilterSidebar(true));
     filterCloseBtn.addEventListener('click', () => toggleFilterSidebar(false));
     filterOverlay.addEventListener('click', () => toggleFilterSidebar(false));
 
-  // Cart button handlers (event delegation)
+    // Cart button handlers (event delegation)
     gameListEl.addEventListener('click', (e) => {
       const addBtn = e.target.closest('.cart-add-btn');
       const removeBtn = e.target.closest('.cart-remove-btn');
@@ -547,8 +495,8 @@ tagFiltersEl.addEventListener('click', (e) => {
     });
   }
 
-// Update cart button appearance
-    function updateCartButtons(cartActions, inCart) {
+  // Update cart button appearance
+  function updateCartButtons(cartActions, inCart) {
     const addBtn = cartActions.querySelector('.cart-add-btn');
     const removeBtn = cartActions.querySelector('.cart-remove-btn');
 

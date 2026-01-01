@@ -96,10 +96,13 @@
     let totalSize = 0;
 
     items.forEach(item => {
-      const game = allGames.find(g => g.id === item.id);
-      // Only count size if game is NOT installed
-      if (game && game.size && !game.installed) {
-        totalSize += game.size;
+      // Only check videogames (boardgames don't have size/installation)
+      if (item.type === 'videogame') {
+        const game = allGames.find(g => g.id === item.id);
+        // Only count size if game is NOT installed
+        if (game && game.size && !game.installed) {
+          totalSize += game.size;
+        }
       }
     });
 
@@ -137,17 +140,23 @@
       itemEl.className = 'cart-item';
       itemEl.dataset.gameId = item.id;
 
-      // Get game data to check installed status
-      const game = allGames.find(g => g.id === item.id);
-      const isInstalled = game ? game.installed : false;
+      // Only show installation status for videogames
+      let statusHtml = '';
+      if (item.type === 'videogame') {
+        const game = allGames.find(g => g.id === item.id);
+        const isInstalled = game ? game.installed : false;
+        statusHtml = `
+          <span class="cart-item-status ${isInstalled ? 'installed' : 'not-installed'}">
+            ${isInstalled ? 'Installed' : 'Will install before session'}
+          </span>
+        `;
+      }
 
       itemEl.innerHTML = `
         <img src="${item.image}" alt="${item.name}" class="cart-item-image">
         <div class="cart-item-info">
           <span class="cart-item-name">${item.name}</span>
-          <span class="cart-item-status ${isInstalled ? 'installed' : 'not-installed'}">
-            ${isInstalled ? 'Installed' : 'Will install before session'}
-          </span>
+          ${statusHtml}
         </div>
         <button class="cart-item-remove" title="Remove from cart">
           <ion-icon name="trash-outline"></ion-icon>
