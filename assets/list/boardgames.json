@@ -214,7 +214,7 @@
     "name": "Ludo (Kimble)",
     "name_fin": "Ludo (Kimble)",
     "image": "../assets/images/list_images/boardgames/ludo.jpg",
-    "url": "https://brainking.com/en/GameRules?tp=78",
+    "url": "https://boardgamegeek.com/boardgame/2136/pachisi",
     "tutorial": "https://www.youtube.com/watch?v=ludUKmZUHSc",
     "tutorial_length": 3,
     "tags": "2-4 players, Light, Medium (30-60 min), K3",
@@ -331,7 +331,7 @@
   },
   {
     "id": 20023,
-    "name": "Party Haaste",
+    "name": "Party Haaste (in Finnish)",
     "name_fin": "Party Haaste",
     "image": "../assets/images/list_images/boardgames/party-haaste.jpg",
     "url": "https://boardgamegeek.com/boardgame/184988/party-haaste",
@@ -391,7 +391,7 @@
   },
   {
     "id": 20027,
-    "name": "Monopoly Deal Card Game",
+    "name": "Monopoly Deal Card Game (in Finnish)",
     "name_fin": "Monopoly korttipeli",
     "image": "../assets/images/list_images/boardgames/monopoly-deal.jpg",
     "url": "https://boardgamegeek.com/boardgame/40398/monopoly-deal-card-game",
@@ -436,7 +436,7 @@
   },
   {
     "id": 20030,
-    "name": "Forbidden Island",
+    "name": "Forbidden Island (in finnish)",
     "name_fin": "Salaisuuksien Saari",
     "image": "../assets/images/list_images/boardgames/forbidden-island.jpg",
     "url": "https://boardgamegeek.com/boardgame/65244/forbidden-island",
@@ -466,7 +466,7 @@
   },
   {
     "id": 20032,
-    "name": "Wavelength",
+    "name": "Wavelength (in finnish)",
     "name_fin": "Asmodee Aallonpituus",
     "image": "../assets/images/list_images/boardgames/wavelength.jpg",
     "url": "https://boardgamegeek.com/boardgame/262543/wavelength",

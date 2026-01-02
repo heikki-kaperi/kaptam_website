@@ -289,8 +289,11 @@
     }
 
     filteredGames.forEach(game => {
-      const itemEl = document.createElement('div');
+      const itemEl = document.createElement('a');
       itemEl.className = 'game-item';
+      itemEl.href = game.url;
+      itemEl.target = '_blank';
+      itemEl.rel = 'noopener noreferrer';
 
       // Format playtime
       const playtimeDisplay = game.playtime ? `⏱ ${game.playtime} min` : '';
@@ -303,12 +306,11 @@
         <img src="${game.image}" alt="${game.name}" class="game-item-image" loading="lazy">
         <div class="game-item-info">
           <div class="game-item-name">
-            <a href="${game.url}" target="_blank" rel="noopener noreferrer">${game.name}</a>
+            <p>${game.name}</p>
           </div>
           <div class="game-item-platforms">
             <span class="boardgame-info">👥 ${game.players}</span>
             ${playtimeDisplay ? `<span class="boardgame-info">${playtimeDisplay}</span>` : ''}
-            ${copiesDisplay ? `<span class="boardgame-info">${copiesDisplay}</span>` : ''}
           </div>
         </div>
         ${game.tutorial ? `
