@@ -114,12 +114,26 @@
         <a href="b-list.html" class="game-tab active skewBg2">Boardgames</a>
       </div>
 
+      <!-- Date Selection -->
+      <div class="date-selection-container">
+        <label for="visit-date-select">Select visit date:</label>
+        <select id="visit-date-select" class="visit-date-select">
+          <option value="">Choose a date...</option>
+          <option value="2026-02-27">27.02.2026</option>
+          <option value="2026-03-06">06.03.2026</option>
+          <option value="2026-03-13">13.03.2026</option>
+          <option value="2026-03-27">27.03.2026</option>
+        </select>
+        <span id="date-info" class="date-info"></span>
+      </div>
+
       <!-- Welcome Message -->
       <div id="welcome-message" class="welcome-message" style="display: none;">
         <div class="welcome-message-content">
           <ion-icon name="information-circle-outline"></ion-icon>
           <div class="welcome-message-text">
             <p>Browse our boardgame collection and reserve games for your visit at the weeklies.</p>
+            <p>Select a date before adding games to your reservation.</p>
           </div>
           <button id="welcome-message-close" class="welcome-message-close" title="Close">
             <ion-icon name="close-outline"></ion-icon>

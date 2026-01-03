@@ -1682,7 +1682,7 @@
   {
     "id": 121,
     "name": "Scheming Through The Zombie Apocalypse: The Beginning",
-    "image": "../assets/images/list_images/Scheming Through The Zombie Apocalypse.jpg",
+    "image": "../assets/images/list_images/Scheming.jpg",
     "url": "https://store.steampowered.com/app/813540/",
     "tags": "Underground, Singleplayer, K16",
     "Date": "2018-06-08",
@@ -4291,7 +4291,7 @@
     "esrb": "T",
     "pegi_k": "K12",
     "esrb_k": "K13"
-    },
+  },
   {
     "id": 312,
     "name": "Roblox",
@@ -4305,5 +4305,75 @@
     "esrb": "T",
     "pegi_k": "K12",
     "esrb_k": "K13"
+  },
+  {
+    "id": 313,
+    "name": "Valorant",
+    "image": "../assets/images/list_images/valorant.jpg",
+    "url": "https://playvalorant.com/en-gb/",
+    "tags": "Mainstream, Online multiplayer, K18",
+    "Date": "2020-06-02",
+    "installed": false,
+    "size": 40,
+    "pegi": "12",
+    "esrb": "T",
+    "pegi_k": "K12",
+    "esrb_k": "K13"
+  },
+  {
+    "id": 314,
+    "name": "Devil May Cry HD Collection",
+    "image": "../assets/images/list_images/dmc-collection.jpg",
+    "url": "https://store.steampowered.com/app/631510/",
+    "tags": "Niche, Singleplayer, K16",
+    "Date": "2018-03-13",
+    "installed": false,
+    "size": 12,
+    "pegi": "16",
+    "esrb": "M",
+    "pegi_k": "K16",
+    "esrb_k": "K17"
+  },
+  {
+    "id": 315,
+    "name": "DmC: Devil May Cry",
+    "image": "../assets/images/list_images/dmc dmc.jpg",
+    "url": "https://store.steampowered.com/app/220440/",
+    "tags": "Niche, Singleplayer, K16",
+    "Date": "2013-01-24",
+    "installed": false,
+    "size": 9,
+    "pegi": "16",
+    "esrb": "M",
+    "pegi_k": "K16",
+    "esrb_k": "K17"
+  },
+  {
+    "id": 316,
+    "name": "Devil May Cry 5 +DLC",
+    "image": "../assets/images/list_images/dmc5.jpg",
+    "url": "https://store.steampowered.com/app/601150/",
+    "tags": "Niche, Singleplayer, K18",
+    "Date": "2019-03-08",
+    "installed": false,
+    "size": 35,
+    "pegi": "18",
+    "esrb": "AO",
+    "pegi_k": "K18",
+    "esrb_k": "K18"
+  },
+  {
+    "id": 317,
+    "name": "Devil May Cry 4 +DLC",
+    "image": "../assets/images/list_images/dmc4.jpg",
+    "url": "https://store.steampowered.com/app/329050/",
+    "tags": "Niche, Singleplayer, K16",
+    "Date": "2015-06-23",
+    "installed": false,
+    "size": 27,
+    "pegi": "16",
+    "esrb": "M",
+    "pegi_k": "K16",
+    "esrb_k": "K17"
   }
 ]

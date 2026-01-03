@@ -115,8 +115,21 @@
         <!-- Previous Cart Section -->
         <div class="checkout-section previous-cart-section">
           <h3>Have a previous order?</h3>
+
+          <!-- Saved Reservations Dropdown -->
+          <div id="saved-reservations-section" style="display: none;">
+            <div class="previous-cart-row">
+              <select id="saved-reservations-select" class="saved-reservations-select">
+                <option value="">Select a previous reservation...</option>
+              </select>
+              <button id="load-saved-btn" class="checkout-btn secondary">Modify</button>
+            </div>
+          </div>
+
+          <!-- Manual Code Input -->
           <div class="previous-cart-row">
-            <input type="text" id="previous-code-input" placeholder="Enter your reservation code (e.g., K4PT-AM7X)" maxlength="9">
+            <input type="text" id="previous-code-input" placeholder="Enter your reservation code (e.g., K4PT-AM7X)"
+              maxlength="9">
             <button id="load-previous-btn" class="checkout-btn secondary">Load</button>
           </div>
         </div>
@@ -161,17 +174,6 @@
               <select id="input-controller" name="controller">
                 <option value="controller">Controller</option>
                 <option value="keyboard-mouse">Keyboard & Mouse</option>
-              </select>
-            </div>
-            <br>
-            <div class="form-group">
-              <label for="input-date" style="display: flex; gap: 0.25rem; align-items: center;">Select Date <span class="required">*</span></label>
-              <select id="input-date" name="date" required>
-                <option value="">Choose a date</option>
-                <option value="2026-02-27">27.02.2026</option>
-                <option value="2026-03-06">06.03.2026</option>
-                <option value="2026-03-13">13.03.2026</option>
-                <option value="2026-03-27">27.03.2026</option>
               </select>
             </div>
             <br>

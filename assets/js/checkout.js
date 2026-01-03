@@ -29,12 +29,111 @@
   let pendingLoadCode = null;
   let allGames = [];
 
+// Storage key for saved reservations
+  const SAVED_RESERVATIONS_KEY = 'kaptam_saved_reservations';
+
+  // Load saved reservations from localStorage
+  function loadSavedReservations() {
+    const savedReservationsSection = document.getElementById('saved-reservations-section');
+    const savedReservationsSelect = document.getElementById('saved-reservations-select');
+    
+    if (!savedReservationsSection || !savedReservationsSelect) return;
+
+    try {
+      const saved = localStorage.getItem(SAVED_RESERVATIONS_KEY);
+      const reservations = saved ? JSON.parse(saved) : [];
+
+      // Clear existing options (except first one)
+      savedReservationsSelect.innerHTML = '<option value="">Select a previous reservation...</option>';
+
+      if (reservations.length > 0) {
+        // Show the section
+        savedReservationsSection.style.display = 'block';
+
+        // Add options for each saved reservation
+        reservations.forEach(res => {
+          const option = document.createElement('option');
+          option.value = res.code;
+          
+          // Format: "27.02 - John (5 items)"
+          const dateDisplay = res.date ? new Date(res.date).toLocaleDateString('fi-FI', { day: '2-digit', month: '2-digit' }) : 'No date';
+          option.textContent = `${dateDisplay} - ${res.name} (${res.itemCount} items)`;
+          
+          savedReservationsSelect.appendChild(option);
+        });
+      }
+    } catch (error) {
+      console.error('Error loading saved reservations:', error);
+    }
+  }
+
+  // Save reservation to localStorage
+  function saveReservationToLocalStorage(code, formData, items) {
+    try {
+      const saved = localStorage.getItem(SAVED_RESERVATIONS_KEY);
+      let reservations = saved ? JSON.parse(saved) : [];
+
+      // Remove any existing reservation with the same code
+      reservations = reservations.filter(r => r.code !== code);
+
+      // Add new/updated reservation
+      reservations.unshift({
+        code: code,
+        name: formData.name,
+        date: formData.date,
+        itemCount: items.length,
+        savedAt: new Date().toISOString()
+      });
+
+      // Keep only last 10 reservations
+      if (reservations.length > 10) {
+        reservations = reservations.slice(0, 10);
+      }
+
+      localStorage.setItem(SAVED_RESERVATIONS_KEY, JSON.stringify(reservations));
+    } catch (error) {
+      console.error('Error saving reservation to localStorage:', error);
+    }
+  }
+
+  // Delete reservation from localStorage
+  function deleteReservationFromLocalStorage(code) {
+    try {
+      const saved = localStorage.getItem(SAVED_RESERVATIONS_KEY);
+      if (!saved) return;
+
+      let reservations = JSON.parse(saved);
+      reservations = reservations.filter(r => r.code !== code);
+
+      localStorage.setItem(SAVED_RESERVATIONS_KEY, JSON.stringify(reservations));
+      loadSavedReservations(); // Refresh the dropdown
+    } catch (error) {
+      console.error('Error deleting reservation from localStorage:', error);
+    }
+  }
+
+    // Auto-fill date from localStorage (selected on game list)
+  function autoFillDate() {
+    const SELECTED_DATE_KEY = 'kaptam_selected_date';
+    try {
+      const savedDate = localStorage.getItem(SELECTED_DATE_KEY);
+      if (savedDate) {
+        // Store in form data (no visible field anymore)
+        document.getElementById('checkout-form').dataset.selectedDate = savedDate;
+      }
+    } catch (error) {
+      console.error('Error loading selected date:', error);
+    }
+  }
+
   // Initialize
   async function init() {
     if (!checkoutMain) return;
 
     // Load games data to get size and installed information
     await loadGamesData();
+
+    autoFillDate();
 
     // Check date availability
     await checkDateAvailability();
@@ -174,9 +273,8 @@
   function updateSubmitButton() {
     const items = window.KaptamCart.getItems();
     const nameValue = inputName.value.trim();
-    const dateValue = inputDate.value;
 
-    submitBtn.disabled = items.length === 0 || nameValue === '' || dateValue === '';
+    submitBtn.disabled = items.length === 0 || nameValue === '';
   }
 
   // Remove item from cart
@@ -260,18 +358,12 @@
       email: document.getElementById('input-email').value.trim(),
       controller: document.getElementById('input-controller').value,
       additionalInfo: document.getElementById('input-additional').value.trim(),
-      date: inputDate.value
+      date: document.getElementById('checkout-form').dataset.selectedDate || null
     };
 
     if (!formData.name) {
       showNotification('Please enter your name or nickname', 'error');
       inputName.focus();
-      return;
-    }
-
-    if (!formData.date) {
-      showNotification('Please select a date', 'error');
-      inputDate.focus();
       return;
     }
 
@@ -285,6 +377,9 @@
       } else {
         result = await window.KaptamCart.submitCart(formData);
       }
+
+      // Save to localStorage for quick access
+      saveReservationToLocalStorage(result.code, formData, items);
 
       // Show thank you screen
       showThankYou(result.code);
@@ -354,7 +449,6 @@
 
     // Name and date input for validation
     inputName.addEventListener('input', updateSubmitButton);
-    inputDate.addEventListener('change', updateSubmitButton);
 
     // Remove item from cart (event delegation)
     cartItemsList.addEventListener('click', (e) => {
@@ -365,6 +459,27 @@
         removeCartItem(gameId);
       }
     });
+
+    // Load saved reservation from dropdown
+    const loadSavedBtn = document.getElementById('load-saved-btn');
+    const savedReservationsSelect = document.getElementById('saved-reservations-select');
+    
+    if (loadSavedBtn && savedReservationsSelect) {
+      loadSavedBtn.addEventListener('click', () => {
+        const code = savedReservationsSelect.value;
+        if (code) {
+          loadPreviousCart(code);
+        }
+      });
+
+      // Also load on Enter key in select
+      savedReservationsSelect.addEventListener('change', (e) => {
+        if (e.target.value) {
+          // Optional: auto-load on selection
+          // loadPreviousCart(e.target.value);
+        }
+      });
+    }
 
     // Load previous cart
     loadPreviousBtn.addEventListener('click', () => {

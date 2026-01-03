@@ -11,6 +11,10 @@
   let allTags = new Map(); // tag -> count
   let tagFilters = new Map(); // tag -> 'include' | 'exclude' | null
 
+  // Date state
+  const SELECTED_DATE_KEY = 'kaptam_selected_date';
+  let selectedDate = null;
+
   // Predetermined tag order
   const tagOrder = [
     'Light',
@@ -45,11 +49,71 @@
   const filterCloseBtn = document.getElementById('filter-close-btn');
   const filterOverlay = document.getElementById('filter-overlay');
 
+// Load selected date from localStorage
+  function loadSelectedDate() {
+    const visitDateSelect = document.getElementById('visit-date-select');
+    if (!visitDateSelect) return;
+
+    try {
+      const saved = localStorage.getItem(SELECTED_DATE_KEY);
+      if (saved) {
+        selectedDate = saved;
+        visitDateSelect.value = saved;
+        updateDateInfo();
+      }
+    } catch (error) {
+      console.error('Error loading selected date:', error);
+    }
+  }
+
+  // Save selected date to localStorage
+  function saveSelectedDate(date) {
+    selectedDate = date;
+    try {
+      if (date) {
+        localStorage.setItem(SELECTED_DATE_KEY, date);
+      } else {
+        localStorage.removeItem(SELECTED_DATE_KEY);
+      }
+    } catch (error) {
+      console.error('Error saving selected date:', error);
+    }
+  }
+
+  // Update date info text
+  function updateDateInfo() {
+    const dateInfo = document.getElementById('date-info');
+    if (!dateInfo) return;
+
+    if (selectedDate) {
+      const cartCount = window.KaptamCart.getCount();
+      if (cartCount > 0) {
+        dateInfo.textContent = `Reserving for ${new Date(selectedDate).toLocaleDateString('fi-FI', { day: '2-digit', month: '2-digit', year: 'numeric' })}`;
+        dateInfo.style.color = 'var(--marigold)';
+      } else {
+        dateInfo.textContent = '';
+      }
+    } else {
+      dateInfo.textContent = 'Please select a date before adding games';
+      dateInfo.style.color = 'var(--roman-silver)';
+    }
+  }
+
+  // Check if date can be changed
+  function canChangeDate() {
+    const cartCount = window.KaptamCart.getCount();
+    if (cartCount > 0) {
+      return confirm('Changing the date will clear your current cart. Continue?');
+    }
+    return true;
+  }
+
   // Initialize
   async function init() {
     if (!gameListEl) return; // Not on game list page
 
     checkWelcomeMessage();
+    loadSelectedDate();
     await loadGames();
     extractTags();
     renderTagFilters();
@@ -59,7 +123,7 @@
 
   // Check and show welcome message
   function checkWelcomeMessage() {
-    const WELCOME_KEY = 'kaptam_boardgames_welcome_dismissed';
+    const WELCOME_KEY = 'kaptam_gamelist_welcome_dismissed'; // Shared key for both pages
     const welcomeMessage = document.getElementById('welcome-message');
     const closeBtn = document.getElementById('welcome-message-close');
 
@@ -315,7 +379,7 @@
         </div>
         ${game.tutorial ? `
           <div class="game-item-tutorial">
-            ${game.tutorial_length ? `<span class="tutorial-length"> ${game.tutorial_length} min</span>` : ''}
+            ${game.tutorial_length ? `<span class="tutorial-length">📺 ${game.tutorial_length} min</span>` : `<span class="tutorial-length">Text</span>`}
             <a href="${game.tutorial}" target="_blank" rel="noopener noreferrer" class="tutorial-btn" title="View tutorial">
               <ion-icon name="help-outline"></ion-icon>
             </a>
@@ -414,6 +478,37 @@
     });
   }
 
+  // Show notification
+  function showNotification(message, type) {
+    const existing = document.querySelector('.game-list-notification');
+    if (existing) existing.remove();
+
+    const notification = document.createElement('div');
+    notification.className = `game-list-notification ${type}`;
+    notification.textContent = message;
+    notification.style.cssText = `
+      position: fixed;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: ${type === 'error' ? 'var(--red)' : 'var(--marigold)'};
+      color: var(--white);
+      padding: 15px 25px;
+      border-radius: 8px;
+      font-size: var(--fs-9);
+      z-index: 1000;
+      animation: slideUp 0.3s ease;
+    `;
+
+    document.body.appendChild(notification);
+
+    setTimeout(() => {
+      notification.style.opacity = '0';
+      notification.style.transition = 'opacity 0.3s ease';
+      setTimeout(() => notification.remove(), 300);
+    }, 3000);
+  }
+
   // Bind events
   function bindEvents() {
     // Search
@@ -452,6 +547,35 @@
       }
     });
 
+    // Date selection handler
+    const visitDateSelect = document.getElementById('visit-date-select');
+    if (visitDateSelect) {
+      visitDateSelect.addEventListener('change', (e) => {
+        const newDate = e.target.value;
+
+        if (!newDate) {
+          saveSelectedDate(null);
+          updateDateInfo();
+          return;
+        }
+
+        if (!canChangeDate()) {
+          // Revert to previous value
+          e.target.value = selectedDate || '';
+          return;
+        }
+
+        // Clear cart if changing date
+        if (selectedDate && selectedDate !== newDate && window.KaptamCart.getCount() > 0) {
+          window.KaptamCart.clearCart();
+          resetAllCartButtons();
+        }
+
+        saveSelectedDate(newDate);
+        updateDateInfo();
+      });
+    }
+
     // Mobile filter toggle
     filterToggleBtn.addEventListener('click', () => toggleFilterSidebar(true));
     filterCloseBtn.addEventListener('click', () => toggleFilterSidebar(false));
@@ -477,16 +601,24 @@
 
       if (addBtn) {
         if (window.KaptamCart.isInCart(gameId)) {
-          // Remove from cart (same as trash button)
+          // Remove from cart
           window.KaptamCart.removeItem(gameId);
           updateCartButtons(cartActions, false);
+          updateDateInfo(); // Add this
         } else {
+          // Check if date is selected
+          if (!selectedDate) {
+            showNotification('Please select a visit date first', 'error');
+            return;
+          }
+
           // Add to cart
           const result = window.KaptamCart.addItem(gameId, gameName, gameImage, gameType);
           if (result === 'limit_reached') {
             showCartLimitModal();
           } else if (result) {
             updateCartButtons(cartActions, true);
+            updateDateInfo(); // Add this
           }
         }
       } else if (removeBtn) {
@@ -513,6 +645,14 @@
       addBtn.innerHTML = '<ion-icon name="add-outline"></ion-icon>';
       removeBtn.classList.remove('visible');
     }
+  }
+
+  // Reset all cart buttons to default state
+  function resetAllCartButtons() {
+    const allCartActions = document.querySelectorAll('.game-item-cart-actions');
+    allCartActions.forEach(cartActions => {
+      updateCartButtons(cartActions, false);
+    });
   }
 
   // Run on DOM ready
