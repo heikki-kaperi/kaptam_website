@@ -22,6 +22,7 @@
   const inputName = document.getElementById('input-name');
   const infoNotice = document.querySelector('.info-notice');
   const inputDate = document.getElementById('input-date');
+  const controllerFormGroup = document.getElementById('controller-form-group');
 
   // State
   let isEditingPrevious = false;
@@ -31,6 +32,20 @@
 
 // Storage key for saved reservations
   const SAVED_RESERVATIONS_KEY = 'kaptam_saved_reservations';
+
+  // Check if cart has videogames and show/hide controller option
+  function updateControllerVisibility() {
+    const items = window.KaptamCart.getItems();
+    const hasVideogames = items.some(item => item.type === 'videogame');
+    
+    if (controllerFormGroup) {
+      if (hasVideogames) {
+        controllerFormGroup.style.display = 'flex';
+      } else {
+        controllerFormGroup.style.display = 'none';
+      }
+    }
+  }
 
   // Load saved reservations from localStorage
   function loadSavedReservations() {
@@ -152,6 +167,7 @@
     bindEvents();
     updateSubmitButton();
     updateInfoNoticeVisibility();
+    updateControllerVisibility();
   }
 
   // Load games data to get size and installed information
@@ -229,6 +245,7 @@
       emptyCartMessage.style.display = 'block';
       submitBtn.disabled = true;
       updateInfoNoticeVisibility();
+      updateControllerVisibility();
       return;
     }
 
@@ -268,6 +285,7 @@
 
     updateSubmitButton();
     updateInfoNoticeVisibility();
+    updateControllerVisibility();
   }
 
   // Update submit button state
