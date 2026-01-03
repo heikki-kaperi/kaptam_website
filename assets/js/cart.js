@@ -185,7 +185,8 @@
   // Load cart from server by code
   async function loadCartByCode(code) {
     try {
-      const response = await fetch(`http://localhost:3000/api/cart/${code}`);
+      const apiUrl = window.KaptamConfig?.endpoints.getCart(code) || `http://localhost:3000/api/cart/${code}`;
+      const response = await fetch(apiUrl);
       if (!response.ok) {
         const error = await response.json();
         throw new Error(error.message || 'Failed to load cart');
@@ -210,7 +211,8 @@
         date: formData.date || null
       };
 
-      const response = await fetch('http://localhost:3000/api/cart/submit', {
+      const apiUrl = window.KaptamConfig?.endpoints.submitCart || 'http://localhost:3000/api/cart/submit';
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -250,7 +252,8 @@
         date: formData.date || null
       };
 
-      const response = await fetch(`http://localhost:3000/api/cart/${code}`, {
+      const apiUrl = window.KaptamConfig?.endpoints.updateCart(code) || `http://localhost:3000/api/cart/${code}`;
+      const response = await fetch(apiUrl, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'

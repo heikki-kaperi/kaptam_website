@@ -168,7 +168,8 @@
   // Check date availability from server
   async function checkDateAvailability() {
     try {
-      const response = await fetch('http://localhost:3000/api/dates/availability');
+      const apiUrl = window.KaptamConfig?.endpoints.dateAvailability || 'http://localhost:3000/api/dates/availability';
+      const response = await fetch(apiUrl);
       if (!response.ok) return;
 
       const availability = await response.json();
