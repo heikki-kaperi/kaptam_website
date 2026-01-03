@@ -21,8 +21,12 @@
   const copyCodeBtn = document.getElementById('copy-code-btn');
   const inputName = document.getElementById('input-name');
   const infoNotice = document.querySelector('.info-notice');
+<<<<<<< HEAD
   const inputDate = document.getElementById('input-date');
   const controllerFormGroup = document.getElementById('controller-form-group');
+=======
+  const inputDate = null;
+>>>>>>> 204599c (fix)
 
   // State
   let isEditingPrevious = false;
@@ -191,6 +195,7 @@
       const availability = await response.json();
 
       // Update date options
+      if  (!inputDate) return;
       const options = inputDate.querySelectorAll('option[value]');
       options.forEach(option => {
         if (option.value) {
@@ -328,7 +333,7 @@
       document.getElementById('input-email').value = data.email || '';
       document.getElementById('input-controller').value = data.controller || 'controller';
       document.getElementById('input-additional').value = data.additionalInfo || '';
-      if (data.date) {
+      if (data.date && inputDate) {
         inputDate.value = data.date;
       }
 

@@ -13,6 +13,7 @@ const emailService = require('./emailService');
 const auth = require('./auth');
 
 const app = express();
+app.set('trust proxy', 1);
 const PORT = process.env.PORT || 3000;
 const NODE_ENV = process.env.NODE_ENV || 'development';
 const SITE_URL = process.env.SITE_URL || 'http://localhost:5500';
@@ -200,25 +201,24 @@ app.post('/api/cart/submit', async (req, res) => {
     db.createReservation(reservation);
 
     // Send emails (don't fail if email fails)
-    try {
-      // Send to admin always
-      await emailService.sendAdminNotification(reservation);
-
-      // Send to user only if email provided
-      if (email && email.trim() !== '') {
-        await emailService.sendUserConfirmation(reservation);
-      }
-    } catch (emailError) {
-      console.error('Email sending failed:', emailError);
-      // Continue - reservation is saved
-    }
-
+// Respond immediately
     res.json({
       success: true,
       code,
       message: 'Reservation created successfully'
     });
 
+    // Send emails in background (don't block response)
+    setImmediate(async () => {
+      try {
+        await emailService.sendAdminNotification(reservation);
+        if (email && email.trim() !== '') {
+          await emailService.sendUserConfirmation(reservation);
+        }
+      } catch (emailError) {
+        console.error('Email sending failed:', emailError);
+      }
+    });
   } catch (error) {
     console.error('Error creating reservation:', error);
     res.status(500).json({ message: 'Failed to create reservation' });
@@ -317,22 +317,24 @@ app.put('/api/cart/:code', async (req, res) => {
     db.updateReservation(reservation);
 
     // Send update emails
-    try {
-      await emailService.sendAdminNotification(reservation, true);
-
-      if (email && email.trim() !== '') {
-        await emailService.sendUserConfirmation(reservation, true);
-      }
-    } catch (emailError) {
-      console.error('Email sending failed:', emailError);
-    }
-
+// Respond immediately
     res.json({
       success: true,
       code: code.toUpperCase(),
       message: 'Reservation updated successfully'
     });
 
+    // Send update emails in background
+    setImmediate(async () => {
+      try {
+        await emailService.sendAdminNotification(reservation, true);
+        if (email && email.trim() !== '') {
+          await emailService.sendUserConfirmation(reservation, true);
+        }
+      } catch (emailError) {
+        console.error('Email sending failed:', emailError);
+      }
+    });
   } catch (error) {
     console.error('Error updating reservation:', error);
     res.status(500).json({ message: 'Failed to update reservation' });
@@ -611,3 +613,5 @@ process.on('SIGINT', () => {
   db.close();
   process.exit(0);
 });
+
+
