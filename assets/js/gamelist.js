@@ -152,7 +152,11 @@
       console.error('Error loading games:', error);
       gameListEl.innerHTML = '<p style="color: #fff; padding: 20px;">Error loading games. Please try again later.</p>';
     }
+
+    
+    
   }
+
 
   // Extract all unique tags and count occurrences
   function extractTags() {
@@ -294,8 +298,13 @@ function renderTagFilters() {
     const searchTerm = searchInput.value.toLowerCase().trim();
     const sortValue = sortSelect.value;
 
-    // Filter games
-    filteredGames = allGames.filter(game => {
+    // Filter games - EXCLUDE FGC-only games
+filteredGames = allGames.filter(game => {
+  // Exclude FGC-only games from the game list
+  if (game.tags && game.tags.toLowerCase().includes('fgc-only')) {
+    return false;
+  }
+  
       // Search filter
       if (searchTerm) {
         const nameMatch = game.name.toLowerCase().includes(searchTerm);
