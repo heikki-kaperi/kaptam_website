@@ -2833,8 +2833,8 @@ body {
   }
 
   .game-tab {
-    font-size: var(--fs-8);
-    padding: 10px 20px;
+    font-size: var(--fs-14);
+    padding: 12px 5px;
   }
 
   .search-row {
