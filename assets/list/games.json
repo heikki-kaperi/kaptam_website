@@ -197,7 +197,7 @@
   },
   {
     "id": 15,
-    "name": "Control Ultimate Edition",
+    "name": "Control +DLC",
     "image": "../assets/images/list_images/Control Ultimate Edition.jpg",
     "url": "https://store.steampowered.com/app/870780/",
     "tags": "Mainstream, Singleplayer, K16",
@@ -2932,7 +2932,7 @@
     "id": 215,
     "name": "FIGHTING EX LAYER +DLC",
     "image": "../assets/images/list_images/FIGHTING EX LAYER.jpg",
-    "url": "https://store.steampowered.com/app/1023802/",
+    "url": "https://store.steampowered.com/app/871200",
     "tags": "Underground, Local 2 players vs, Fighting, K12",
     "Date": "2019-03-25",
     "installed": false,

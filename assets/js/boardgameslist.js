@@ -379,7 +379,7 @@
         </div>
         ${game.tutorial ? `
           <div class="game-item-tutorial">
-            ${game.tutorial_length ? `<span class="tutorial-length">📺 ${game.tutorial_length} min</span>` : `<span class="tutorial-length">Text</span>`}
+            ${game.tutorial_length ? `<span class="tutorial-length"> ${game.tutorial_length} min</span>` : `<span class="tutorial-length">Text</span>`}
             <a href="${game.tutorial}" target="_blank" rel="noopener noreferrer" class="tutorial-btn" title="View tutorial">
               <ion-icon name="help-outline"></ion-icon>
             </a>

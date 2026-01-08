@@ -987,7 +987,7 @@ body {
 .welcome-message-close {
   background: none;
   border: none;
-  color: var(--roman-silver);
+  color: var(--red);
   padding: 4px;
   cursor: pointer;
   transition: var(--transition);

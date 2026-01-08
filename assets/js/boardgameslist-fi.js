@@ -384,7 +384,7 @@
       // Tutorial text translation
       let tutorialSection = '';
       if (game.tutorial) {
-        const tutorialLengthText = game.tutorial_length ? `📺 ${game.tutorial_length} min` : 'Teksti';
+        const tutorialLengthText = game.tutorial_length ? ` ${game.tutorial_length} min` : 'Teksti';
         tutorialSection = `
           <div class="game-item-tutorial">
             <span class="tutorial-length">${tutorialLengthText}</span>

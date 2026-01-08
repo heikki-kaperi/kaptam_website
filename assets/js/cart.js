@@ -185,7 +185,7 @@
   // Load cart from server by code
   async function loadCartByCode(code) {
     try {
-      const apiUrl = window.KaptamConfig?.endpoints.getCart(code) || `http://localhost:3000/api/cart/${code}`;
+      const apiUrl = window.KaptamConfig?.endpoints.getCart(code) || `http://kaptam.fi:3000/api/cart/${code}`;
       const response = await fetch(apiUrl);
       if (!response.ok) {
         const error = await response.json();
@@ -211,7 +211,7 @@
         date: formData.date || null
       };
 
-      const apiUrl = window.KaptamConfig?.endpoints.submitCart || 'http://localhost:3000/api/cart/submit';
+      const apiUrl = window.KaptamConfig?.endpoints.submitCart || 'http://kaptam.fi:3000/api/cart/submit';
       const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
@@ -252,7 +252,7 @@
         date: formData.date || null
       };
 
-      const apiUrl = window.KaptamConfig?.endpoints.updateCart(code) || `http://localhost:3000/api/cart/${code}`;
+      const apiUrl = window.KaptamConfig?.endpoints.updateCart(code) || `http://kaptam.fi:3000/api/cart/${code}`;
       const response = await fetch(apiUrl, {
         method: 'PUT',
         headers: {

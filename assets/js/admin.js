@@ -5,7 +5,7 @@
 (function() {
   'use strict';
 
-  const API_URL = 'http://localhost:3000';
+  const API_URL = 'http://kaptam.fi:3000';
 
   // DOM Elements
   const loginView = document.getElementById('login-view');
