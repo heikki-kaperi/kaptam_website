@@ -4375,5 +4375,19 @@
     "esrb": "M",
     "pegi_k": "K16",
     "esrb_k": "K17"
+  },
+  {
+    "id": 318,
+    "name": "Dengeki Bunko: Fighting Climax Ignition",
+    "image": "../assets/images/list_images/dengeki-bunko.jpg",
+    "url": "https://en.wikipedia.org/wiki/Dengeki_Bunko:_Fighting_Climax",
+    "tags": "Underground, Local 2 players vs, Fighting, K16, fgc-only",
+    "Date": "2014-11-13",
+    "installed": false,
+    "platform": "ps4",
+    "pegi": "16",
+    "esrb": "M",
+    "pegi_k": "K16",
+    "esrb_k": "K17"
   }
 ]
