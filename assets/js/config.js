@@ -13,7 +13,7 @@
   // API Base URLs
   const API_URLS = {
     development: 'http://localhost:3000',
-    production: 'http://kaptam.fi:3000' // Or use a subdomain like 'https://api.kaptam.fi'
+    production: 'https://kaptam.fi:3000' // Use HTTPS to match the website protocol
   };
 
   // Get current API URL based on environment
