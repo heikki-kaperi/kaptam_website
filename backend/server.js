@@ -7,7 +7,12 @@ const app = express();
 const PORT = 3000;
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: ['http://kaptam.fi', 'https://kaptam.fi', 'http://localhost', 'http://127.0.0.1'],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(express.json());
 
 // File paths
