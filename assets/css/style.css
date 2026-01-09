@@ -2834,7 +2834,7 @@ body {
 
   .game-tab {
     font-size: var(--fs-14);
-    padding: 12px 5px;
+    padding: 12px 15px;
   }
 
   .search-row {
